@@ -1,0 +1,657 @@
+[
+  {
+    "product_id": "prod_d9fc5a7711c8",
+    "name": "The Aarsha's Heritage Kundan Necklace Set",
+    "description": "An exquisite heritage-inspired statement necklace set adorned with premium Kundan stones, ruby and emerald accents, and delicate pearls. Crafted for the modern woman who appreciates timeless royal elegance.",
+    "price": 1128600,
+    "currency": "INR",
+    "images": [
+      "/images/heritage-kundan-necklace-set.jpg"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Necklace Set with Matching Earrings",
+    "materials": "Premium Kundan Stones, Ruby-Colored Glass Stones, Emerald-Colored Glass Stones, Antique Gold Finish Alloy, Faux Pearls, Handcrafted Enamel Detailing, Black Crystal Accent Stone, High-Quality Brass Base Metal",
+    "availability": "In Stock",
+    "set_includes": "Necklace + Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T04:47:02.141000"
+  },
+  {
+    "product_id": "prod_7e9d3843e2d1",
+    "name": "The Aarsha's Celeste Crystal Drop Necklace Set",
+    "description": "A delicate and elegant crystal drop necklace set designed for effortless sophistication. Featuring brilliant teardrop-cut crystals suspended from a fine antique-gold chain, this lightweight piece adds subtle sparkle and grace to both traditional and contemporary outfits. Perfect for cocktail parties, festive celebrations, bridesmaids, and modern minimalistic styling.",
+    "price": 255400,
+    "currency": "INR",
+    "images": [
+      "/images/celeste-crystal-drop-necklace-set.jpg"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Necklace Set with Matching Earrings",
+    "materials": "Premium AAA Cubic Zirconia Crystals, High-Quality Glass Stones, Antique Gold-Plated Alloy, Micro Pave Crystal Detailing, Brass Base Metal, Anti-Tarnish Protective Coating",
+    "availability": "In Stock",
+    "set_includes": "Crystal Drop Necklace + Matching Stud Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T04:47:03.464000"
+  },
+  {
+    "product_id": "prod_60e3cf2cf510",
+    "name": "The Aarsha's Antique Kundan Necklace Set",
+    "description": "Inspired by the grandeur of royal Indian jewellery, this antique-finish Kundan necklace set features handcrafted crescent moon motifs, textured gold beads, and striking ruby and emerald accents. The statement pendant and matching Chandbali earrings showcase intricate filigree detailing, creating a timeless heirloom-inspired look perfect for weddings and festive occasions.",
+    "price": 764400,
+    "currency": "INR",
+    "images": [
+      "/images/Kundan_set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Necklace Set with Matching Chandbali Earrings",
+    "materials": "Premium Kundan Stones, Ruby-Colored Glass Stones, Emerald-Colored Glass Stones, Antique Gold-Plated Alloy, Handcrafted Filigree Metalwork, Textured Gold Beads, Seed Pearl Bead Tassels, Brass Base Metal",
+    "availability": "In Stock (Limited Edition)",
+    "set_includes": "Antique Kundan Necklace + Matching Chandbali Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T06:41:06.612000"
+  },
+  {
+    "product_id": "prod_bbf6965c3d1d",
+    "name": "The Aarsha's Polki Emerald Choker Set",
+    "description": "A breathtaking royal-inspired Polki choker set featuring layers of lustrous pearl strands, intricate Kundan craftsmanship, emerald-green accents, and striking black enamel detailing. Designed to evoke timeless Mughal elegance, this statement piece effortlessly blends regal grandeur with contemporary sophistication, making it ideal for bridal wear and luxury festive occasions.",
+    "price": 952000,
+    "currency": "INR",
+    "images": [
+      "/images/PolkiMoissaniteset.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Choker Necklace Set with Matching Earrings",
+    "materials": "Premium Polki Moissanite Stones, Emerald Green Beads, Black Onyx-Inspired Crystal / Enamel Detailing, Faux Pearl Strands, Gold-Plated Alloy, Handcrafted Metal Framework, Brass Base Metal, Adjustable Dori Closure",
+    "availability": "In Stock",
+    "set_includes": "Statement Choker Necklace + Matching Statement Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T04:29:03.059000"
+  },
+  {
+    "product_id": "prod_2c1607507522",
+    "name": "The Aarsha's Rosé Moissanite Layered Necklace Set",
+    "description": "A graceful layered necklace set featuring brilliant moissanite-style stones, rose-pink accents, and intricate scalloped craftsmanship. The cascading design creates a royal yet feminine look, perfect for weddings, receptions, festive celebrations, and elegant occasion wear.",
+    "price": 1502200,
+    "currency": "INR",
+    "images": [
+      "/images/rose-royale-layered-kundan-necklace-set.jpg"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Layered Moissanite Necklace Set with Matching Earrings",
+    "materials": "Moissanite-style white stones, Rose-pink hydro stones, Micro CZ / crystal accents, Antique gold-plated alloy base, Adjustable chain closure",
+    "availability": "Limited Edition",
+    "set_includes": "Layered Kundan Necklace + Matching Drop Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T07:06:54.264000"
+  },
+  {
+    "product_id": "prod_20cb89a73b48",
+    "name": "The Aarsha's Gulmohar Hasli Necklace Set",
+    "description": "A graceful floral-inspired necklace set featuring vibrant fuchsia stones, sparkling crystal accents, and delicate leaf motifs arranged on a sleek gold-tone collar. The asymmetrical designer pendant creates a modern yet feminine silhouette, making this piece perfect for festive occasions, cocktail events, and elegant celebrations. Lightweight and versatile, it effortlessly blends contemporary sophistication with timeless charm.",
+    "price": 479400,
+    "currency": "INR",
+    "images": [
+      "/images/gulmohar-bloom-necklace-set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Designer Necklace Set with Matching Drop Earrings",
+    "materials": "Premium Cubic Zirconia Crystals, Fuchsia Pink Glass Stones, Moissanite Pear-Cut Crystal Drops, Gold-Plated Alloy, Micro Pavé Crystal Accents, Handcrafted Floral & Leaf Motifs, Brass Base Metal, Adjustable Extension Chain",
+    "availability": "In Stock",
+    "set_includes": "Designer Necklace + Matching Drop Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T06:47:06.519000"
+  },
+  {
+    "product_id": "prod_0804a64c3cac",
+    "name": "The Aarsha's Gulbahar Heritage Necklace Set",
+    "description": "A captivating heritage-inspired statement necklace featuring blush pink gemstone panels, emerald-green accents, intricate floral motifs, and cascading pearl tassels. Crafted with vintage-inspired artistry and antique gold detailing, this luxurious set embodies regal elegance and timeless femininity, making it an exceptional choice for weddings, festive occasions, and grand celebrations.",
+    "price": 914200,
+    "currency": "INR",
+    "images": [
+      "/images/gulbahar-heritage-necklace-set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Necklace Set with Matching Earrings",
+    "materials": "Premium Kundan Stones, Pink Opal-Inspired Glass Stones, Emerald Green Glass Stones, Antique Gold-Plated Alloy, Handcrafted Enamel Detailing, Faux Pearl Tassels, Micro Crystal Embellishments, Brass Base Metal, Adjustable Chain Closure",
+    "availability": "Limited Edition",
+    "set_includes": "Statement Heritage Necklace + Matching Designer Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T04:47:08.822000"
+  },
+  {
+    "product_id": "prod_f743a0956aca",
+    "name": "The Aarsha's Sabyasachi Inspired Royale Necklace Set",
+    "description": "A magnificent heritage-inspired statement necklace featuring an artistic blend of multicolored gemstones, pearl embellishments, and intricate antique detailing. The centerpiece showcases regal floral motifs, Navratna-inspired accents, and elegant drop charms, creating a vibrant masterpiece that celebrates India's rich royal jewellery traditions. Designed for women who love distinctive, heirloom-style jewellery with a modern couture appeal.",
+    "price": 647400,
+    "currency": "INR",
+    "images": [
+      "/images/sabyasachi-inspired-royale-necklace-set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Necklace Set with Matching Drop Earrings",
+    "materials": "Navratna-Inspired Multicolored Glass Stones, Premium Kundan Stones, Faux Pearls, Emerald Green Stones, Sapphire Blue Stones, Ruby Pink Stones, Grey Chalcedony-Inspired Stones, Antique Gold-Plated Alloy, Handcrafted Enamel Detailing, Brass Base Metal, Adjustable Dori Closure with Beaded Tassels",
+    "availability": "Limited Edition",
+    "set_includes": "Statement Heritage Necklace + Matching Floral Drop Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T04:47:10.760000"
+  },
+  {
+    "product_id": "prod_a9c7cf2e38b1",
+    "name": "The Aarsha's Crystal Moissanite Necklace Set",
+    "description": "A timeless and elegant crystal necklace set featuring pear-cut and trillion-cut stones delicately arranged along a sleek gold-tone silhouette. Designed for effortless sophistication, this lightweight piece offers refined sparkle that transitions seamlessly from festive celebrations to evening occasions. Its minimalist luxury aesthetic makes it a versatile addition to every jewellery collection.",
+    "price": 474600,
+    "currency": "INR",
+    "images": [
+      "/images/crystal-necklace-set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Moissanite Necklace Set",
+    "materials": "Premium Alloy Base, Gold-Plated Finish, High-Grade Moissanite Stones, Pear-Cut Moissanite, Trillion-Cut Moissanite, Micro CZ / Pave Accent Stones, Anti-Tarnish Coating",
+    "availability": "In Stock",
+    "set_includes": "Crystal Statement Necklace + Matching Crystal Stud Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T06:58:00.950000"
+  },
+  {
+    "product_id": "prod_86304978f91d",
+    "name": "The Aarsha's Sabyasachi Inspired Necklace Set",
+    "description": "A breathtaking couture-inspired statement necklace set featuring blush rose cabochons, emerald-green gemstones, pearl accents, and intricate multicolored detailing. Designed with a palace-jewellery aesthetic, this masterpiece combines Mughal artistry, vintage elegance, and contemporary luxury to create an unforgettable heirloom-inspired look. Perfect for brides, receptions, and grand festive occasions where making a statement is essential.",
+    "price": 847000,
+    "currency": "INR",
+    "images": [
+      "/images/sabyasachi-inspired-necklace-set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Couture Statement Necklace Set with Matching Statement Earrings",
+    "materials": "Rose Quartz-Inspired Cabochon Stones, Emerald Green Glass Stones, Multicolored Navratna-Inspired Stones, Premium Kundan Crystals, Faux Pearls, Antique Gold-Plated Alloy, Handcrafted Enamel Detailing, Micro Crystal Embellishments, Brass Base Metal, Adjustable Dori Closure with Beaded Tassels",
+    "availability": "Exclusive Limited Edition",
+    "set_includes": "Statement Couture Necklace + Matching Statement Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T04:47:14.654000"
+  },
+  {
+    "product_id": "prod_1357f1d2784f",
+    "name": "The Aarsha's Sabyasachi Inspired Necklace Set (Pastel)",
+    "description": "A charming heritage-inspired necklace set featuring blush rose cabochons, emerald-green accents, pearl embellishments, and vibrant multicolored gemstone clusters. The elegant arrangement of soft pastel tones and antique gold detailing creates a sophisticated statement piece that blends vintage artistry with modern femininity. Perfect for festive celebrations, intimate weddings, and elegant daytime occasions.",
+    "price": 269400,
+    "currency": "INR",
+    "images": [
+      "/images/sabyasachi-inspired-necklace-set-pastel.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Necklace Set with Matching Drop Earrings",
+    "materials": "Rose Quartz-Inspired Cabochon Stones, Emerald Green Glass Stones, Multicolored Semi-Precious Inspired Beads, Faux Pearls, Cubic Zirconia / Crystal Accents, Antique Gold-Plated Alloy, Handcrafted Metal Filigree, Brass Base Metal, Adjustable Dori Closure with Beaded Tassels",
+    "availability": "Limited Edition",
+    "set_includes": "Heritage Statement Necklace + Matching Designer Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T04:47:16.546000"
+  },
+  {
+    "product_id": "prod_9f2bdd677b73",
+    "name": "The Aarsha's Crystal Choker Set",
+    "description": "A sophisticated V-shaped crystal choker set crafted with dazzling marquise and round-cut stones arranged in a graceful cascading pattern. Designed to deliver maximum brilliance with a lightweight feel, this elegant piece is perfect for modern brides, cocktail soirees, receptions, and special celebrations. Its timeless silhouette adds refined glamour to both ethnic and western ensembles.",
+    "price": 269400,
+    "currency": "INR",
+    "images": [
+      "/images/crystal-choker-set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Crystal Choker Necklace Set with Matching Drop Earrings",
+    "materials": "Premium AAA Cubic Zirconia Stones, Marquise-Cut Crystal Stones, Round Brilliant-Cut Crystals, Rhodium-Plated Alloy Finish, Micro Pave Crystal Detailing, Anti-Tarnish Coating, Brass Alloy Base, Adjustable Extension Chain",
+    "availability": "In Stock",
+    "set_includes": "Crystal Choker Necklace + Matching Drop Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T04:47:18.454000"
+  },
+  {
+    "product_id": "prod_d38ff0247883",
+    "name": "The Aarsha's Emerald Veena Kundan Haar Set",
+    "description": "A graceful Rajwadi-inspired layered necklace featuring cascading strands of emerald-green beads adorned with handcrafted Kundan drop charms. The elegant multi-layer silhouette creates beautiful movement and a regal drape, making it an ideal choice for festive occasions, wedding functions, and traditional celebrations. Lightweight yet impactful, this timeless design celebrates classic Indian craftsmanship with contemporary wearability.",
+    "price": 756000,
+    "currency": "INR",
+    "images": [
+      "/images/emerald-veena-kundan-haar-set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Layered Kundan Haar Set with Matching Stud Earrings",
+    "materials": "Premium Polki Kundan Stones, Emerald Green Glass Beads, Faux Pearls, Antique Gold-Plated Alloy, Handcrafted Kundan Drop Charms, Micro Crystal Detailing, Brass Base Metal, Adjustable Dori Closure with Pearl Tassels",
+    "availability": "In Stock",
+    "set_includes": "Layered Kundan Haar Necklace + Matching Kundan Stud Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T04:47:20.372000"
+  },
+  {
+    "product_id": "prod_9540f629317e",
+    "name": "The Aarsha's Polki Choker Set",
+    "description": "A timeless Polki-inspired choker set featuring a seamless row of pear-cut stones framed with delicate crystal detailing and an antique gold finish. Designed for understated luxury, this elegant piece offers effortless sophistication and versatility, making it perfect for intimate weddings, festive occasions, cocktail evenings, and contemporary ethnic styling.",
+    "price": 497000,
+    "currency": "INR",
+    "images": [
+      "/images/polki-choker-set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Polki Choker Necklace Set with Matching Stud Earrings",
+    "materials": "Premium Polki-Inspired Stones, Pear-Cut Crystal Stones, Cubic Zirconia Micro Stones, Antique Gold-Plated Alloy, High-Polish Finish, Brass Base Metal, Adjustable Extension Chain",
+    "availability": "In Stock",
+    "set_includes": "Polki Choker Necklace + Matching Stud Earrings",
+    "created_at": "2026-06-03T16:37:22.068000",
+    "updated_at": "2026-06-06T04:47:22.308000"
+  },
+  {
+    "product_id": "prod_d96b4b7460b2",
+    "name": "The Aarsha's Rajsi Emerald Choker Set",
+    "description": "A breathtaking bridal choker inspired by royal Indian heritage, featuring luxurious emerald-green stones, cascading gemstone tassels. The statement centerpiece is designed to command attention, blending regal elegance with intricate craftsmanship. Perfect for brides and grand festive occasions, this masterpiece embodies timeless royalty and sophistication.",
+    "price": 1160000,
+    "currency": "INR",
+    "images": [
+      "/images/rajsi-emerald-choker.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Bridal Statement Choker Set with Matching Earrings",
+    "materials": "Premium Emerald Green Hydro Stones, Polki Stones, Pear-Cut Crystal Stones, American Diamond (CZ) Accents, Emerald Drop Beads, Gold-Plated Alloy, Handcrafted Stone Setting, Brass Base Metal",
+    "availability": "Exclusive Limited Edition",
+    "set_includes": "Necklace + Earrings",
+    "created_at": "2026-06-04T15:01:33.650000"
+  },
+  {
+    "product_id": "prod_750b0227fcc6",
+    "name": "The Aarsha's Mint Rosé Royale Choker Set",
+    "description": "A dreamy pastel-inspired statement choker featuring delicate blush-pink crystals, mint-green cabochon drops, and intricate antique gold detailing. The layered openwork design creates an elegant, airy silhouette, while the soft color palette exudes feminine charm and modern sophistication. Perfect for bridesmaids, destination weddings, festive brunches, and contemporary ethnic styling.",
+    "price": 1040000,
+    "currency": "INR",
+    "images": [
+      "/images/mint-rose-royale-choker.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Designer Choker Necklace Set with Matching Earrings",
+    "materials": "Mint Green Jade-Inspired Cabochon Stones, Blush Pink Crystal Stones, Faux Pearls, Cubic Zirconia Accents, Antique Gold-Plated Alloy, Handcrafted Filigree Metalwork, Brass Base Metal, Premium Adjustable Choker Framework",
+    "availability": "Limited Edition",
+    "set_includes": "Statement Choker Necklace + Matching Drop Earrings",
+    "created_at": "2026-06-04T15:01:33.677000"
+  },
+  {
+    "product_id": "prod_9b9f071280cc",
+    "name": "The Aarsha's Meher Crystal Choker",
+    "description": "A delicate Polki-inspired choker featuring a graceful row of pear-shaped stones accented with sparkling crystal clusters and an elegant antique gold finish. The symmetrical design creates a refined neckline silhouette, while the matching drop earrings add timeless charm. Lightweight yet luxurious, this set is perfect for weddings, festive celebrations, and sophisticated evening styling.",
+    "price": 340000,
+    "currency": "INR",
+    "images": [
+      "/images/Crystal_set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Choker Necklace Set with Matching Drop Earrings",
+    "materials": "Pear-Cut Crystal Stones, American Diamond (CZ) Accents, Antique Gold-Plated Alloy, Handcrafted Stone Setting, Brass Base Metal, Adjustable Dori Closure, Decorative Pearl & Bead Tassels",
+    "availability": "In Stock",
+    "set_includes": "Choker Necklace + Matching Drop Earrings",
+    "created_at": "2026-06-04T16:17:02.081000"
+  },
+  {
+    "product_id": "prod_454b4aa7ad7e",
+    "name": "The Aarsha's Ruby Emerald Layered Necklace Set",
+    "description": "A delicate double-layer necklace set featuring vibrant ruby-red center stones, emerald-green teardrop charms, and sparkling Polki-inspired accents. The lightweight layered silhouette blends traditional Indian elegance with contemporary styling, making it perfect for festive gatherings, intimate celebrations, and everyday luxury wear. Designed to add a graceful pop of color while remaining effortlessly wearable.",
+    "price": 440000,
+    "currency": "INR",
+    "images": [
+      "/images/red_green_Set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Layered Necklace Set with Matching Stud Earrings",
+    "materials": "Ruby Red Glass Stones, Emerald Green Teardrop Crystals, Polki-Inspired Stones, Cubic Zirconia Accents, Gold-Plated Alloy, Handcrafted Stone Setting, Brass Base Metal, Adjustable Extension Chain",
+    "availability": "In Stock",
+    "set_includes": "Double-Layer Necklace + Matching Stud Earrings",
+    "created_at": "2026-06-04T16:17:02.107000"
+  },
+  {
+    "product_id": "prod_a0a987b5053e",
+    "name": "The Aarsha's Lavender Bloom Statement Necklace Set",
+    "description": "An enchanting statement necklace crafted with delicate lavender crystal stones arranged in an intricate floral vine pattern. The graceful leaf-inspired design is highlighted with sparkling zircon accents, creating a luxurious and feminine silhouette. Perfect for cocktail parties, wedding receptions, engagement ceremonies, and festive celebrations where elegance takes center stage.",
+    "price": 480000,
+    "currency": "INR",
+    "images": [
+      "/images/Purple_stone_Set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Necklace Set with Earrings",
+    "materials": "Lavender Crystal Stones, Premium Cubic Zirconia (CZ), Marquise-Cut Crystal Accents, Micro-Pavé Stone Setting, Gold-Plated Alloy Base, Handcrafted Floral Vine Framework, Adjustable Dori Closure",
+    "availability": "Limited Edition",
+    "set_includes": "Statement Necklace + Matching Drop Earrings",
+    "created_at": "2026-06-04T16:17:02.109000"
+  },
+  {
+    "product_id": "prod_22a71bc12c02",
+    "name": "The Aarsha's Emerald Stag Statement Necklace Set",
+    "description": "A breathtaking designer statement necklace inspired by the majesty of a royal stag amidst an emerald forest. Intricately crafted with antler-shaped branches adorned with emerald-green stones and sparkling kundan accents, the centerpiece showcases a regal deer motif finished with a luxurious emerald drop pendant. This artistic masterpiece blends heritage craftsmanship with contemporary luxury, making it a true conversation piece.",
+    "price": 960000,
+    "currency": "INR",
+    "images": [
+      "/images/giragge_Set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Designer Statement Necklace Set with Earrings",
+    "materials": "Emerald Green Hydro Stones, American Diamonds (CZ), Micro-Pavé Crystal Detailing, Gold-Plated Alloy Base, Handcrafted Stag Motif Centerpiece, Pear-Cut Emerald Pendant Drop, Adjustable Dori Closure",
+    "availability": "Limited Edition",
+    "set_includes": "Statement Necklace + Matching Designer Earrings",
+    "created_at": "2026-06-04T16:17:02.111000"
+  },
+  {
+    "product_id": "prod_39c78f59c568",
+    "name": "The Aarsha's Ruby Blossom Pendant Necklace Set",
+    "description": "A delicate and elegant necklace set featuring floral-inspired kundan motifs connected by a sparkling crystal chain, highlighted by rich ruby-red teardrop stones. Designed for women who appreciate understated luxury, this lightweight piece effortlessly transitions from festive occasions to intimate celebrations. The floral detailing adds a feminine charm while the ruby centerpiece creates a graceful statement.",
+    "price": 180000,
+    "currency": "INR",
+    "images": [
+      "/images/Ruby_crystal_Set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Pendant Necklace Set with Earrings",
+    "materials": "Ruby Red Hydro Stones, American Diamonds (CZ), Gold-Plated Alloy Base, Teardrop-Cut Ruby Stone Pendant, Adjustable Dori Closure",
+    "availability": "In Stock",
+    "set_includes": "Pendant Necklace + Matching Drop Earrings",
+    "created_at": "2026-06-04T16:17:02.114000"
+  },
+  {
+    "product_id": "prod_454688661f78",
+    "name": "The Aarsha's Celeste Layered Pendant Necklace Set",
+    "description": "A refined layered necklace set featuring delicate chains adorned with sparkling crystal drops and an elegant teardrop centerpiece. The minimalist silhouette creates a sophisticated, contemporary look while maintaining timeless elegance. Designed for modern women who appreciate subtle luxury, this piece effortlessly complements both ethnic and western ensembles.",
+    "price": 320000,
+    "currency": "INR",
+    "images": [
+      "/images/Crystal_layered_Set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Layered Necklace Set with Stud Earrings",
+    "materials": "American Diamonds (CZ), Pear-Cut Crystal Drops, Micro-Pavé Crystal Setting, Rose Gold Plated Alloy Base, Delicate Layered Chain Design, Teardrop Pendant Centerpiece",
+    "availability": "In Stock",
+    "set_includes": "Layered Necklace + Matching Stud Earrings",
+    "created_at": "2026-06-04T16:17:02.118000"
+  },
+  {
+    "product_id": "prod_969e8f8b70b7",
+    "name": "The Aarsha's Navratna Pearl Choker Set",
+    "description": "An opulent Navratna-inspired choker handcrafted with intricate kundan detailing, lustrous pearl strands, and vibrant multicolored gemstones symbolizing prosperity and elegance. The rich arrangement of emerald, ruby, sapphire, amethyst, citrine, and other colored stones is beautifully complemented by cascading pearl drops, creating a regal heirloom-inspired masterpiece. Perfect for brides, festive occasions, and grand celebrations.",
+    "price": 960000,
+    "currency": "INR",
+    "images": [
+      "/images/multicolor_Set1.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Premium Choker Necklace Set with Earrings",
+    "materials": "Navratna-Inspired Multicolor Stones, American Diamonds (CZ), White Pearl Strands, Pearl Drop Hangings, Gold-Plated Alloy Base, Handcrafted Heritage Filigree Work, Adjustable Dori Closure",
+    "availability": "Limited Edition",
+    "set_includes": "Navratna Pearl Choker Necklace + Matching Pearl Earrings",
+    "created_at": "2026-06-04T16:17:02.120000"
+  },
+  {
+    "product_id": "prod_76f21f56fc05",
+    "name": "The Aarsha's Sage Hexa Luxe Necklace Set",
+    "description": "A contemporary statement necklace showcasing an elegant geometric arrangement of sage-green hexagonal stones framed with shimmering crystals. The structured design blends modern sophistication with timeless glamour, creating a luxurious piece that effortlessly complements both ethnic and western ensembles. Perfect for women who appreciate clean lines, architectural beauty, and refined elegance.",
+    "price": 1060000,
+    "currency": "INR",
+    "images": [
+      "/images/Green_emerald12.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Necklace Set with Long Earrings",
+    "materials": "Sage Green Hydro Stones, Premium Cubic Zirconia (CZ), Micro-Pavé Crystal Setting, Rose Gold Plated Alloy Base, Hexagon-Cut Center Stones, Precision Geometric Framework, High-Polish Finish",
+    "availability": "Limited Edition",
+    "set_includes": "Statement Necklace + Matching Long Drop Earrings",
+    "created_at": "2026-06-04T16:17:02.123000"
+  },
+  {
+    "product_id": "prod_571462e0744b",
+    "name": "The Aarsha's Emerald Noor Polki Choker Set",
+    "description": "A sophisticated Polki choker set featuring hand-set pear-shaped Polki stones accented with rich emerald-green drops. The elegant arrangement of traditional Polki craftsmanship and contemporary design creates a timeless statement piece that effortlessly transitions from festive celebrations to wedding occasions. The matching earrings mirror the graceful floral-inspired design, making this set a perfect choice for bridesmaids, wedding guests, and festive styling.",
+    "price": 660000,
+    "currency": "INR",
+    "images": [
+      "/images/Green_light_Set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Polki Choker Necklace Set",
+    "materials": "Handcrafted Polki Stones (Pear Shape), Emerald Green Hydro Stones, Premium Crystal Accents, Premium Alloy Base, Gold-Plated Finish",
+    "availability": "In Stock",
+    "set_includes": "Designer Choker Necklace + Matching Statement Earrings",
+    "created_at": "2026-06-04T16:17:02.126000",
+    "updated_at": "2026-06-06T07:15:57.594000"
+  },
+  {
+    "product_id": "prod_d1e64363dd84",
+    "name": "The Aarsha's Ruby Royale Victorian Choker Set",
+    "description": "A statement Victorian-inspired choker featuring an intricate lattice of uncut kundan stones highlighted by a striking ruby-colored centerpiece. The floral filigree design, antique finish, and matching statement earrings create a royal silhouette that is perfect for weddings, receptions, and festive occasions. Designed for women who love timeless heritage jewellery with a contemporary touch.",
+    "price": 780000,
+    "currency": "INR",
+    "images": [
+      "/images/Ruby_stone_set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Victorian Choker Necklace Set",
+    "materials": "Premium Uncut Stones, Ruby-Colored Hydro Stones, AAA Cubic Zirconia Crystals, Victorian Finish Alloy Base, Handcrafted Floral Filigree Work, Micro-Pavé Stone Setting, Adjustable Dori Closure",
+    "availability": "In Stock",
+    "set_includes": "Victorian Kundan Choker Necklace + Matching Statement Earrings",
+    "created_at": "2026-06-04T16:17:02.128000"
+  },
+  {
+    "product_id": "prod_8bfc94ce9e54",
+    "name": "The Aarsha's Emerald Bloom Statement Collar Set",
+    "description": "A sophisticated statement collar necklace featuring a bold emerald-green teardrop centerpiece suspended from an elegant textured gold-tone collar. Accentuated with floral-inspired kundan detailing and sparkling zircon embellishments, this design beautifully balances modern luxury with traditional craftsmanship. The matching earrings complete the look, making it a perfect choice for weddings, receptions, festive celebrations, and cocktail occasions.",
+    "price": 620000,
+    "currency": "INR",
+    "images": [
+      "/images/Green_golden_Set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Collar Necklace Set",
+    "materials": "Emerald Green Hydro Stones, Premium Polki Stones, AAA Cubic Zirconia Crystals, Gold-Tone Alloy Base, Handcrafted Floral Motif Work, Micro-Setting Crystal Detailing, Anti-Tarnish Premium Finish",
+    "availability": "In Stock",
+    "set_includes": "Statement Collar Necklace + Matching Drop Earrings",
+    "created_at": "2026-06-04T16:17:02.131000"
+  },
+  {
+    "product_id": "prod_c9160c450f91",
+    "name": "The Aarsha's Jewel Spectrum Statement Choker Set",
+    "description": "A bold and contemporary statement choker featuring vibrant gemstone-inspired accents in emerald green, ruby red, citrine yellow, and blush pink. The architectural crystal framework is beautifully highlighted with oversized colored stones, creating a luxurious high-fashion aesthetic. Perfect for women who love modern glamour with a royal touch, this piece effortlessly elevates both ethnic and fusion ensembles.",
+    "price": 880000,
+    "currency": "INR",
+    "images": [
+      "/images/multicolor_Set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Designer Statement Choker Necklace Set",
+    "materials": "Multicolor Hydro Stones (Emerald, Ruby, Citrine & Blush Pink), AAA Cubic Zirconia Crystals, Baguette-Cut Crystal Stones, Gold-Tone Alloy Base, Micro-Pavé Crystal Setting, Premium Anti-Tarnish Finish, Handcrafted Stone Embellishments",
+    "availability": "In Stock",
+    "set_includes": "Statement Choker Necklace + Matching Stud Earrings",
+    "created_at": "2026-06-04T16:17:02.135000"
+  },
+  {
+    "product_id": "prod_1d11803d941c",
+    "name": "The Aarsha's Mint Vine Necklace Set",
+    "description": "A graceful and contemporary necklace set inspired by delicate flowering vines. Featuring soothing mint-green stones framed by shimmering zircon accents, the design flows beautifully around the neckline with a nature-inspired silhouette. Its lightweight elegance makes it perfect for engagement ceremonies, destination weddings, pastel outfits, and modern festive styling.",
+    "price": 880000,
+    "currency": "INR",
+    "images": [
+      "/images/Pastel_color_set.png"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Necklace Set with Earrings",
+    "materials": "Mint Green Hydro Stones, Premium Cubic Zirconia (CZ), Micro-Pavé Crystal Setting, Gold-Plated Alloy Base, Pear-Cut Mint Crystals, Handcrafted Vine Motif Framework, Adjustable Dori Closure",
+    "availability": "Limited Edition",
+    "set_includes": "Necklace + Matching Drop Earrings",
+    "created_at": "2026-06-05T04:02:51.902000"
+  },
+  {
+    "product_id": "prod_2c2cb2756603",
+    "name": "The Aarsha's Rose Parrot Heritage Jhumkas Earrings",
+    "description": "A charming pair of handcrafted statement earrings inspired by traditional Indian artistry. Featuring delicate parrot motifs, soft blush-pink stones, antique silver-finish metalwork, and classic jhumka bells adorned with pearl drops, these earrings beautifully blend heritage aesthetics with contemporary elegance. Perfect for festive occasions, cultural celebrations, and artisanal fashion lovers.",
+    "price": 105000,
+    "currency": "INR",
+    "images": [
+      "/images/Rose_Earrings.png"
+    ],
+    "category": "oxidised",
+    "product_type": "Statement Jhumka Earrings",
+    "materials": "Monalisa Rose Stone, Antique Silver-Finish Alloy, Handcrafted Parrot Motif Elements, Pearl Bead Drops, Oxidized Silver Detailing, Traditional Dome Jhumka Construction",
+    "availability": "In Stock",
+    "set_includes": "Pair of Statement Jhumka Earrings",
+    "created_at": "2026-06-05T05:06:40.455000"
+  },
+  {
+    "product_id": "prod_5abb558aa2f1",
+    "name": "The Aarsha's Royal Peacock Jhumka Earrings",
+    "description": "Inspired by the grandeur of Indian heritage artistry, these statement jhumkas feature intricately sculpted twin peacock motifs, antique dual-tone metalwork, black enamel accents, and delicate pearl embellishments. The beautifully crafted dome-shaped jhumka with pearl fringe adds movement and elegance, making this pair a timeless heirloom-inspired accessory for festive and wedding occasions.",
+    "price": 124000,
+    "currency": "INR",
+    "images": [
+      "/images/Navy_Blue_earrings.png"
+    ],
+    "category": "oxidised",
+    "product_type": "Statement Jhumka Earrings",
+    "materials": "Antique Gold & Silver Finish Alloy, Black Onyx-Look Stones, Freshwater Pearl-Look Beads, Handcrafted Peacock Motif Elements, Intricate Filigree Metalwork, Oxidized Heritage Finish, Traditional Jhumka Dome Construction",
+    "availability": "In Stock",
+    "set_includes": "Pair of Statement Peacock Jhumka Earrings",
+    "created_at": "2026-06-05T05:06:40.475000"
+  },
+  {
+    "product_id": "prod_7396fe6ed362",
+    "name": "The Aarsha's Royal Peacock Ruby Choker Set",
+    "description": "A regal handcrafted choker inspired by royal Indian artistry, featuring majestic peacock motifs, deep ruby-red cabochon stones, intricate antique silver detailing, and elegant pearl drops. The striking center medallion and heritage-inspired craftsmanship make this piece a statement accessory for weddings, festive occasions, and grand celebrations.",
+    "price": 150000,
+    "currency": "INR",
+    "images": [
+      "/images/Dark_Red_Necklace.png"
+    ],
+    "category": "oxidised",
+    "product_type": "Heritage Choker Necklace Set",
+    "materials": "Premium Alloy Base, Antique Gold & Oxidized Silver Finish, Ruby-Red Monalisa Stones, Handcrafted Peacock Motifs, Faux Pearl Drops, Black Braided Adjustable Dori Closure, Micro CZ Crystal Embellishments",
+    "availability": "In Stock",
+    "set_includes": "Heritage Peacock Choker Necklace + Matching Peacock Drop Earrings",
+    "created_at": "2026-06-05T05:06:40.477000"
+  },
+  {
+    "product_id": "prod_e55cf53ba9ed",
+    "name": "The Aarsha's Ruby Feather Statement Jhumkas (Earcuff)",
+    "description": "Inspired by the graceful curves of a peacock feather, these statement jhumkas blend antique silver artistry with warm gold accents and rich ruby-toned stones. The intricately detailed filigree work culminates in a classic dome-shaped jhumka adorned with delicate pearl drops, creating a timeless piece that effortlessly elevates festive and ethnic ensembles.",
+    "price": 54000,
+    "currency": "INR",
+    "images": [
+      "/images/Earcuff.png"
+    ],
+    "category": "oxidised",
+    "product_type": "Statement Jhumka Earrings",
+    "materials": "Premium Alloy Base, Dual-Tone Antique Gold & Oxidized Silver Finish, Ruby-Colored Crystal Stones, Faux Pearl Drop Accents, Push Back Closure",
+    "availability": "In Stock",
+    "set_includes": "Statement Jhumka Earrings",
+    "created_at": "2026-06-05T05:06:40.478000"
+  },
+  {
+    "product_id": "prod_b9096484f597",
+    "name": "The Aarsha's Rustic Peacock Charm Choker Set",
+    "description": "A beautifully handcrafted heritage choker inspired by the elegance of peacocks and nature motifs. The centerpiece features an amber-toned stone framed with intricate detailing, flanked by artistic peacock accents and pearl danglers. Paired with matching peacock stud earrings, this statement set brings together traditional craftsmanship and contemporary charm, making it perfect for festive and cultural occasions.",
+    "price": 128000,
+    "currency": "INR",
+    "images": [
+      "/images/COlored_Necklace.png"
+    ],
+    "category": "oxidised",
+    "product_type": "Designer Choker Necklace Set",
+    "materials": "Premium Alloy Base, Antique Silver Finish, Amber-Colored Center Stone, Faux Pearl Embellishments, Handcrafted Peacock & Nature Motifs, Adjustable Black Braided Dori Closure",
+    "availability": "In Stock",
+    "set_includes": "Designer Choker Necklace + Matching Peacock Stud Earrings",
+    "created_at": "2026-06-05T05:06:40.480000"
+  },
+  {
+    "product_id": "prod_8adbbed04f4f",
+    "name": "The Aarsha's Mayuri Blush Heritage Choker",
+    "description": "A regal handcrafted choker inspired by the elegance of royal peacocks and vintage Indian artistry. The design features twin peacock motifs embracing a blush-pink centerpiece, accented with delicate pearl danglers and antique dual-tone detailing. Perfect for festive celebrations, intimate weddings, and statement ethnic styling, this piece beautifully blends heritage charm with contemporary sophistication.",
+    "price": 150000,
+    "currency": "INR",
+    "images": [
+      "/images/Gold_color_necklace.png"
+    ],
+    "category": "oxidised",
+    "product_type": "Designer Heritage Choker Necklace Set",
+    "materials": "Premium Alloy Base, Dual-Tone Antique Gold & Oxidized Silver Finish, Blush Pink Stones, Handcrafted Peacock Motifs, Faux Pearl Danglers, Adjustable Black Braided Dori Closure",
+    "availability": "In Stock",
+    "set_includes": "Designer Peacock Choker Necklace + Matching Peacock Stud Earrings",
+    "created_at": "2026-06-05T05:06:40.481000"
+  },
+  {
+    "product_id": "prod_74162792d329",
+    "name": "The Aarsha's Hasli Choker Set",
+    "description": "Inspired by the timeless elegance of Indian classical music and temple artistry, this heritage choker showcases intricate veena-inspired motifs set against an antique dual-tone finish. The statement centerpiece radiates vintage charm while the matching earrings complete the look with graceful sophistication. A perfect choice for festive occasions and traditional celebrations.",
+    "price": 210000,
+    "currency": "INR",
+    "images": [
+      "/images/Hasli1.png"
+    ],
+    "category": "oxidised",
+    "product_type": "Heritage Statement Choker Necklace Set",
+    "materials": "Premium Alloy Base, Antique Silver & Gold Dual-Tone Finish, Faux Pearl Embellishments, Handcrafted Veena Motifs, Micro CZ Crystal Accents, Adjustable Black Braided Dori Closure",
+    "availability": "In Stock",
+    "set_includes": "Heritage Choker Necklace + Matching Statement Earrings",
+    "created_at": "2026-06-05T05:06:40.483000"
+  },
+  {
+    "product_id": "prod_1db8b00b890c",
+    "name": "The Aarsha's Mayur Ratna Hasli Choker",
+    "description": "A majestic heritage choker inspired by royal Indian artistry, featuring intricately carved peacock motifs set against an antique dual-tone finish. The centerpiece showcases vibrant ruby and emerald-toned stones framed by delicate pearl detailing, creating a rich and timeless aesthetic. Paired with matching statement earrings, this set is designed for women who love regal elegance and traditional craftsmanship.",
+    "price": 210000,
+    "currency": "INR",
+    "images": [
+      "/images/Hasli2.png"
+    ],
+    "category": "oxidised",
+    "product_type": "Heritage Statement Choker Necklace Set",
+    "materials": "Premium Alloy Base, Antique Silver & Gold Dual-Tone Finish, Ruby-Colored Crystal Stones, Emerald Green Crystal Stones, Faux Pearl Embellishments, Handcrafted Peacock Motifs, Adjustable Black Braided Dori Closure",
+    "availability": "In Stock",
+    "set_includes": "Heritage Choker Necklace + Matching Statement Earrings",
+    "created_at": "2026-06-05T05:06:40.483000"
+  },
+  {
+    "product_id": "prod_29f83d323aa4",
+    "name": "The Aarsha's Vintage Paisley Pearl Drops",
+    "description": "A graceful fusion of heritage craftsmanship and timeless elegance, these statement jhumkas feature an intricately carved paisley motif highlighted with soft blush-pink stones and antique dual-tone detailing. The finely crafted jhumka base is adorned with delicate pearl clusters, creating a sophisticated silhouette that beautifully complements both traditional and contemporary ethnic wear.",
+    "price": 124000,
+    "currency": "INR",
+    "images": [
+      "/images/Earrings1.png"
+    ],
+    "category": "oxidised",
+    "product_type": "Statement Jhumka Earrings",
+    "materials": "Premium Alloy Base, Antique Silver Finish with Gold Accents, Blush Pink Glass Stones, Handcrafted Paisley Motifs, Faux Pearl Clusters, Push Back Closure",
+    "availability": "In Stock",
+    "set_includes": "Statement Jhumka Earrings",
+    "created_at": "2026-06-05T05:06:40.485000"
+  },
+  {
+    "product_id": "prod_eb5873d0e319",
+    "name": "The Aarsha's Zariya Emerald Chandbali Earrings",
+    "description": "A captivating blend of traditional Kundan artistry and contemporary elegance, these statement chandbali earrings feature hand-set kundan stones framed with rich emerald-green accents. Adorned with pearl drops and emerald bead danglers, the design creates graceful movement and a regal charm, making it perfect for festive celebrations, weddings, and special occasions.",
+    "price": 150000,
+    "currency": "INR",
+    "images": [
+      "/images/DropEarrings.png"
+    ],
+    "category": "oxidised",
+    "product_type": "Statement Chandbali Earrings",
+    "materials": "Premium Alloy Base, Gold-Plated Finish, Emerald Green Glass Stones, Emerald Green Beads, Ivory Pearl Drops, Handcrafted Meenakari-Inspired Detailing, Push Back Closure",
+    "availability": "In Stock",
+    "set_includes": "Pair of Statement Chandbali Earrings",
+    "created_at": "2026-06-05T05:06:40.486000"
+  },
+  {
+    "product_id": "prod_72d9c83b548d",
+    "name": "The Aarsha's Rajsi Antique Silver Necklace",
+    "description": "Inspired by royal Indian temple artistry, this handcrafted oxidised necklace showcases intricate floral motifs, vintage engraving, and traditional ghungroo embellishments. The statement pendant is adorned with delicate maroon accents and antique silver detailing, creating a timeless piece that beautifully complements ethnic and fusion ensembles. The matching earrings mirror the heritage-inspired craftsmanship, making this set a perfect choice for festive occasions, cultural celebrations, and statement styling.",
+    "price": 150000,
+    "currency": "INR",
+    "images": [
+      "/images/Oxidised_Necklace.png"
+    ],
+    "category": "oxidised",
+    "product_type": "Oxidised Statement Necklace Set",
+    "materials": "Premium Alloy Base, Antique Silver Oxidised Finish, Handcrafted Floral Engraving, Traditional Ghungroo Charms, Intricate Temple-Inspired Metalwork, Hook & Chain Closure",
+    "availability": "In Stock",
+    "set_includes": "Oxidised Statement Necklace + Matching Earrings",
+    "created_at": "2026-06-05T05:06:40.489000"
+  }
+]
