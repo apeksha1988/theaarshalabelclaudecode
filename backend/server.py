@@ -848,17 +848,19 @@ def _load_seed_snapshot():
 async def ensure_admin_user():
     admin_exists = await users_collection.find_one({"role": "admin"})
     if not admin_exists:
-        admin_password = "admin123"
+        # Credentials come from env so they're never hardcoded in source.
+        admin_email = os.getenv("ADMIN_EMAIL", "admin@aarshaslabel.com")
+        admin_password = os.getenv("ADMIN_PASSWORD", "admin123")
         password_hash = bcrypt.hashpw(admin_password.encode(), bcrypt.gensalt()).decode()
         await users_collection.insert_one({
             "user_id": f"user_{uuid.uuid4().hex[:12]}",
-            "email": "admin@aarshaslabel.com",
+            "email": admin_email,
             "name": "Admin",
             "role": "admin",
             "password_hash": password_hash,
             "created_at": datetime.now(timezone.utc),
         })
-        logger.info("Created admin user: admin@aarshaslabel.com / admin123")
+        logger.info("Created admin user: %s", admin_email)
 
 
 # Seed data on startup
