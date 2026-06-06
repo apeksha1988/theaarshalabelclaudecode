@@ -16,7 +16,12 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import DashboardPage from './pages/DashboardPage';
 import ContactPage from './pages/ContactPage';
+import RefundPolicyPage from './pages/RefundPolicyPage';
+import ShippingPolicyPage from './pages/ShippingPolicyPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsPage from './pages/TermsPage';
 import WhatsAppButton from './components/WhatsAppButton';
+import Footer from './components/Footer';
 import '@/App.css';
 
 function AppRoutes() {
@@ -32,6 +37,10 @@ function AppRoutes() {
         <Route path="/checkout/result" element={<CheckoutResultPage />} />
         <Route path="/custom-dress" element={<CustomDressPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/refund-policy" element={<RefundPolicyPage />} />
+        <Route path="/shipping-policy" element={<ShippingPolicyPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
@@ -44,6 +53,7 @@ function AppRoutes() {
           }
         />
       </Routes>
+      <Footer />
       <WhatsAppButton />
     </>
   );
