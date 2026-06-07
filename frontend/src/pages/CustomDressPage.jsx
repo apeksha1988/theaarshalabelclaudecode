@@ -75,7 +75,7 @@ export default function CustomDressPage() {
         <div className="mb-12">
           <div className="aspect-[16/9] bg-[#F5F0E6] overflow-hidden mb-8">
             <img
-              src="/images/custom-dress.png"
+              src="/images/custom-dress.webp"
               alt="Custom ethnic dress"
               className="w-full h-full object-cover"
             />

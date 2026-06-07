@@ -23,7 +23,7 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-24">
           <Link to="/" className="flex items-center" data-testid="nav-logo">
             <img 
-              src="/images/logo.png"
+              src="/images/logo.webp"
               alt="The Aarsha's Label" 
               className="h-16 w-auto object-contain"
             />
