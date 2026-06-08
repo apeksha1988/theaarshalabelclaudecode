@@ -46,7 +46,7 @@ export default function Homepage() {
             Heritage. Crafted. Eternal.
           </h1>
           <p className="text-base sm:text-lg font-light leading-relaxed text-[#1A1A1A] mb-8 max-w-2xl mx-auto" data-testid="hero-subtitle">
-            Discover exquisite Kundan jewellery and bespoke ethnic dresses, handcrafted with centuries of tradition.
+            Discover exquisite Kundan jewellery, handcrafted with centuries of tradition.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

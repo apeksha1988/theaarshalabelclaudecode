@@ -1,0 +1,19 @@
+name: Keep backend warm
+
+# Render's free tier sleeps after ~15 min idle, causing a ~50s cold start
+# for the next visitor. This pings the API every 10 minutes to keep it warm.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping products API
+        run: |
+          curl -fsS --max-time 60 https://api.theaarshalabel.com/api/products > /dev/null \
+            && echo "API is awake" \
+            || echo "Ping failed (will retry next run)"
