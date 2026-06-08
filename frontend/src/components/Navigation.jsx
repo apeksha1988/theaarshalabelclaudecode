@@ -73,10 +73,20 @@ export default function Navigation() {
             </Link>
           </div>
 
-          {/* Mobile menu button */}
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden" data-testid="mobile-menu-button">
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile: cart icon + menu button */}
+          <div className="flex items-center gap-5 md:hidden">
+            <Link to="/cart" className="relative" data-testid="nav-cart-mobile" aria-label="Cart">
+              <ShoppingCart className="w-6 h-6" strokeWidth={1.5} />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#7A1F3D] text-white text-xs min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center" data-testid="cart-count-mobile">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} data-testid="mobile-menu-button" aria-label="Menu">
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
