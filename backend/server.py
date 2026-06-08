@@ -686,15 +686,29 @@ def _fire(coro):
     task.add_done_callback(_bg_tasks.discard)
 
 
-def _to_e164(phone: Optional[str]) -> str:
-    p = (phone or "").strip().replace(" ", "").replace("-", "")
-    if not p:
+def _to_e164(phone: Optional[str], default_cc: str = "91") -> str:
+    """Normalize a phone number to E.164 (e.g. +919876543210).
+
+    Handles common Indian input formats: bare 10-digit, leading trunk '0'
+    (08598931531), international '00' prefix, and existing country code.
+    """
+    raw = (phone or "").strip()
+    if not raw:
         return ""
-    if p.startswith("+"):
-        return p
-    if len(p) == 10:  # assume India for a bare 10-digit number
-        return "+91" + p
-    return "+" + p
+    had_plus = raw.startswith("+")
+    digits = "".join(ch for ch in raw if ch.isdigit())
+    if not digits:
+        return ""
+    if had_plus:
+        return "+" + digits
+    if digits.startswith("00"):  # international dialing prefix
+        return "+" + digits[2:]
+    digits = digits.lstrip("0")  # strip national trunk zero(s)
+    if not digits:
+        return ""
+    if len(digits) == 10:  # bare national number -> assume default country
+        return "+" + default_cc + digits
+    return "+" + digits  # already includes a country code
 
 
 async def notify_order_paid(order: dict):
