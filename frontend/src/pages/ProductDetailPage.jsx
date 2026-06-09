@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Check, Package, Sparkles } from 'lucide-react';
+import { ShoppingCart, Check, Package } from 'lucide-react';
 import api from '../lib/api';
 import { useCart } from '../context/CartContext';
-import TryOnModal from '../components/TryOnModal';
 
 export default function ProductDetailPage() {
   const { productId } = useParams();
@@ -11,7 +10,6 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
-  const [showTryOn, setShowTryOn] = useState(false);
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
@@ -80,13 +78,6 @@ export default function ProductDetailPage() {
                 data-testid="product-main-image"
               />
             </div>
-            <button
-              onClick={() => setShowTryOn(true)}
-              className="w-full flex items-center justify-center gap-2 border border-[#7A1F3D] text-[#7A1F3D] py-3 text-sm tracking-[0.1em] uppercase hover:bg-[#7A1F3D] hover:text-white transition-all duration-300"
-              data-testid="try-on-button"
-            >
-              <Sparkles className="w-4 h-4" /> Try It On
-            </button>
           </div>
 
           {/* Product Info */}
@@ -203,10 +194,6 @@ export default function ProductDetailPage() {
           </div>
         </div>
       </div>
-
-      {showTryOn && (
-        <TryOnModal product={product} onClose={() => setShowTryOn(false)} />
-      )}
     </div>
   );
 }
