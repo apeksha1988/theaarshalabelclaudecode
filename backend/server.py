@@ -148,6 +148,14 @@ class RazorpayOrderResponse(BaseModel):
     prefill_email: Optional[str] = None
     prefill_contact: Optional[str] = None
 
+# Order fulfillment tracking
+FULFILLMENT_STATUSES = ["processing", "dispatched", "in_transit", "out_for_delivery", "delivered"]
+
+class OrderStatusUpdate(BaseModel):
+    fulfillment_status: str
+    tracking_number: Optional[str] = None
+    courier: Optional[str] = None
+
 class PaymentVerifyRequest(BaseModel):
     order_id: str
     razorpay_order_id: str
@@ -625,8 +633,33 @@ async def get_order(order_id: str):
 @api_router.get("/admin/orders")
 async def get_all_orders(request: Request):
     await require_admin(request)
-    orders = await orders_collection.find({}, {"_id": 0}).to_list(1000)
+    orders = await orders_collection.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     return orders
+
+@api_router.put("/admin/orders/{order_id}/status")
+async def update_order_status(order_id: str, data: OrderStatusUpdate, request: Request):
+    await require_admin(request)
+    if data.fulfillment_status not in FULFILLMENT_STATUSES:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid status. Allowed: {', '.join(FULFILLMENT_STATUSES)}",
+        )
+    update = {
+        "fulfillment_status": data.fulfillment_status,
+        "updated_at": datetime.now(timezone.utc),
+    }
+    if data.tracking_number is not None:
+        update["tracking_number"] = data.tracking_number.strip()
+    if data.courier is not None:
+        update["courier"] = data.courier.strip()
+
+    result = await orders_collection.update_one({"order_id": order_id}, {"$set": update})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Order not found")
+
+    order = await orders_collection.find_one({"order_id": order_id}, {"_id": 0})
+    _fire(notify_order_status(order))  # email the customer about the update
+    return order
 
 # Custom dress request routes
 @api_router.post("/custom-dress")
@@ -731,6 +764,15 @@ async def notify_order_paid(order: dict):
         logging.error("notify_order_paid failed: %s", e)
 
 
+async def notify_order_status(order: dict):
+    """Email the customer when their order's fulfillment status changes."""
+    try:
+        subj, html, text = notifications.order_status_update_for_customer(order)
+        await notifications.send_email(order.get("email"), subj, html, text)
+    except Exception as e:
+        logging.error("notify_order_status failed: %s", e)
+
+
 # Webhook handler
 async def _apply_payment_status(order_id: Optional[str], payment_id: Optional[str], paid: bool):
     """Update the payment + order records for a settled payment."""
@@ -762,7 +804,10 @@ async def _apply_payment_status(order_id: Optional[str], payment_id: Optional[st
             # Notify exactly once per order (verify + webhook may both fire).
             guard = await orders_collection.update_one(
                 {"order_id": order_id, "notified_at": {"$exists": False}},
-                {"$set": {"notified_at": datetime.now(timezone.utc)}},
+                {"$set": {
+                    "notified_at": datetime.now(timezone.utc),
+                    "fulfillment_status": "processing",
+                }},
             )
             if guard.modified_count == 1:
                 fresh = await orders_collection.find_one({"order_id": order_id}, {"_id": 0})

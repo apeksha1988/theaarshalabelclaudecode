@@ -15,6 +15,7 @@ import LoginPage from './pages/LoginPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import DashboardPage from './pages/DashboardPage';
+import AdminOrdersPage from './pages/AdminOrdersPage';
 import ContactPage from './pages/ContactPage';
 import RefundPolicyPage from './pages/RefundPolicyPage';
 import ShippingPolicyPage from './pages/ShippingPolicyPage';
@@ -49,6 +50,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute adminOnly>
+              <AdminOrdersPage />
             </ProtectedRoute>
           }
         />

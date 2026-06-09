@@ -220,6 +220,48 @@ def order_alert_for_owner(order: dict):
     return subject, html, text
 
 
+FULFILLMENT_LABELS = {
+    "processing": "Order Confirmed & Processing",
+    "dispatched": "Dispatched",
+    "in_transit": "In Transit",
+    "out_for_delivery": "Out for Delivery",
+    "delivered": "Delivered",
+}
+
+
+def order_status_update_for_customer(order: dict):
+    oid = order.get("order_id", "")
+    status = order.get("fulfillment_status", "processing")
+    label = FULFILLMENT_LABELS.get(status, status.replace("_", " ").title())
+    tracking = order.get("tracking_number")
+    courier = order.get("courier")
+
+    track_html = track_text = ""
+    if tracking:
+        prefix = f"{courier} — " if courier else ""
+        track_html = f"<p style='font-size:15px'><b>Tracking:</b> {prefix}{tracking}</p>"
+        track_text = f"Tracking: {prefix}{tracking}\n"
+
+    note = ""
+    if status == "delivered":
+        note = "We hope you love your purchase! 🪔"
+    elif status == "out_for_delivery":
+        note = "Your order will reach you today."
+
+    subject = f"Order {oid} update: {label}"
+    html = f"""
+    <div style="font-family:Georgia,serif;max-width:560px;margin:auto;color:#1A1A1A">
+      <h2 style="color:#7A1F3D">Your order is now: {label}</h2>
+      <p>The status of your order <b>{oid}</b> has been updated.</p>
+      {track_html}
+      <p style="color:#444">{note}</p>
+      <p style="color:#666">Thank you for shopping with {STORE_NAME}.</p>
+    </div>"""
+    text = (f"Your order {oid} is now: {label}\n{track_text}"
+            f"{note}\n\n— {STORE_NAME}")
+    return subject, html, text
+
+
 def whatsapp_order_text(order: dict, for_owner: bool) -> str:
     oid = order.get("order_id", "")
     total = format_inr(order.get("total"))

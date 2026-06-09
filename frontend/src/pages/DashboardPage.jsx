@@ -4,6 +4,42 @@ import { Link } from 'react-router-dom';
 import api from '../lib/api';
 import { Package, User } from 'lucide-react';
 
+const FULFILLMENT_STAGES = [
+  { key: 'processing', label: 'Processing' },
+  { key: 'dispatched', label: 'Dispatched' },
+  { key: 'in_transit', label: 'In Transit' },
+  { key: 'out_for_delivery', label: 'Out for Delivery' },
+  { key: 'delivered', label: 'Delivered' },
+];
+
+function OrderTimeline({ status }) {
+  const idx = Math.max(0, FULFILLMENT_STAGES.findIndex((s) => s.key === status));
+  return (
+    <div className="mt-5" data-testid="order-timeline">
+      <div className="flex items-center">
+        {FULFILLMENT_STAGES.map((stage, i) => (
+          <React.Fragment key={stage.key}>
+            <div className={`w-3.5 h-3.5 rounded-full shrink-0 ${i <= idx ? 'bg-[#7A1F3D]' : 'bg-[#D8CFC0]'}`} />
+            {i < FULFILLMENT_STAGES.length - 1 && (
+              <div className={`h-0.5 flex-1 ${i < idx ? 'bg-[#7A1F3D]' : 'bg-[#D8CFC0]'}`} />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+      <div className="flex mt-2">
+        {FULFILLMENT_STAGES.map((stage, i) => (
+          <span
+            key={stage.key}
+            className={`flex-1 text-[10px] sm:text-xs leading-tight ${i === 0 ? 'text-left' : i === FULFILLMENT_STAGES.length - 1 ? 'text-right' : 'text-center'} ${i <= idx ? 'text-[#7A1F3D] font-medium' : 'text-[#999999]'}`}
+          >
+            {stage.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function DashboardPage() {
   const { user } = useAuth();
   const [orders, setOrders] = useState([]);
@@ -75,12 +111,27 @@ export default function DashboardPage() {
                     <div>
                       <p className="text-sm uppercase tracking-wide text-[#666666]">Order #{order.order_id}</p>
                       <p className="text-lg font-serif font-medium text-[#1A1A1A] mt-1" data-testid="order-status">
-                        {order.status.replace('_', ' ').toUpperCase()}
+                        {order.status === 'paid'
+                          ? (FULFILLMENT_STAGES.find((s) => s.key === (order.fulfillment_status || 'processing'))?.label || 'Processing')
+                          : order.status.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
                       </p>
                     </div>
                     <p className="text-lg font-medium text-[#1A1A1A]" data-testid="order-amount">₹{(order.total / 100).toLocaleString('en-IN')}</p>
                   </div>
-                  <div className="space-y-2">
+
+                  {order.status === 'paid' && (
+                    <>
+                      <OrderTimeline status={order.fulfillment_status || 'processing'} />
+                      {order.tracking_number && (
+                        <p className="mt-4 text-sm text-[#1A1A1A]" data-testid="order-tracking">
+                          <span className="text-[#666666]">Tracking: </span>
+                          {order.courier ? `${order.courier} — ` : ''}{order.tracking_number}
+                        </p>
+                      )}
+                    </>
+                  )}
+
+                  <div className="space-y-2 mt-5 pt-4 border-t border-[#E5DCC9]">
                     {order.items.map((item, index) => (
                       <p key={index} className="text-sm text-[#666666]" data-testid={`order-item-${index}`}>
                         {item.name} × {item.quantity}
