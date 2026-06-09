@@ -51,6 +51,12 @@ else:
 OWNER_EMAIL = os.getenv("OWNER_EMAIL")
 OWNER_WHATSAPP = os.getenv("OWNER_WHATSAPP")
 
+# Google Sign-In (the Client ID is public; safe as a default).
+GOOGLE_CLIENT_ID = os.getenv(
+    "GOOGLE_CLIENT_ID",
+    "52599065883-2o7m5adv4j45d30gdqqgks1elcsrdv0l.apps.googleusercontent.com",
+)
+
 # Public site URL (used to build password-reset links in emails)
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
 
@@ -199,6 +205,9 @@ class LoginRequest(BaseModel):
     email: EmailStr
     password: str
 
+class GoogleAuthRequest(BaseModel):
+    credential: str  # Google ID token (JWT) from the Sign-In button
+
 class ForgotPasswordRequest(BaseModel):
     email: EmailStr
 
@@ -343,6 +352,70 @@ async def login(data: LoginRequest, response: Response):
     )
     
     user_doc.pop("password_hash")
+    return user_doc
+
+@api_router.post("/auth/google")
+async def google_auth(data: GoogleAuthRequest, response: Response):
+    if not GOOGLE_CLIENT_ID:
+        raise HTTPException(status_code=503, detail="Google sign-in is not configured.")
+
+    # Verify the Google ID token with Google's tokeninfo endpoint.
+    try:
+        async with httpx.AsyncClient(timeout=15) as client:
+            resp = await client.get(
+                "https://oauth2.googleapis.com/tokeninfo",
+                params={"id_token": data.credential},
+            )
+    except Exception:
+        raise HTTPException(status_code=503, detail="Could not reach Google. Please try again.")
+
+    if resp.status_code != 200:
+        raise HTTPException(status_code=401, detail="Invalid Google sign-in.")
+    info = resp.json()
+
+    if info.get("aud") != GOOGLE_CLIENT_ID:
+        raise HTTPException(status_code=401, detail="Google token audience mismatch.")
+    if info.get("iss") not in ("accounts.google.com", "https://accounts.google.com"):
+        raise HTTPException(status_code=401, detail="Invalid Google token issuer.")
+    email = (info.get("email") or "").strip().lower()
+    if not email or info.get("email_verified") not in ("true", True):
+        raise HTTPException(status_code=401, detail="Google account email not verified.")
+    name = info.get("name") or email.split("@")[0]
+    picture = info.get("picture")
+
+    # Find or create the user.
+    user_doc = await users_collection.find_one({"email": email}, {"_id": 0})
+    if not user_doc:
+        user_doc = {
+            "user_id": f"user_{uuid.uuid4().hex[:12]}",
+            "email": email,
+            "name": name,
+            "picture": picture,
+            "role": "customer",
+            "auth_provider": "google",
+            "created_at": datetime.now(timezone.utc),
+        }
+        await users_collection.insert_one(user_doc)
+        user_doc.pop("_id", None)
+    user_doc.pop("password_hash", None)
+
+    # Create session + cookie (identical to email login).
+    session_token = f"sess_{uuid.uuid4().hex}"
+    await sessions_collection.insert_one({
+        "session_token": session_token,
+        "user_id": user_doc["user_id"],
+        "expires_at": datetime.now(timezone.utc) + timedelta(days=7),
+        "created_at": datetime.now(timezone.utc),
+    })
+    response.set_cookie(
+        key="session_token",
+        value=session_token,
+        httponly=True,
+        secure=True,
+        samesite="none",
+        path="/",
+        max_age=7 * 24 * 60 * 60,
+    )
     return user_doc
 
 @api_router.get("/auth/me")

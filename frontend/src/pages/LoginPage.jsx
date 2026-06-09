@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import api from '../lib/api';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, User } from 'lucide-react';
+import GoogleSignInButton from '../components/GoogleSignInButton';
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -126,6 +127,16 @@ export default function LoginPage() {
               </Link>
             </div>
           )}
+
+          <div className="mt-6 flex items-center gap-3">
+            <div className="flex-1 h-px bg-[#EAE5D9]" />
+            <span className="text-xs uppercase tracking-wide text-[#999999]">or</span>
+            <div className="flex-1 h-px bg-[#EAE5D9]" />
+          </div>
+
+          <div className="mt-6">
+            <GoogleSignInButton onError={setError} />
+          </div>
 
           <div className="mt-6 text-center">
             <button
