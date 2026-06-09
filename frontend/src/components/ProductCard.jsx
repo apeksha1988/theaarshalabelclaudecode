@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingBag, Check } from 'lucide-react';
+import { ShoppingBag, Check, Heart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
+  const { toggleWishlist, isWished } = useWishlist();
   const [added, setAdded] = useState(false);
+  const wished = isWished(product.product_id);
+
+  const handleWishlist = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWishlist(product);
+  };
 
   const hasPrice = product.price !== null && product.price !== undefined;
   const isLimited = /limited|exclusive/i.test(product.availability || '');
@@ -41,6 +50,14 @@ export default function ProductCard({ product }) {
               {product.availability}
             </span>
           )}
+          <button
+            onClick={handleWishlist}
+            aria-label={wished ? 'Remove from wishlist' : 'Add to wishlist'}
+            data-testid="wishlist-toggle"
+            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/85 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+          >
+            <Heart className={`w-5 h-5 transition-colors ${wished ? 'fill-[#7A1F3D] text-[#7A1F3D]' : 'text-[#1A1A1A]'}`} strokeWidth={1.5} />
+          </button>
         </div>
         <h3 className="text-lg font-serif font-medium text-[#1A1A1A] leading-snug" data-testid="product-name">
           {product.name}

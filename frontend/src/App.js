@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { WishlistProvider } from './context/WishlistContext';
 import Navigation from './components/Navigation';
 import ProtectedRoute from './components/ProtectedRoute';
 import Homepage from './pages/Homepage';
@@ -16,6 +17,7 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import DashboardPage from './pages/DashboardPage';
 import AdminOrdersPage from './pages/AdminOrdersPage';
+import WishlistPage from './pages/WishlistPage';
 import ContactPage from './pages/ContactPage';
 import RefundPolicyPage from './pages/RefundPolicyPage';
 import ShippingPolicyPage from './pages/ShippingPolicyPage';
@@ -34,6 +36,7 @@ function AppRoutes() {
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/product/:productId" element={<ProductDetailPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/checkout/result" element={<CheckoutResultPage />} />
         <Route path="/custom-dress" element={<CustomDressPage />} />
@@ -74,7 +77,9 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <CartProvider>
-            <AppRoutes />
+            <WishlistProvider>
+              <AppRoutes />
+            </WishlistProvider>
           </CartProvider>
         </AuthProvider>
       </BrowserRouter>

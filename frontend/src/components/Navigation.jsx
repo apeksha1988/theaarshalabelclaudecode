@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Menu, X, User, ChevronDown } from 'lucide-react';
+import { ShoppingCart, Menu, X, User, ChevronDown, Heart } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const { cartItems } = useCart();
+  const { wishlist } = useWishlist();
   const navigate = useNavigate();
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const wishlistCount = wishlist.length;
 
   const handleLogout = async () => {
     await logout();
@@ -63,6 +66,15 @@ export default function Navigation() {
               <Link to="/login" className="text-sm font-medium tracking-wide uppercase hover:text-[#7A1F3D] transition-colors" data-testid="nav-login">Login</Link>
             )}
 
+            <Link to="/wishlist" className="relative" data-testid="nav-wishlist" aria-label="Wishlist">
+              <Heart className="w-5 h-5" strokeWidth={1.5} />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#7A1F3D] text-white text-xs min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center" data-testid="wishlist-count">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
+
             <Link to="/cart" className="relative" data-testid="nav-cart">
               <ShoppingCart className="w-5 h-5" strokeWidth={1.5} />
               {cartCount > 0 && (
@@ -73,8 +85,16 @@ export default function Navigation() {
             </Link>
           </div>
 
-          {/* Mobile: cart icon + menu button */}
+          {/* Mobile: wishlist + cart icon + menu button */}
           <div className="flex items-center gap-5 md:hidden">
+            <Link to="/wishlist" className="relative" data-testid="nav-wishlist-mobile" aria-label="Wishlist">
+              <Heart className="w-6 h-6" strokeWidth={1.5} />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#7A1F3D] text-white text-xs min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
             <Link to="/cart" className="relative" data-testid="nav-cart-mobile" aria-label="Cart">
               <ShoppingCart className="w-6 h-6" strokeWidth={1.5} />
               {cartCount > 0 && (
