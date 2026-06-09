@@ -207,7 +207,8 @@ class LoginRequest(BaseModel):
     password: str
 
 class GoogleAuthRequest(BaseModel):
-    credential: str  # Google ID token (JWT) from the Sign-In button
+    credential: Optional[str] = None     # Google ID token (JWT) from the One Tap button
+    access_token: Optional[str] = None   # OAuth2 access token from the token client
 
 class ForgotPasswordRequest(BaseModel):
     email: EmailStr
@@ -360,29 +361,56 @@ async def google_auth(data: GoogleAuthRequest, response: Response):
     if not GOOGLE_CLIENT_ID:
         raise HTTPException(status_code=503, detail="Google sign-in is not configured.")
 
-    # Verify the Google ID token with Google's tokeninfo endpoint.
+    # Resolve the verified profile from either an ID token or an access token.
+    email = name = picture = None
     try:
         async with httpx.AsyncClient(timeout=15) as client:
-            resp = await client.get(
-                "https://oauth2.googleapis.com/tokeninfo",
-                params={"id_token": data.credential},
-            )
+            if data.credential:
+                resp = await client.get(
+                    "https://oauth2.googleapis.com/tokeninfo",
+                    params={"id_token": data.credential},
+                )
+                if resp.status_code != 200:
+                    raise HTTPException(status_code=401, detail="Invalid Google sign-in.")
+                info = resp.json()
+                if info.get("aud") != GOOGLE_CLIENT_ID:
+                    raise HTTPException(status_code=401, detail="Google token audience mismatch.")
+                if info.get("iss") not in ("accounts.google.com", "https://accounts.google.com"):
+                    raise HTTPException(status_code=401, detail="Invalid Google token issuer.")
+                email = (info.get("email") or "").strip().lower()
+                if not email or info.get("email_verified") not in ("true", True):
+                    raise HTTPException(status_code=401, detail="Google account email not verified.")
+                name = info.get("name") or email.split("@")[0]
+                picture = info.get("picture")
+            elif data.access_token:
+                # Verify the token was issued to OUR client (anti-substitution).
+                resp = await client.get(
+                    "https://oauth2.googleapis.com/tokeninfo",
+                    params={"access_token": data.access_token},
+                )
+                if resp.status_code != 200:
+                    raise HTTPException(status_code=401, detail="Invalid Google sign-in.")
+                tinfo = resp.json()
+                if GOOGLE_CLIENT_ID not in (tinfo.get("aud"), tinfo.get("azp")):
+                    raise HTTPException(status_code=401, detail="Google token audience mismatch.")
+                ui = await client.get(
+                    "https://www.googleapis.com/oauth2/v3/userinfo",
+                    headers={"Authorization": f"Bearer {data.access_token}"},
+                )
+                if ui.status_code != 200:
+                    raise HTTPException(status_code=401, detail="Could not read Google profile.")
+                uinfo = ui.json()
+                email = (uinfo.get("email") or "").strip().lower()
+                if not email or uinfo.get("email_verified") not in ("true", True):
+                    raise HTTPException(status_code=401, detail="Google account email not verified.")
+                name = uinfo.get("name") or email.split("@")[0]
+                picture = uinfo.get("picture")
+            else:
+                raise HTTPException(status_code=400, detail="Missing Google credential.")
+    except HTTPException:
+        raise
     except Exception:
         raise HTTPException(status_code=503, detail="Could not reach Google. Please try again.")
-
-    if resp.status_code != 200:
-        raise HTTPException(status_code=401, detail="Invalid Google sign-in.")
-    info = resp.json()
-
-    if info.get("aud") != GOOGLE_CLIENT_ID:
-        raise HTTPException(status_code=401, detail="Google token audience mismatch.")
-    if info.get("iss") not in ("accounts.google.com", "https://accounts.google.com"):
-        raise HTTPException(status_code=401, detail="Invalid Google token issuer.")
-    email = (info.get("email") or "").strip().lower()
-    if not email or info.get("email_verified") not in ("true", True):
-        raise HTTPException(status_code=401, detail="Google account email not verified.")
-    name = info.get("name") or email.split("@")[0]
-    picture = info.get("picture")
 
     # Find or create the user.
     user_doc = await users_collection.find_one({"email": email}, {"_id": 0})
