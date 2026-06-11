@@ -52,6 +52,10 @@ else:
 OWNER_EMAIL = os.getenv("OWNER_EMAIL")
 OWNER_WHATSAPP = os.getenv("OWNER_WHATSAPP")
 
+# AiSensy WhatsApp template campaign names (created in the AiSensy dashboard)
+AISENSY_CUSTOMER_CAMPAIGN = os.getenv("AISENSY_CUSTOMER_CAMPAIGN")
+AISENSY_OWNER_CAMPAIGN = os.getenv("AISENSY_OWNER_CAMPAIGN")
+
 # Google Sign-In (the Client ID is public; safe as a default).
 GOOGLE_CLIENT_ID = os.getenv(
     "GOOGLE_CLIENT_ID",
@@ -858,10 +862,30 @@ async def notify_order_paid(order: dict):
             await notifications.send_email(OWNER_EMAIL, subj, html, text)
 
         phone = _to_e164((order.get("shipping_address") or {}).get("phone"))
-        if phone:
-            await notifications.send_whatsapp(phone, notifications.whatsapp_order_text(order, for_owner=False))
-        if OWNER_WHATSAPP:
-            await notifications.send_whatsapp(OWNER_WHATSAPP, notifications.whatsapp_order_text(order, for_owner=True))
+        oid = order.get("order_id", "")
+        total_str = notifications.format_inr(order.get("total"))
+        cust_name = (order.get("shipping_address") or {}).get("name") or order.get("email", "Customer")
+
+        if notifications.aisensy_enabled:
+            # Production WhatsApp via AiSensy approved templates.
+            if phone and AISENSY_CUSTOMER_CAMPAIGN:
+                # Customer template params: {{1}} name, {{2}} order id, {{3}} total
+                await notifications.send_whatsapp_template(
+                    AISENSY_CUSTOMER_CAMPAIGN, phone, cust_name,
+                    [cust_name, oid, total_str],
+                )
+            if OWNER_WHATSAPP and AISENSY_OWNER_CAMPAIGN:
+                # Owner template params: {{1}} order id, {{2}} customer email, {{3}} total
+                await notifications.send_whatsapp_template(
+                    AISENSY_OWNER_CAMPAIGN, OWNER_WHATSAPP, "Owner",
+                    [oid, order.get("email", ""), total_str],
+                )
+        else:
+            # Fallback: Twilio sandbox free-form messages.
+            if phone:
+                await notifications.send_whatsapp(phone, notifications.whatsapp_order_text(order, for_owner=False))
+            if OWNER_WHATSAPP:
+                await notifications.send_whatsapp(OWNER_WHATSAPP, notifications.whatsapp_order_text(order, for_owner=True))
     except Exception as e:
         logging.error("notify_order_paid failed: %s", e)
 

@@ -44,6 +44,11 @@ TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
 TWILIO_WHATSAPP_FROM = os.getenv("TWILIO_WHATSAPP_FROM")  # e.g. "whatsapp:+14155238886"
 
+# --- WhatsApp (AiSensy WhatsApp Business API) config ---
+AISENSY_API_KEY = os.getenv("AISENSY_API_KEY")
+AISENSY_API_URL = os.getenv("AISENSY_API_URL", "https://backend.aisensy.com/campaign/t1/api/v2")
+aisensy_enabled = bool(AISENSY_API_KEY)
+
 smtp_enabled = bool(SMTP_USER and SMTP_PASSWORD)
 mailgun_enabled = bool(MAILGUN_API_KEY and MAILGUN_DOMAIN)
 email_enabled = smtp_enabled or mailgun_enabled
@@ -144,6 +149,35 @@ async def send_whatsapp(to_number: str, body: str) -> bool:
         return True
     except Exception as e:
         logger.error("WhatsApp send error: %s", e)
+        return False
+
+
+async def send_whatsapp_template(campaign_name: str, destination: str, user_name: str, params: list) -> bool:
+    """Send an approved WhatsApp template via AiSensy's Campaign API.
+    `destination` is a phone number (any format); `params` fill the template {{1}}, {{2}}..."""
+    if not aisensy_enabled or not campaign_name or not destination:
+        if not aisensy_enabled:
+            logger.warning("AiSensy not configured — skipping WhatsApp template '%s'", campaign_name)
+        return False
+    dest = "".join(ch for ch in str(destination) if ch.isdigit())  # digits incl. country code
+    payload = {
+        "apiKey": AISENSY_API_KEY,
+        "campaignName": campaign_name,
+        "destination": dest,
+        "userName": user_name or STORE_NAME,
+        "templateParams": [str(p) for p in params],
+        "source": "theaarshalabel.com",
+    }
+    try:
+        async with httpx.AsyncClient(timeout=20) as client:
+            resp = await client.post(AISENSY_API_URL, json=payload)
+        if resp.status_code >= 400:
+            logger.error("AiSensy send failed (%s): %s", resp.status_code, resp.text[:300])
+            return False
+        logger.info("AiSensy WhatsApp sent via '%s' -> %s", campaign_name, dest)
+        return True
+    except Exception as e:
+        logger.error("AiSensy send error: %s", e)
         return False
 
 
