@@ -4,6 +4,7 @@ import api from '../lib/api';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { CreditCard } from 'lucide-react';
+import { trackBeginCheckout, trackPurchase } from '../lib/analytics';
 
 // Lazily load Razorpay Checkout only when needed (on the checkout page).
 const loadRazorpayScript = () =>
@@ -48,6 +49,7 @@ export default function CheckoutPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    trackBeginCheckout(cartItems, cartTotal / 100);
 
     const redirectUrl = window.location.origin + '/checkout/result';
     const payload = {
@@ -111,6 +113,7 @@ export default function CheckoutPage() {
             // The webhook is a server-side backstop; continue to the result page.
             console.error('Verification error:', err);
           }
+          trackPurchase(data.order_id, cartItems, cartTotal / 100);
           clearCart();
           navigate(`/checkout/result?order_id=${data.order_id}`);
         },

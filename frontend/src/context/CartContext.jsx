@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { trackAddToCart } from '../lib/analytics';
 
 const CartContext = createContext();
 
@@ -20,6 +21,7 @@ export function CartProvider({ children }) {
   }, []);
 
   const addToCart = (product, quantity = 1) => {
+    trackAddToCart(product, quantity);
     setCartItems(prev => {
       const existing = prev.find(item => item.product_id === product.product_id);
       if (existing) {
