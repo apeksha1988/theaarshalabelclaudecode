@@ -789,5 +789,22 @@
     "set_includes": "1 Pair of Oxidized Camel Cascade Statement Earrings",
     "created_at": "2026-06-29T15:15:05.112559",
     "updated_at": "2026-06-29T15:15:05.112559"
+  },
+  {
+    "product_id": "prod_c24d48aec236",
+    "name": "The Aarsha's Noor Oxidized Midnight Cascade Earrings",
+    "description": "Make a bold statement with the Noor Oxidized Midnight Cascade Earrings, featuring an intricately engraved circular centerpiece accented with deep midnight-black cabochon stones, delicate kundan-style highlights, and flowing chain tassels adorned with traditional ghungroo bells. Blending vintage tribal artistry with contemporary elegance, these handcrafted earrings are perfect for festive occasions, cultural celebrations, concerts, and Indo-western styling.",
+    "price": 91000,
+    "currency": "INR",
+    "images": [
+      "/images/Blck_long_earrings.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Oxidized Long Tassel Statement Earrings",
+    "materials": "Premium alloy base with antique oxidized silver finish, Black round cabochon glass stones, Black pear-shaped cabochon top stones, Kundan-style white glass accent stone, Handcrafted engraved metal detailing, Long oxidized chain tassels, Traditional oxidized ghungroo bell charms",
+    "availability": "In Stock",
+    "set_includes": "1 Pair of Oxidized Long Tassel Earrings",
+    "created_at": "2026-06-29T15:21:50.639615",
+    "updated_at": "2026-06-29T15:21:50.639615"
   }
 ]
