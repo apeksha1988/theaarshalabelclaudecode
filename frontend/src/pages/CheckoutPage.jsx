@@ -91,7 +91,7 @@ export default function CheckoutPage() {
         key: data.key_id,
         amount: data.amount,
         currency: data.currency,
-        name: "The Aarsha's Label",
+        name: "The Aarsha Label",
         description: 'Jewellery Order',
         order_id: data.razorpay_order_id,
         prefill: {

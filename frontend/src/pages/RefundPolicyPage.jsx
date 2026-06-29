@@ -9,7 +9,7 @@ export default function RefundPolicyPage() {
       sections={[
         {
           body: [
-            "At The Aarsha's Label, every piece is handcrafted with care. Because our jewellery is delicate and made in limited quantities, we follow the policy below for returns, exchanges, and refunds. Please read it carefully before placing an order.",
+            "At The Aarsha Label, every piece is handcrafted with care. Because our jewellery is delicate and made in limited quantities, we follow the policy below for returns, exchanges, and refunds. Please read it carefully before placing an order.",
           ],
         },
         {

@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-14">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="md:col-span-1">
-            <h3 className="text-xl font-serif text-white mb-3">The Aarsha's Label</h3>
+            <h3 className="text-xl font-serif text-white mb-3">The Aarsha Label</h3>
             <p className="text-sm text-[#A89F92] leading-relaxed">
               Handcrafted Kundan, Polki &amp; contemporary jewellery — heritage craftsmanship for the modern woman.
             </p>
@@ -44,7 +44,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-[#3a3530] mt-10 pt-6 text-xs text-[#A89F92] flex flex-col sm:flex-row justify-between gap-2">
-          <span>© {year} The Aarsha's Label. All rights reserved.</span>
+          <span>© {year} The Aarsha Label. All rights reserved.</span>
           <span>Secure payments powered by Razorpay</span>
         </div>
       </div>

@@ -9,7 +9,7 @@ export default function PrivacyPolicyPage() {
       sections={[
         {
           body: [
-            "The Aarsha's Label (\"we\", \"us\") respects your privacy. This policy explains what information we collect, how we use it, and your choices.",
+            "The Aarsha Label (\"we\", \"us\") respects your privacy. This policy explains what information we collect, how we use it, and your choices.",
           ],
         },
         {

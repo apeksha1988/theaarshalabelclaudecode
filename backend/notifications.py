@@ -29,7 +29,7 @@ SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USER = os.getenv("SMTP_USER")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 SMTP_FROM = os.getenv("SMTP_FROM") or SMTP_USER
-STORE_NAME = os.getenv("STORE_NAME", "The Aarsha's Label")
+STORE_NAME = os.getenv("STORE_NAME", "The Aarsha Label")
 
 # --- Email (Mailgun HTTP API) config — used in preference to SMTP when set ---
 MAILGUN_API_KEY = os.getenv("MAILGUN_API_KEY")

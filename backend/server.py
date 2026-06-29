@@ -485,7 +485,7 @@ async def forgot_password(data: ForgotPasswordRequest):
         })
         reset_link = f"{FRONTEND_URL}/reset-password?token={token}"
         logging.info(f"[password-reset] link for {user['email']}: {reset_link}")
-        subject = "Reset your The Aarsha's Label password"
+        subject = "Reset your The Aarsha Label password"
         html = (
             "<div style='font-family:Georgia,serif;color:#1A1A1A;max-width:520px'>"
             "<h2 style='color:#7A1F3D'>Password reset</h2>"

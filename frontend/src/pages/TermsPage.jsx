@@ -9,7 +9,7 @@ export default function TermsPage() {
       sections={[
         {
           body: [
-            "These Terms & Conditions govern your use of The Aarsha's Label website and your purchases from us. By using this site or placing an order, you agree to these terms.",
+            "These Terms & Conditions govern your use of The Aarsha Label website and your purchases from us. By using this site or placing an order, you agree to these terms.",
           ],
         },
         {
@@ -33,13 +33,13 @@ export default function TermsPage() {
         {
           heading: 'Intellectual Property',
           body: [
-            "All content on this site — including images, designs, text, and logos — is the property of The Aarsha's Label and may not be used or reproduced without our written permission.",
+            "All content on this site — including images, designs, text, and logos — is the property of The Aarsha Label and may not be used or reproduced without our written permission.",
           ],
         },
         {
           heading: 'Limitation of Liability & Governing Law',
           body: [
-            "To the extent permitted by law, The Aarsha's Label is not liable for indirect or consequential losses arising from the use of this site or our products. These terms are governed by the laws of India, and any disputes are subject to the jurisdiction of the courts at our place of business.",
+            "To the extent permitted by law, The Aarsha Label is not liable for indirect or consequential losses arising from the use of this site or our products. These terms are governed by the laws of India, and any disputes are subject to the jurisdiction of the courts at our place of business.",
           ],
         },
         {

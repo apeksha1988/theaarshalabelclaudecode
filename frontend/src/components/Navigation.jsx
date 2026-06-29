@@ -27,7 +27,7 @@ export default function Navigation() {
           <Link to="/" className="flex items-center" data-testid="nav-logo">
             <img 
               src="/images/logo.webp"
-              alt="The Aarsha's Label"
+              alt="The Aarsha Label"
               className="h-20 w-auto object-contain"
             />
           </Link>
