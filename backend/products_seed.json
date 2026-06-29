@@ -755,5 +755,22 @@
     "set_includes": "1 Pair of Long Statement Earrings",
     "created_at": "2026-06-29T14:15:08.863647",
     "updated_at": "2026-06-29T14:15:08.863647"
+  },
+  {
+    "product_id": "prod_8bb8574b3e7c",
+    "name": "The Aarsha's Noir Heritage Chandbali Earrings",
+    "description": "Make a bold statement with the Noir Heritage Chandbali Earrings, inspired by timeless Indian craftsmanship. Featuring an antique gold finish with intricate engraved detailing, these earrings are adorned with black teardrop stones, sparkling Polki-style stones, and delicate ghungroo danglers that create graceful movement. A perfect choice for festive occasions, weddings, and Indo-western styling.",
+    "price": 93800,
+    "currency": "INR",
+    "images": [
+      "/images/Chandbali_black.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Oxidized Chandbali Statement Earrings",
+    "materials": "Premium alloy base, Antique gold finish, Polki-style uncut glass stones (white), Black teardrop glass stone (centerpiece), High-quality American Diamond/Cubic Zirconia accent stones, Intricate engraved metalwork, Decorative ghungroo danglers, Push-back closure",
+    "availability": "In Stock",
+    "set_includes": "1 Pair of Statement Chandbali Earrings",
+    "created_at": "2026-06-29T14:22:32.934153",
+    "updated_at": "2026-06-29T14:22:32.934153"
   }
 ]
