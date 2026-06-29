@@ -772,5 +772,22 @@
     "set_includes": "1 Pair of Statement Chandbali Earrings",
     "created_at": "2026-06-29T14:22:32.934153",
     "updated_at": "2026-06-29T14:22:32.934153"
+  },
+  {
+    "product_id": "prod_70d04903a2a6",
+    "name": "The Aarsha's Safar Oxidized Camel Cascade Statement Earrings",
+    "description": "Inspired by the timeless beauty of Rajasthan and desert caravans, the Safar Oxidized Camel Cascade Statement Earrings feature an intricately crafted camel motif, emerald-green cabochon centerpiece, kundan-style accents, and flowing chain tassels adorned with ghungroo bells. These handcrafted statement earrings create graceful movement with every step, making them a perfect choice for festive celebrations, cultural events, and bohemian ethnic styling.",
+    "price": 84000,
+    "currency": "INR",
+    "images": [
+      "/images/safar-camel-cascade-earrings.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Oxidized Long Statement Earrings",
+    "materials": "Premium alloy base with antique oxidized silver finish, Handcrafted camel motif detailing, Green oval cabochon stone (emerald-inspired glass stone), Kundan-style white glass stones, Mini pearl detailing around the centerpiece, Oxidized ghungroo bell charms, Long oxidized chain tassels",
+    "availability": "In Stock",
+    "set_includes": "1 Pair of Oxidized Camel Cascade Statement Earrings",
+    "created_at": "2026-06-29T15:15:05.112559",
+    "updated_at": "2026-06-29T15:15:05.112559"
   }
 ]
