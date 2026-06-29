@@ -653,5 +653,22 @@
     "availability": "In Stock",
     "set_includes": "Oxidised Statement Necklace + Matching Earrings",
     "created_at": "2026-06-05T05:06:40.489000"
+  },
+  {
+    "product_id": "prod_cd62a0e09e8e",
+    "name": "The Aarsha's Mayura Pearl Heritage Chandbali Earrings",
+    "description": "Celebrate timeless Indian craftsmanship with the Mayura Pearl Heritage Chandbali Earrings. Featuring intricately engraved antique oxidised detailing, vibrant ruby-pink and emerald-green accents, delicate pearl clusters, and handcrafted bead drops, these statement earrings beautifully blend heritage artistry with contemporary elegance. Designed to elevate festive and bridal ensembles, they exude royal charm while remaining lightweight and comfortable to wear.",
+    "price": 378000,
+    "currency": "INR",
+    "images": [
+      "/images/Emerald_ruby.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Statement Chandbali Earrings",
+    "materials": "Premium Alloy Base, Antique Oxidised Silver Finish, Hand-Painted Meenakari Detailing (Pink & Green), Kundan-Style White Stone Accent (Center Motif), Emerald Green Glass Beads, Ivory Faux Pearl Drops, Premium Pearl Bead Clusters, Intricate Handcrafted Metal Engraving, Push Back Closure",
+    "availability": "In Stock",
+    "set_includes": "Pair of Statement Chandbali Earrings",
+    "created_at": "2026-06-29T13:48:31.747251",
+    "updated_at": "2026-06-29T13:48:31.747251"
   }
 ]
