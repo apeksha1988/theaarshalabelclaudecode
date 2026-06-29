@@ -534,6 +534,18 @@ async def reset_password(data: ResetPasswordRequest):
 async def get_products(category: Optional[str] = None):
     query = {} if not category else {"category": category}
     products = await products_collection.find(query, {"_id": 0}).to_list(1000)
+
+    # Display order: necklace sets first, then earrings, then everything else.
+    # (Python's sort is stable, so items keep their existing order within a group.)
+    def _kind(p):
+        t = f"{p.get('product_type','')} {p.get('name','')} {p.get('set_includes','')}".lower()
+        if any(k in t for k in ("necklace", "choker", "haar", "hasli", "collar", "pendant")):
+            return 0
+        if any(k in t for k in ("earring", "jhumka", "jhumki", "chandbali", "ear chain", "earcuff", "ear cuff")):
+            return 1
+        return 2
+
+    products.sort(key=_kind)
     return products
 
 @api_router.get("/products/{product_id}")
