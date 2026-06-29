@@ -721,5 +721,22 @@
     "set_includes": "Statement Ruby Necklace + Pair of Matching Earrings",
     "created_at": "2026-06-29T14:03:30.894694",
     "updated_at": "2026-06-29T14:03:30.894694"
+  },
+  {
+    "product_id": "prod_cd8c6fc2b8ab",
+    "name": "The Aarsha's Neelanjana Oxidised Ghungroo Statement Earrings",
+    "description": "Make a bold statement with the Neelanjana Oxidised Ghungroo Statement Earrings, crafted for women who love timeless artistry. Featuring rich teal cabochon stones, handcrafted Polki-style accents, intricate floral motifs, and cascading antique chain tassels adorned with ghungroo bells, these earrings create graceful movement with every step. Perfect for festive occasions, weddings, Navratri, and Indo-western styling.",
+    "price": 80500,
+    "currency": "INR",
+    "images": [
+      "/images/Emerald_Earrings.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Long Statement Oxidised Earrings (Shoulder Duster Earrings)",
+    "materials": "Premium Alloy Base, Antique Oxidised Silver Finish, Deep Teal Cabochon Glass/Semi-Precious Style Stone (Top), Handcrafted Polki-Style Glass Stones (White Accent Stones), American Diamond (CZ) Centre Accent, Oxidised Ghungroo Bells, Antique Chain Tassels",
+    "availability": "In Stock",
+    "set_includes": "1 Pair of Long Statement Earrings",
+    "created_at": "2026-06-29T14:09:14.555147",
+    "updated_at": "2026-06-29T14:09:14.555147"
   }
 ]
