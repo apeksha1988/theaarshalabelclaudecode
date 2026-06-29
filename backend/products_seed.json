@@ -806,5 +806,22 @@
     "set_includes": "1 Pair of Oxidized Long Tassel Earrings",
     "created_at": "2026-06-29T15:21:50.639615",
     "updated_at": "2026-06-29T15:21:50.639615"
+  },
+  {
+    "product_id": "prod_58c0cf6ac936",
+    "name": "The Aarsha's Meher Oxidised Chand Ghungroo Long Earrings",
+    "description": "Make a striking statement with the Meher Oxidised Chand Ghungroo Long Earrings, a perfect blend of heritage craftsmanship and contemporary elegance. Designed with antique floral detailing, handcrafted Polki-style accents, delicate chain tassels, and traditional ghungroo charms, these earrings create graceful movement with every step. The soft lavender cabochon stone adds a touch of sophistication, making them ideal for festive occasions, weddings, and fusion ensembles.",
+    "price": 80500,
+    "currency": "INR",
+    "images": [
+      "/images/Pink_Long_Earrings.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Long Statement Oxidised Earrings",
+    "materials": "Premium alloy base with antique oxidized silver finish, Lavender Cabochon Glass/Semi-Precious Style Stone (Top), Handcrafted Polki-Style Glass Stones (White Accent Stones), American Diamond (CZ) Center Accent, Oxidised Ghungroo Charms, Antique Chain Tassels",
+    "availability": "In Stock",
+    "set_includes": "1 Pair of Long Statement Earrings",
+    "created_at": "2026-06-29T15:34:24.602386",
+    "updated_at": "2026-06-29T15:34:24.602386"
   }
 ]
