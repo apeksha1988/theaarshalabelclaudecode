@@ -738,5 +738,22 @@
     "set_includes": "1 Pair of Long Statement Earrings",
     "created_at": "2026-06-29T14:09:14.555147",
     "updated_at": "2026-06-29T14:09:14.555147"
+  },
+  {
+    "product_id": "prod_5864293defdd",
+    "name": "The Aarsha's Gulnaar Oxidized Chandbali Earrings",
+    "description": "Celebrate timeless Indian craftsmanship with the Gulnaar Oxidized Chandbali Earrings. Designed with intricate floral filigree, sparkling kundan-style stones, a soft blush pink center stone, and cascading ghungroo charms, these earrings beautifully blend vintage elegance with contemporary styling. Perfect for festive occasions, weddings, Navratri, and ethnic celebrations, they add graceful movement and artisanal charm to every look.",
+    "price": 93800,
+    "currency": "INR",
+    "images": [
+      "/images/Chandbali_Pink.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Oxidized Chandbali Statement Earrings",
+    "materials": "Premium alloy base with oxidized antique silver finish, Antique gold detailing, Kundan-style white glass stones, Pink teardrop cabochon stone, White glass center stone, Intricate engraved metalwork, Hanging oxidized ghungroo bells",
+    "availability": "In Stock",
+    "set_includes": "1 Pair of Long Statement Earrings",
+    "created_at": "2026-06-29T14:15:08.863647",
+    "updated_at": "2026-06-29T14:15:08.863647"
   }
 ]
