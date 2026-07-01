@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import api from '../lib/api';
-import { Package } from 'lucide-react';
+import { Package, Download } from 'lucide-react';
+
+const csvEscape = (v) => {
+  const s = String(v ?? '');
+  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+};
 
 const FULFILLMENT_OPTIONS = [
   { key: 'processing', label: 'Processing' },
@@ -25,6 +30,26 @@ export default function AdminOrdersPage() {
 
   const paidOrders = orders.filter((o) => o.status === 'paid');
 
+  const downloadCsv = () => {
+    const cols = ['order_id', 'date', 'customer_name', 'phone', 'email', 'address_line1', 'address_line2', 'city', 'state', 'postal_code', 'country', 'items', 'amount_inr', 'fulfillment_status'];
+    const rows = paidOrders.map((o) => {
+      const a = o.shipping_address || {};
+      return [
+        o.order_id, (o.created_at || '').slice(0, 16), a.name || '', a.phone || '', o.email || '',
+        a.line1 || '', a.line2 || '', a.city || '', a.state || '', a.postal_code || '', a.country || '',
+        (o.items || []).map((it) => `${it.quantity || 1}x ${it.name || ''}`).join('; '),
+        ((o.total || 0) / 100).toFixed(0), o.fulfillment_status || 'processing',
+      ];
+    });
+    const csv = [cols.join(','), ...rows.map((r) => r.map(csvEscape).join(','))].join('\n');
+    const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `aarsha-orders-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen pt-32 flex items-center justify-center">
@@ -36,9 +61,20 @@ export default function AdminOrdersPage() {
   return (
     <div className="min-h-screen pt-32 pb-20" data-testid="admin-orders-page">
       <div className="max-w-5xl mx-auto px-6 md:px-12">
-        <div className="flex items-center gap-3 mb-8">
-          <Package className="w-7 h-7 text-[#7A1F3D]" strokeWidth={1.5} />
-          <h1 className="text-3xl sm:text-4xl font-serif font-light text-[#1A1A1A]">Orders — Admin</h1>
+        <div className="flex items-center justify-between gap-3 mb-8 flex-wrap">
+          <div className="flex items-center gap-3">
+            <Package className="w-7 h-7 text-[#7A1F3D]" strokeWidth={1.5} />
+            <h1 className="text-3xl sm:text-4xl font-serif font-light text-[#1A1A1A]">Orders — Admin</h1>
+          </div>
+          {paidOrders.length > 0 && (
+            <button
+              onClick={downloadCsv}
+              className="flex items-center gap-2 border border-[#7A1F3D] text-[#7A1F3D] px-4 py-2 text-sm hover:bg-[#7A1F3D] hover:text-white transition-colors"
+              data-testid="download-orders-csv"
+            >
+              <Download className="w-4 h-4" /> Download CSV ({paidOrders.length})
+            </button>
+          )}
         </div>
 
         {error && <p className="text-red-600 mb-6">{error}</p>}
