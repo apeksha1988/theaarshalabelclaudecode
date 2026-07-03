@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useCart, MAX_QTY } from '../context/CartContext';
 
 export default function CartPage() {
   const { cartItems, updateQuantity, removeFromCart, cartTotal, clearCart } = useCart();
@@ -60,7 +60,8 @@ export default function CartPage() {
                     <span className="text-sm font-light w-8 text-center" data-testid="cart-item-quantity">{item.quantity}</span>
                     <button
                       onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
-                      className="w-8 h-8 border border-[#EAE5D9] flex items-center justify-center hover:border-[#7A1F3D] transition-colors"
+                      disabled={item.quantity >= MAX_QTY}
+                      className="w-8 h-8 border border-[#EAE5D9] flex items-center justify-center hover:border-[#7A1F3D] transition-colors disabled:opacity-40 disabled:hover:border-[#EAE5D9] disabled:cursor-not-allowed"
                       data-testid="cart-increase-quantity"
                     >
                       <Plus className="w-4 h-4" />

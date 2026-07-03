@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { trackAddToCart } from '../lib/analytics';
 
+export const MAX_QTY = 6; // max units of a single item per order
+
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
@@ -27,11 +29,11 @@ export function CartProvider({ children }) {
       if (existing) {
         return prev.map(item =>
           item.product_id === product.product_id
-            ? { ...item, quantity: item.quantity + quantity }
+            ? { ...item, quantity: Math.min(MAX_QTY, item.quantity + quantity) }
             : item
         );
       }
-      return [...prev, { ...product, quantity }];
+      return [...prev, { ...product, quantity: Math.min(MAX_QTY, quantity) }];
     });
   };
 
@@ -44,9 +46,10 @@ export function CartProvider({ children }) {
       removeFromCart(productId);
       return;
     }
+    const capped = Math.min(MAX_QTY, quantity);
     setCartItems(prev =>
       prev.map(item =>
-        item.product_id === productId ? { ...item, quantity } : item
+        item.product_id === productId ? { ...item, quantity: capped } : item
       )
     );
   };

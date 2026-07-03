@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Check, Package } from 'lucide-react';
 import api from '../lib/api';
-import { useCart } from '../context/CartContext';
+import { useCart, MAX_QTY } from '../context/CartContext';
 
 export default function ProductDetailPage() {
   const { productId } = useParams();
@@ -139,13 +139,17 @@ export default function ProductDetailPage() {
                     </button>
                     <span className="text-lg font-light w-12 text-center" data-testid="quantity-display">{quantity}</span>
                     <button
-                      onClick={() => setQuantity(Math.min(99, quantity + 1))}
-                      className="w-10 h-10 border border-[#EAE5D9] flex items-center justify-center hover:border-[#7A1F3D] transition-colors"
+                      onClick={() => setQuantity(Math.min(MAX_QTY, quantity + 1))}
+                      disabled={quantity >= MAX_QTY}
+                      className="w-10 h-10 border border-[#EAE5D9] flex items-center justify-center hover:border-[#7A1F3D] transition-colors disabled:opacity-40 disabled:hover:border-[#EAE5D9] disabled:cursor-not-allowed"
                       data-testid="increase-quantity"
                     >
                       +
                     </button>
                   </div>
+                  {quantity >= MAX_QTY && (
+                    <p className="text-xs text-[#666666] mt-2">Maximum {MAX_QTY} per item.</p>
+                  )}
                 </div>
 
                 <button
