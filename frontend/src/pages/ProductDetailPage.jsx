@@ -148,7 +148,7 @@ export default function ProductDetailPage() {
                     </button>
                   </div>
                   {quantity >= MAX_QTY && (
-                    <p className="text-xs text-[#666666] mt-2">Maximum {MAX_QTY} per item.</p>
+                    <p className="text-xs text-[#666666] mt-2">Sorry! We are out of stock</p>
                   )}
                 </div>
 
