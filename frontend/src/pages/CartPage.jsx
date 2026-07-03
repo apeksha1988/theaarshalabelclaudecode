@@ -93,8 +93,8 @@ export default function CartPage() {
                   <span className="text-[#1A1A1A]" data-testid="cart-subtotal">₹{(cartTotal / 100).toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between text-base">
-                  <span className="text-[#666666]">Shipping</span>
-                  <span className="text-[#1A1A1A]">Calculated at checkout</span>
+                  <span className="text-[#666666]">Delivery</span>
+                  <span className="text-[#388E3C] font-medium" data-testid="cart-delivery">FREE</span>
                 </div>
                 <div className="border-t border-[#EAE5D9] pt-4">
                   <div className="flex justify-between text-xl font-serif">

@@ -317,8 +317,16 @@ export default function CheckoutPage() {
                     <p className="text-sm text-[#1A1A1A]">₹{((item.price * item.quantity) / 100).toLocaleString('en-IN')}</p>
                   </div>
                 ))}
-                <div className="border-t border-[#EAE5D9] pt-4">
-                  <div className="flex justify-between text-xl font-serif">
+                <div className="border-t border-[#EAE5D9] pt-4 space-y-3">
+                  <div className="flex justify-between text-base">
+                    <span className="text-[#666666]">Subtotal</span>
+                    <span className="text-[#1A1A1A]">₹{(cartTotal / 100).toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="flex justify-between text-base">
+                    <span className="text-[#666666]">Delivery</span>
+                    <span className="text-[#388E3C] font-medium" data-testid="checkout-delivery">FREE</span>
+                  </div>
+                  <div className="flex justify-between text-xl font-serif pt-1">
                     <span className="text-[#1A1A1A]">Total</span>
                     <span className="text-[#1A1A1A]" data-testid="checkout-total">₹{(cartTotal / 100).toLocaleString('en-IN')}</span>
                   </div>
