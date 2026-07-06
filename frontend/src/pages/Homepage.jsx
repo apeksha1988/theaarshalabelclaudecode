@@ -26,6 +26,16 @@ export default function Homepage() {
     };
   }, []);
 
+  // Show the collection cheapest-first; items without a price ("Price on
+  // Request") always sort to the end.
+  const hasPrice = (p) => p.price !== null && p.price !== undefined;
+  const sortedProducts = [...products].sort((a, b) => {
+    if (!hasPrice(a) && !hasPrice(b)) return 0;
+    if (!hasPrice(a)) return 1;
+    if (!hasPrice(b)) return -1;
+    return a.price - b.price;
+  });
+
   return (
     <div className="min-h-screen" data-testid="homepage">
       {/* Hero Section */}
@@ -83,7 +93,7 @@ export default function Homepage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12" data-testid="home-products-grid">
-              {products.map((product) => (
+              {sortedProducts.map((product) => (
                 <ProductCard key={product.product_id} product={product} />
               ))}
             </div>
