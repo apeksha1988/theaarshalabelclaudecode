@@ -6,6 +6,7 @@ import ProductCard from '../components/ProductCard';
 export default function ShopPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState('price_asc');
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get('category') || 'all';
 
@@ -13,6 +14,21 @@ export default function ShopPage() {
     if (value === 'all') setSearchParams({});
     else setSearchParams({ category: value });
   };
+
+  // Sort a copy of the products for display. Items without a price
+  // ("Price on Request") always sink to the bottom.
+  const sortProducts = (list) => {
+    if (sortBy === 'featured') return list;
+    const hasPrice = (p) => p.price !== null && p.price !== undefined;
+    return [...list].sort((a, b) => {
+      if (!hasPrice(a) && !hasPrice(b)) return 0;
+      if (!hasPrice(a)) return 1;
+      if (!hasPrice(b)) return -1;
+      return sortBy === 'price_desc' ? b.price - a.price : a.price - b.price;
+    });
+  };
+
+  const sortedProducts = sortProducts(products);
 
   useEffect(() => {
     fetchProducts();
@@ -61,6 +77,21 @@ export default function ShopPage() {
               </button>
             ))}
           </div>
+
+          <div className="flex justify-center sm:justify-end items-center gap-2 mt-8">
+            <label htmlFor="sort" className="text-xs uppercase tracking-wide text-[#666666]">Sort by</label>
+            <select
+              id="sort"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="border border-[#EAE5D9] bg-white px-4 py-2 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#7A1F3D]"
+              data-testid="sort-select"
+            >
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+              <option value="featured">Featured</option>
+            </select>
+          </div>
         </div>
 
         {loading ? (
@@ -76,7 +107,7 @@ export default function ShopPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12" data-testid="products-grid">
-            {products.map((product) => (
+            {sortedProducts.map((product) => (
               <ProductCard key={product.product_id} product={product} />
             ))}
           </div>
