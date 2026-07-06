@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { CreditCard } from 'lucide-react';
 import { trackBeginCheckout, trackPurchase } from '../lib/analytics';
 import TrustBadges from '../components/TrustBadges';
+import { getCoupon } from '../lib/coupons';
 
 // Lazily load Razorpay Checkout only when needed (on the checkout page).
 const loadRazorpayScript = () =>
@@ -30,6 +31,9 @@ export default function CheckoutPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [couponInput, setCouponInput] = useState('');
+  const [coupon, setCoupon] = useState(null); // { valid, code, percent, discount }
+  const [couponError, setCouponError] = useState('');
   const [formData, setFormData] = useState({
     email: user?.email || '',
     name: '',
@@ -47,6 +51,26 @@ export default function CheckoutPage() {
     return null;
   }
 
+  const applyCoupon = () => {
+    const result = getCoupon(couponInput, cartTotal);
+    if (result.valid) {
+      setCoupon(result);
+      setCouponError('');
+    } else {
+      setCoupon(null);
+      setCouponError('That code is not valid. Please check and try again.');
+    }
+  };
+
+  const removeCoupon = () => {
+    setCoupon(null);
+    setCouponInput('');
+    setCouponError('');
+  };
+
+  const discount = coupon?.valid ? coupon.discount : 0;
+  const payableTotal = cartTotal - discount;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -63,6 +87,7 @@ export default function CheckoutPage() {
         image: item.images[0],
       })),
       currency: 'INR',
+      coupon: coupon?.valid ? coupon.code : null,
       shipping_address: {
         name: formData.name,
         line1: formData.line1,
@@ -114,7 +139,7 @@ export default function CheckoutPage() {
             // The webhook is a server-side backstop; continue to the result page.
             console.error('Verification error:', err);
           }
-          trackPurchase(data.order_id, cartItems, cartTotal / 100);
+          trackPurchase(data.order_id, cartItems, (data.amount ?? payableTotal) / 100);
           clearCart();
           navigate(`/checkout/result?order_id=${data.order_id}`);
         },
@@ -319,17 +344,57 @@ export default function CheckoutPage() {
                   </div>
                 ))}
                 <div className="border-t border-[#EAE5D9] pt-4 space-y-3">
+                  {/* Coupon */}
+                  {coupon?.valid ? (
+                    <div className="flex justify-between items-center text-sm bg-[#EAF4EA] px-3 py-2" data-testid="coupon-applied">
+                      <span className="text-[#2E7D32] font-medium">
+                        Coupon {coupon.code} applied ({coupon.percent}% off)
+                      </span>
+                      <button type="button" onClick={removeCoupon} className="text-[#666666] hover:text-[#7A1F3D] text-xs uppercase tracking-wide">
+                        Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={couponInput}
+                          onChange={(e) => setCouponInput(e.target.value)}
+                          placeholder="Discount code"
+                          className="flex-1 border border-[#EAE5D9] bg-white px-3 py-2 text-sm focus:outline-none focus:border-[#7A1F3D] uppercase"
+                          data-testid="coupon-input"
+                        />
+                        <button
+                          type="button"
+                          onClick={applyCoupon}
+                          className="border border-[#7A1F3D] text-[#7A1F3D] px-4 py-2 text-sm uppercase tracking-wide hover:bg-[#7A1F3D] hover:text-white transition-colors"
+                          data-testid="coupon-apply"
+                        >
+                          Apply
+                        </button>
+                      </div>
+                      {couponError && <p className="text-xs text-[#D32F2F] mt-1" data-testid="coupon-error">{couponError}</p>}
+                    </div>
+                  )}
+
                   <div className="flex justify-between text-base">
                     <span className="text-[#666666]">Subtotal</span>
                     <span className="text-[#1A1A1A]">₹{(cartTotal / 100).toLocaleString('en-IN')}</span>
                   </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between text-base" data-testid="checkout-discount">
+                      <span className="text-[#666666]">Discount</span>
+                      <span className="text-[#2E7D32] font-medium">− ₹{(discount / 100).toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between text-base">
                     <span className="text-[#666666]">Delivery</span>
                     <span className="text-[#388E3C] font-medium" data-testid="checkout-delivery">FREE</span>
                   </div>
                   <div className="flex justify-between text-xl font-serif pt-1">
                     <span className="text-[#1A1A1A]">Total</span>
-                    <span className="text-[#1A1A1A]" data-testid="checkout-total">₹{(cartTotal / 100).toLocaleString('en-IN')}</span>
+                    <span className="text-[#1A1A1A]" data-testid="checkout-total">₹{(payableTotal / 100).toLocaleString('en-IN')}</span>
                   </div>
                 </div>
               </div>

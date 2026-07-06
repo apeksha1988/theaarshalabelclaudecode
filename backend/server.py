@@ -144,6 +144,24 @@ class CheckoutRequest(BaseModel):
     currency: str
     shipping_address: ShippingAddress
     redirect_url: str
+    coupon: Optional[str] = None
+
+# Discount coupons: code -> percentage off. Kept in sync with the frontend
+# (frontend/src/lib/coupons.js) for display; the server value is authoritative.
+COUPONS = {
+    "WELCOME10": 10,
+}
+
+def apply_coupon(subtotal: int, code: Optional[str]):
+    """Return (discount_amount_paise, normalized_code) for a subtotal in paise.
+    Unknown/empty codes yield no discount."""
+    if not code:
+        return 0, None
+    pct = COUPONS.get(code.strip().upper())
+    if not pct:
+        return 0, None
+    discount = (subtotal * pct) // 100
+    return discount, code.strip().upper()
 
 class CheckoutResponse(BaseModel):
     checkout_url: str
@@ -602,7 +620,9 @@ async def create_checkout_order(data: CheckoutRequest, request: Request):
             detail="Payment gateway not configured yet. Please try again later or use guest checkout.",
         )
 
-    total = sum(item.price * item.quantity for item in data.items)
+    subtotal = sum(item.price * item.quantity for item in data.items)
+    discount, coupon_code = apply_coupon(subtotal, data.coupon)
+    total = subtotal - discount
     currency = data.currency or "INR"
     order_id = f"order_{uuid.uuid4().hex[:12]}"
     user = await get_current_user(request)
@@ -612,6 +632,9 @@ async def create_checkout_order(data: CheckoutRequest, request: Request):
         "user_id": user["user_id"] if user else None,
         "email": data.email,
         "items": [item.model_dump() for item in data.items],
+        "subtotal": subtotal,
+        "discount": discount,
+        "coupon": coupon_code,
         "total": total,
         "currency": currency,
         "status": "pending_payment",

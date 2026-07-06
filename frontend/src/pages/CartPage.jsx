@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
 import { useCart, MAX_QTY } from '../context/CartContext';
+import PromoBanner from '../components/PromoBanner';
 
 export default function CartPage() {
   const { cartItems, updateQuantity, removeFromCart, cartTotal, clearCart } = useCart();
@@ -29,6 +30,9 @@ export default function CartPage() {
   return (
     <div className="min-h-screen pt-32 pb-20" data-testid="cart-page">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="mb-8">
+          <PromoBanner />
+        </div>
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-light tracking-tight text-[#1A1A1A] mb-12" data-testid="cart-title">
           Shopping Cart
         </h1>

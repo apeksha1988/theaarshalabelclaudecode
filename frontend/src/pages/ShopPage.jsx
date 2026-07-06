@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import api from '../lib/api';
 import ProductCard from '../components/ProductCard';
+import PromoBanner from '../components/PromoBanner';
 
 export default function ShopPage() {
   const [products, setProducts] = useState([]);
@@ -50,6 +51,9 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen pt-32 pb-20" data-testid="shop-page">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
+        <PromoBanner />
+      </div>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="text-center mb-16">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A1F3D] mb-4" data-testid="shop-overline">Browse Our Collection</p>
