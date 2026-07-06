@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { CreditCard } from 'lucide-react';
 import { trackBeginCheckout, trackPurchase } from '../lib/analytics';
+import TrustBadges from '../components/TrustBadges';
 
 // Lazily load Razorpay Checkout only when needed (on the checkout page).
 const loadRazorpayScript = () =>
@@ -331,6 +332,10 @@ export default function CheckoutPage() {
                     <span className="text-[#1A1A1A]" data-testid="checkout-total">₹{(cartTotal / 100).toLocaleString('en-IN')}</span>
                   </div>
                 </div>
+              </div>
+
+              <div className="border-t border-[#EAE5D9] pt-6">
+                <TrustBadges variant="compact" />
               </div>
             </div>
           </div>

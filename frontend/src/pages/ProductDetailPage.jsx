@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Check, Package } from 'lucide-react';
 import api from '../lib/api';
 import { useCart, MAX_QTY } from '../context/CartContext';
+import TrustBadges from '../components/TrustBadges';
 
 export default function ProductDetailPage() {
   const { productId } = useParams();
@@ -184,6 +185,11 @@ export default function ProductDetailPage() {
                 </p>
               </div>
             )}
+
+            {/* Trust Badges */}
+            <div className="mt-8 pt-8 border-t border-[#EAE5D9]">
+              <TrustBadges variant="compact" />
+            </div>
 
             {/* Care Instructions */}
             <div className="mt-8 pt-8 border-t border-[#EAE5D9]">
