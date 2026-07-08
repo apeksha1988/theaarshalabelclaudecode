@@ -53,7 +53,7 @@ export default function Homepage() {
 
         <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-light tracking-tight text-[#1A1A1A] mb-6" data-testid="hero-title">
-            Radiate Timeless Elegance
+            Radiate.Timeless.Elegance
           </h1>
           <p className="text-base sm:text-lg font-light leading-relaxed text-[#1A1A1A] mb-6 max-w-2xl mx-auto" data-testid="hero-subtitle">
             Discover exquisite Kundan, Polki, Moissanite, Semi Precious stones jewellery, handcrafted with centuries of tradition.
