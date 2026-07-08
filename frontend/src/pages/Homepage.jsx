@@ -55,9 +55,12 @@ export default function Homepage() {
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-light tracking-tight text-[#1A1A1A] mb-6" data-testid="hero-title">
             Radiate Timeless Elegance
           </h1>
-          <p className="text-base sm:text-lg font-light leading-relaxed text-[#1A1A1A] mb-8 max-w-2xl mx-auto" data-testid="hero-subtitle">
+          <p className="text-base sm:text-lg font-light leading-relaxed text-[#1A1A1A] mb-6 max-w-2xl mx-auto" data-testid="hero-subtitle">
             Discover exquisite Kundan, Polki, Moissanite, Semi Precious stones jewellery, handcrafted with centuries of tradition.
           </p>
+          <div className="inline-flex items-center gap-2 bg-[#7A1F3D]/10 border border-[#7A1F3D]/30 text-[#7A1F3D] px-5 py-2 rounded-full text-sm font-medium mb-8" data-testid="hero-promo">
+            🎁 First order? Use code <span className="font-semibold tracking-wider">WELCOME10</span> for 10% off
+          </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/shop"
