@@ -11,6 +11,7 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
@@ -73,12 +74,29 @@ export default function ProductDetailPage() {
           <div>
             <div className="bg-[#F5F0E6] aspect-square overflow-hidden mb-4">
               <img
-                src={product.images[0]}
+                src={product.images[activeImage] || product.images[0]}
                 alt={product.name}
                 className="w-full h-full object-cover"
                 data-testid="product-main-image"
               />
             </div>
+            {product.images.length > 1 && (
+              <div className="grid grid-cols-4 gap-3" data-testid="product-thumbnails">
+                {product.images.map((img, i) => (
+                  <button
+                    key={img}
+                    onClick={() => setActiveImage(i)}
+                    className={`bg-[#F5F0E6] aspect-square overflow-hidden border-2 transition-colors ${
+                      i === activeImage ? 'border-[#7A1F3D]' : 'border-transparent hover:border-[#EAE5D9]'
+                    }`}
+                    aria-label={`View image ${i + 1}`}
+                    data-testid={`product-thumbnail-${i}`}
+                  >
+                    <img src={img} alt={`${product.name} view ${i + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Product Info */}
