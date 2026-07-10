@@ -209,14 +209,30 @@ def _address_text(addr: dict) -> str:
     return "\n".join(p for p in parts if p and p.strip(", "))
 
 
+def _payment_label(order: dict) -> str:
+    """Human-readable payment method for an order."""
+    if order.get("payment_method") == "cod" or order.get("status") == "cod_confirmed":
+        return "Cash on Delivery"
+    return "Paid Online"
+
+
 def order_confirmation_for_customer(order: dict):
     oid = order.get("order_id", "")
     total = format_inr(order.get("total"))
-    subject = f"Your {STORE_NAME} order is confirmed ({oid})"
+    pay = _payment_label(order)
+    is_cod = pay == "Cash on Delivery"
+    addr = order.get("shipping_address", {}) or {}
+    intro = (
+        f"Your order is confirmed. You've chosen <b>Cash on Delivery</b> — please keep <b>{total}</b> ready to pay when your order arrives."
+        if is_cod else
+        "We've received your payment and your order is confirmed."
+    )
+    subject = f"{STORE_NAME} — Order confirmed ({oid})"
     html = f"""
     <div style="font-family:Georgia,serif;max-width:560px;margin:auto;color:#1A1A1A">
       <h2 style="color:#7A1F3D">Thank you for your order!</h2>
-      <p>We've received your payment and your order <b>{oid}</b> is confirmed.</p>
+      <p>{intro}</p>
+      <p style="font-size:15px"><b>Order ID:</b> {oid}<br/><b>Payment method:</b> {pay}</p>
       <table style="width:100%;border-collapse:collapse;margin:16px 0">
         <thead><tr>
           <th style="text-align:left;padding:6px 10px;border-bottom:2px solid #7A1F3D">Item</th>
@@ -226,10 +242,17 @@ def order_confirmation_for_customer(order: dict):
         <tbody>{_items_html(order)}</tbody>
       </table>
       <p style="text-align:right;font-size:18px"><b>Total: {total}</b></p>
-      <p style="color:#666">We'll be in touch as your order is prepared.<br/>— {STORE_NAME}</p>
+      <h3 style="color:#7A1F3D;margin-bottom:4px">Delivering to</h3>
+      <pre style="font-family:Georgia,serif;white-space:pre-wrap;background:#F5F0E6;padding:12px;margin-top:4px">{_address_text(addr)}</pre>
+      <p style="color:#666">We'll email you again as your order is dispatched.<br/>— {STORE_NAME}</p>
     </div>"""
-    text = (f"Thank you for your order!\n\nOrder {oid} is confirmed.\n\n"
-            f"{_items_text(order)}\n\nTotal: {total}\n\n— {STORE_NAME}")
+    text = (
+        f"Thank you for your order!\n\nOrder {oid} is confirmed.\n"
+        f"Payment method: {pay}\n"
+        + (f"Please keep {total} ready for Cash on Delivery.\n" if is_cod else "")
+        + f"\nItems:\n{_items_text(order)}\n\nTotal: {total}\n\n"
+        f"Delivering to:\n{_address_text(addr)}\n\n— {STORE_NAME}"
+    )
     return subject, html, text
 
 
@@ -282,17 +305,33 @@ def order_status_update_for_customer(order: dict):
     elif status == "out_for_delivery":
         note = "Your order will reach you today."
 
-    subject = f"Order {oid} update: {label}"
+    total = format_inr(order.get("total"))
+    pay = _payment_label(order)
+    subject = f"{STORE_NAME} — Order {label} ({oid})"
     html = f"""
     <div style="font-family:Georgia,serif;max-width:560px;margin:auto;color:#1A1A1A">
       <h2 style="color:#7A1F3D">Your order is now: {label}</h2>
-      <p>The status of your order <b>{oid}</b> has been updated.</p>
+      <p>Here's an update on your order <b>{oid}</b>.</p>
+      <table style="width:100%;border-collapse:collapse;margin:16px 0">
+        <thead><tr>
+          <th style="text-align:left;padding:6px 10px;border-bottom:2px solid #7A1F3D">Item</th>
+          <th style="text-align:center;padding:6px 10px;border-bottom:2px solid #7A1F3D">Qty</th>
+          <th style="text-align:right;padding:6px 10px;border-bottom:2px solid #7A1F3D">Price</th>
+        </tr></thead>
+        <tbody>{_items_html(order)}</tbody>
+      </table>
+      <p style="font-size:15px"><b>Payment method:</b> {pay}</p>
+      <p style="text-align:right;font-size:18px"><b>Total: {total}</b></p>
       {track_html}
       <p style="color:#444">{note}</p>
       <p style="color:#666">Thank you for shopping with {STORE_NAME}.</p>
     </div>"""
-    text = (f"Your order {oid} is now: {label}\n{track_text}"
-            f"{note}\n\n— {STORE_NAME}")
+    text = (
+        f"Your order {oid} is now: {label}\n\n"
+        f"Items:\n{_items_text(order)}\n\n"
+        f"Payment method: {pay}\nTotal: {total}\n{track_text}"
+        f"{note}\n\n— {STORE_NAME}"
+    )
     return subject, html, text
 
 
@@ -300,7 +339,8 @@ def whatsapp_order_text(order: dict, for_owner: bool) -> str:
     oid = order.get("order_id", "")
     total = format_inr(order.get("total"))
     items = "\n".join(f"• {it.get('quantity',1)}x {it.get('name','')}" for it in order.get("items", []))
+    pay = _payment_label(order)
     if for_owner:
-        return (f"🛍️ *New order* {oid}\nCustomer: {order.get('email','')}\n{items}\n*Total: {total}*")
+        return (f"🛍️ *New order* {oid}\nCustomer: {order.get('email','')}\n{items}\nPayment: {pay}\n*Total: {total}*")
     return (f"Thank you for shopping with {STORE_NAME}! 🪔\n\nYour order *{oid}* is confirmed.\n{items}\n"
-            f"*Total: {total}*\n\nWe'll update you as it's prepared.")
+            f"Payment: {pay}\n*Total: {total}*\n\nWe'll update you as it's prepared.")
