@@ -19,6 +19,11 @@ export default function ProductCard({ product }) {
   const hasPrice = product.price !== null && product.price !== undefined;
   const isLimited = /limited|exclusive/i.test(product.availability || '');
 
+  // Use a lightweight card thumbnail (…-thumb.webp) for the grid; fall back to
+  // the full image if a thumbnail doesn't exist for this product.
+  const fullImage = product.images[0] || '';
+  const thumbImage = fullImage.replace(/\.webp$/i, '-thumb.webp');
+
   const formatPrice = (price) => {
     if (!hasPrice) return 'Price on Request';
     return `₹${(price / 100).toLocaleString('en-IN')}`;
@@ -39,7 +44,12 @@ export default function ProductCard({ product }) {
       <Link to={`/product/${product.product_id}`} className="block">
         <div className="relative bg-[#F5F0E6] w-full aspect-[4/5] overflow-hidden mb-4">
           <img
-            src={product.images[0]}
+            src={thumbImage}
+            onError={(e) => {
+              if (fullImage && !e.currentTarget.src.endsWith(fullImage)) {
+                e.currentTarget.src = fullImage;
+              }
+            }}
             alt={product.name}
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
