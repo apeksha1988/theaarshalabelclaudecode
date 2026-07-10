@@ -27,7 +27,7 @@ export default function CheckoutResultPage() {
         for (let attempt = 0; attempt < 3 && !cancelled; attempt++) {
           const response = await api.get(`/orders/${orderId}`);
           data = response.data;
-          if (data.status === 'paid' || data.status === 'payment_failed') break;
+          if (['paid', 'cod_confirmed', 'payment_failed'].includes(data.status)) break;
           await new Promise((r) => setTimeout(r, 2000));
         }
         if (!cancelled) setOrder(data);
@@ -67,7 +67,8 @@ export default function CheckoutResultPage() {
     );
   }
 
-  const isPaid = order.status === 'paid';
+  const isCod = order.status === 'cod_confirmed';
+  const isPaid = order.status === 'paid' || isCod;
 
   return (
     <div className="min-h-screen pt-32 pb-20" data-testid="checkout-result-page">
@@ -80,7 +81,9 @@ export default function CheckoutResultPage() {
                 Order Confirmed!
               </h1>
               <p className="text-[#666666]" data-testid="success-message">
-                Thank you for your purchase. You'll receive a confirmation email shortly.
+                {isCod
+                  ? "Thank you! Your Cash on Delivery order is confirmed. Please keep the amount ready — you'll pay when it's delivered. A confirmation email is on its way."
+                  : "Thank you for your purchase. You'll receive a confirmation email shortly."}
               </p>
             </>
           ) : (

@@ -56,6 +56,9 @@ OWNER_WHATSAPP = os.getenv("OWNER_WHATSAPP")
 AISENSY_CUSTOMER_CAMPAIGN = os.getenv("AISENSY_CUSTOMER_CAMPAIGN")
 AISENSY_OWNER_CAMPAIGN = os.getenv("AISENSY_OWNER_CAMPAIGN")
 
+# Cash on Delivery surcharge (in paise). Override with COD_FEE_PAISE.
+COD_FEE_PAISE = int(os.getenv("COD_FEE_PAISE", "15000"))  # ₹150 default
+
 # Google Sign-In (the Client ID is public; safe as a default).
 GOOGLE_CLIENT_ID = os.getenv(
     "GOOGLE_CLIENT_ID",
@@ -698,6 +701,43 @@ async def guest_checkout(data: CheckoutRequest):
     await orders_collection.insert_one(order_doc)
     order_doc.pop("_id", None)
     return {"order_id": order_id, "status": "pending_payment"}
+
+@api_router.post("/checkout/cod")
+async def create_cod_order(data: CheckoutRequest, request: Request):
+    """Place a Cash on Delivery order. No online payment; a COD surcharge is
+    added to the total and the order is confirmed immediately."""
+    subtotal = sum(item.price * item.quantity for item in data.items)
+    discount, coupon_code = apply_coupon(subtotal, data.coupon)
+    total = subtotal - discount + COD_FEE_PAISE
+    currency = data.currency or "INR"
+    order_id = f"order_{uuid.uuid4().hex[:12]}"
+    user = await get_current_user(request)
+
+    order_doc = {
+        "order_id": order_id,
+        "user_id": user["user_id"] if user else None,
+        "email": data.email,
+        "items": [item.model_dump() for item in data.items],
+        "subtotal": subtotal,
+        "discount": discount,
+        "coupon": coupon_code,
+        "cod_fee": COD_FEE_PAISE,
+        "payment_method": "cod",
+        "total": total,
+        "currency": currency,
+        "status": "cod_confirmed",
+        "shipping_address": data.shipping_address.model_dump(),
+        "fulfillment_status": "processing",
+        "created_at": datetime.now(timezone.utc),
+        "updated_at": datetime.now(timezone.utc),
+        "notified_at": datetime.now(timezone.utc),
+    }
+    await orders_collection.insert_one(order_doc)
+
+    fresh = await orders_collection.find_one({"order_id": order_id}, {"_id": 0})
+    if fresh:
+        _fire(notify_order_paid(fresh))  # order-confirmation email/WhatsApp (customer + owner)
+    return {"order_id": order_id, "status": "cod_confirmed"}
 
 @api_router.post("/checkout/verify")
 async def verify_checkout(data: PaymentVerifyRequest):

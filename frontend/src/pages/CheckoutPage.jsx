@@ -8,6 +8,9 @@ import { trackBeginCheckout, trackPurchase } from '../lib/analytics';
 import TrustBadges from '../components/TrustBadges';
 import { getCoupon } from '../lib/coupons';
 
+// Cash on Delivery surcharge in paise (must match backend COD_FEE_PAISE).
+const COD_FEE = 15000; // ₹150
+
 // Lazily load Razorpay Checkout only when needed (on the checkout page).
 const loadRazorpayScript = () =>
   new Promise((resolve) => {
@@ -34,6 +37,7 @@ export default function CheckoutPage() {
   const [couponInput, setCouponInput] = useState('');
   const [coupon, setCoupon] = useState(null); // { valid, code, percent, discount }
   const [couponError, setCouponError] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('online'); // 'online' | 'cod'
   const [formData, setFormData] = useState({
     email: user?.email || '',
     name: '',
@@ -69,7 +73,8 @@ export default function CheckoutPage() {
   };
 
   const discount = coupon?.valid ? coupon.discount : 0;
-  const payableTotal = cartTotal - discount;
+  const codFee = paymentMethod === 'cod' ? COD_FEE : 0;
+  const payableTotal = cartTotal - discount + codFee;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,6 +105,22 @@ export default function CheckoutPage() {
       },
       redirect_url: redirectUrl,
     };
+
+    // Cash on Delivery: place the order directly, no online payment.
+    if (paymentMethod === 'cod') {
+      try {
+        const { data } = await api.post('/checkout/cod', payload);
+        trackPurchase(data.order_id, cartItems, payableTotal / 100);
+        clearCart();
+        navigate(`/checkout/result?order_id=${data.order_id}`);
+      } catch (error) {
+        console.error('COD checkout error:', error);
+        const detail = error?.response?.data?.detail;
+        alert(detail || 'Could not place your order. Please try again.');
+        setLoading(false);
+      }
+      return;
+    }
 
     try {
       // 1) Create a Razorpay order on the backend.
@@ -311,6 +332,41 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
+              {/* Payment Method */}
+              <div className="bg-[#F5F0E6] p-8">
+                <h2 className="text-2xl font-serif font-medium text-[#1A1A1A] mb-6">Payment Method</h2>
+                <div className="space-y-3">
+                  <label className={`flex items-start gap-3 p-4 border cursor-pointer transition-colors ${paymentMethod === 'online' ? 'border-[#7A1F3D] bg-white' : 'border-[#EAE5D9]'}`} data-testid="pay-online-option">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="online"
+                      checked={paymentMethod === 'online'}
+                      onChange={() => setPaymentMethod('online')}
+                      className="mt-1 accent-[#7A1F3D]"
+                    />
+                    <div>
+                      <p className="text-sm font-medium text-[#1A1A1A]">Pay Online</p>
+                      <p className="text-xs text-[#666666]">UPI, Cards, Net Banking & Wallets — secure payment via Razorpay</p>
+                    </div>
+                  </label>
+                  <label className={`flex items-start gap-3 p-4 border cursor-pointer transition-colors ${paymentMethod === 'cod' ? 'border-[#7A1F3D] bg-white' : 'border-[#EAE5D9]'}`} data-testid="pay-cod-option">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="cod"
+                      checked={paymentMethod === 'cod'}
+                      onChange={() => setPaymentMethod('cod')}
+                      className="mt-1 accent-[#7A1F3D]"
+                    />
+                    <div>
+                      <p className="text-sm font-medium text-[#1A1A1A]">Cash on Delivery <span className="text-[#666666] font-normal">(+₹{(COD_FEE / 100).toLocaleString('en-IN')})</span></p>
+                      <p className="text-xs text-[#666666]">Pay in cash when your order is delivered. A ₹{(COD_FEE / 100).toLocaleString('en-IN')} handling charge applies.</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
               <button
                 type="submit"
                 disabled={loading}
@@ -319,7 +375,7 @@ export default function CheckoutPage() {
               >
                 {loading ? 'Processing...' : (
                   <>
-                    <CreditCard className="w-5 h-5" /> Complete Order
+                    <CreditCard className="w-5 h-5" /> {paymentMethod === 'cod' ? 'Place COD Order' : 'Complete Order'}
                   </>
                 )}
               </button>
@@ -392,6 +448,12 @@ export default function CheckoutPage() {
                     <span className="text-[#666666]">Delivery</span>
                     <span className="text-[#388E3C] font-medium" data-testid="checkout-delivery">FREE</span>
                   </div>
+                  {codFee > 0 && (
+                    <div className="flex justify-between text-base" data-testid="checkout-cod-fee">
+                      <span className="text-[#666666]">COD charge</span>
+                      <span className="text-[#1A1A1A]">₹{(codFee / 100).toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between text-xl font-serif pt-1">
                     <span className="text-[#1A1A1A]">Total</span>
                     <span className="text-[#1A1A1A]" data-testid="checkout-total">₹{(payableTotal / 100).toLocaleString('en-IN')}</span>

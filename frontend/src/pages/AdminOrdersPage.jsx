@@ -28,14 +28,15 @@ export default function AdminOrdersPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const paidOrders = orders.filter((o) => o.status === 'paid');
+  const paidOrders = orders.filter((o) => o.status === 'paid' || o.status === 'cod_confirmed');
 
   const downloadCsv = () => {
-    const cols = ['order_id', 'date', 'customer_name', 'phone', 'email', 'address_line1', 'address_line2', 'city', 'state', 'postal_code', 'country', 'items', 'amount_inr', 'fulfillment_status'];
+    const cols = ['order_id', 'date', 'payment', 'customer_name', 'phone', 'email', 'address_line1', 'address_line2', 'city', 'state', 'postal_code', 'country', 'items', 'amount_inr', 'fulfillment_status'];
     const rows = paidOrders.map((o) => {
       const a = o.shipping_address || {};
+      const pay = o.status === 'cod_confirmed' ? 'COD (collect cash)' : 'Prepaid';
       return [
-        o.order_id, (o.created_at || '').slice(0, 16), a.name || '', a.phone || '', o.email || '',
+        o.order_id, (o.created_at || '').slice(0, 16), pay, a.name || '', a.phone || '', o.email || '',
         a.line1 || '', a.line2 || '', a.city || '', a.state || '', a.postal_code || '', a.country || '',
         (o.items || []).map((it) => `${it.quantity || 1}x ${it.name || ''}`).join('; '),
         ((o.total || 0) / 100).toFixed(0), o.fulfillment_status || 'processing',
@@ -124,7 +125,14 @@ function AdminOrderCard({ order }) {
     <div className="bg-[#F5F0E6] p-6" data-testid={`admin-order-${order.order_id}`}>
       <div className="flex flex-wrap justify-between gap-2 mb-3">
         <div>
-          <p className="text-sm uppercase tracking-wide text-[#666666]">Order #{order.order_id}</p>
+          <div className="flex items-center gap-2">
+            <p className="text-sm uppercase tracking-wide text-[#666666]">Order #{order.order_id}</p>
+            {order.status === 'cod_confirmed' && (
+              <span className="text-[10px] font-semibold uppercase tracking-wide bg-[#7A1F3D] text-white px-2 py-0.5 rounded" data-testid="cod-badge">
+                COD · collect cash
+              </span>
+            )}
+          </div>
           <p className="text-sm text-[#1A1A1A] mt-1">{order.email}</p>
           {addr.name && (
             <p className="text-xs text-[#666666] mt-1">
