@@ -25,7 +25,10 @@
     "price": 255400,
     "currency": "INR",
     "images": [
-      "/images/celeste-crystal-drop-necklace-set.webp"
+      "/images/celeste-crystal-drop-necklace-set.webp",
+      "/images/celeste-crystal-drop-necklace-set-model-1.webp",
+      "/images/celeste-crystal-drop-necklace-set-model-2.webp",
+      "/images/celeste-crystal-drop-necklace-set-model-3.webp"
     ],
     "category": "premium_heritage",
     "product_type": "Necklace Set with Matching Earrings",
