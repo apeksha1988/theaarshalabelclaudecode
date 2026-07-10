@@ -38,6 +38,11 @@ export default function ProductDetailPage() {
     setTimeout(() => setAdded(false), 2000);
   };
 
+  const handleBuyNow = () => {
+    addToCart(product, quantity);
+    navigate('/checkout');
+  };
+
   const formatPrice = (price, currency = 'INR') => {
     if (price === null || price === undefined) return 'Price on Request';
     if (currency === 'INR') {
@@ -189,11 +194,11 @@ export default function ProductDetailPage() {
                 </button>
 
                 <button
-                  onClick={() => navigate('/cart')}
+                  onClick={handleBuyNow}
                   className="w-full bg-transparent border border-[#7A1F3D] text-[#7A1F3D] px-8 py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#7A1F3D] hover:text-white transition-all duration-300"
-                  data-testid="view-cart-button"
+                  data-testid="buy-now-button"
                 >
-                  View Cart
+                  Buy Now
                 </button>
 
                 <a
