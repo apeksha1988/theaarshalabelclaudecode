@@ -190,7 +190,9 @@
     "price": 269400,
     "currency": "INR",
     "images": [
-      "/images/crystal-choker-set.webp"
+      "/images/crystal-choker-set.webp",
+      "/images/crystal-choker-set-model-1.webp",
+      "/images/crystal-choker-set-model-2.webp"
     ],
     "category": "premium_heritage",
     "product_type": "Crystal Choker Necklace Set with Matching Drop Earrings",
