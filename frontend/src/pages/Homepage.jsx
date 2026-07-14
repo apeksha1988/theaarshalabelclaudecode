@@ -5,13 +5,14 @@ import api from '../lib/api';
 import ProductCard from '../components/ProductCard';
 import { GROUPS, productGroup } from '../lib/productGroups';
 
-// Rotating product images behind a fixed hero message.
+// Rotating product images behind a fixed hero message. Product-only shots
+// so the focus stays on the jewellery.
 const HERO_IMAGES = [
-  { image: '/images/sabyasachi-inspired-necklace-set-pastel-model-2.webp', position: 'top' },
-  { image: '/images/gulbahar-heritage-necklace-set-model-1.webp', position: 'top' },
-  { image: '/images/heritage-kundan-necklace-set-model-1.webp', position: 'top' },
-  { image: '/images/emerald-noor-polki-choker-set-model-1.webp', position: 'center' },
-  { image: '/images/ruby-emerald-layered-necklace-set-model-1.webp', position: 'top' },
+  { image: '/images/heritage-kundan-necklace-set.webp', position: 'center' },
+  { image: '/images/gulbahar-heritage-necklace-set.webp', position: 'center' },
+  { image: '/images/sabyasachi-inspired-necklace-set.webp', position: 'center' },
+  { image: '/images/emerald-veena-kundan-haar-set.webp', position: 'center' },
+  { image: '/images/sabyasachi-inspired-royale-necklace-set.webp', position: 'center' },
 ];
 
 export default function Homepage() {
@@ -80,7 +81,7 @@ export default function Homepage() {
               className="absolute inset-0 w-full h-full object-cover"
               style={{ objectPosition: s.position }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-black/15" />
           </div>
         ))}
 
