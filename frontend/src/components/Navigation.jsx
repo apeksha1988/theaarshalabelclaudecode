@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Menu, X, User, ChevronDown, Heart, Search } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+
+// Rotating search placeholder hints.
+const SEARCH_HINTS = [
+  'Search for Necklaces',
+  'Search for Earrings',
+  'Search for Bracelets',
+  'Search for Hathphool',
+];
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -13,6 +21,12 @@ export default function Navigation() {
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [hintIndex, setHintIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setHintIndex((i) => (i + 1) % SEARCH_HINTS.length), 2500);
+    return () => clearInterval(id);
+  }, []);
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const wishlistCount = wishlist.length;
@@ -49,8 +63,8 @@ export default function Navigation() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search jewellery"
-                className="w-44 border border-[#EAE5D9] bg-white/70 rounded-full pl-4 pr-9 py-1.5 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#7A1F3D] transition-colors"
+                placeholder={SEARCH_HINTS[hintIndex]}
+                className="w-52 border border-[#EAE5D9] bg-white/70 rounded-full pl-4 pr-9 py-1.5 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#7A1F3D] transition-colors"
                 data-testid="nav-search-input"
                 aria-label="Search jewellery"
               />
@@ -155,7 +169,7 @@ export default function Navigation() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search jewellery"
+                placeholder={SEARCH_HINTS[hintIndex]}
                 className="w-full border border-[#EAE5D9] bg-white rounded-full pl-4 pr-10 py-2 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#7A1F3D]"
                 aria-label="Search jewellery"
               />
