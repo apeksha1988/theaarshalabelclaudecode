@@ -44,6 +44,21 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <form onSubmit={submitSearch} className="relative" data-testid="nav-search-form">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search jewellery"
+                className="w-44 border border-[#EAE5D9] bg-white/70 rounded-full pl-4 pr-9 py-1.5 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#7A1F3D] transition-colors"
+                data-testid="nav-search-input"
+                aria-label="Search jewellery"
+              />
+              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7A1F3D]" aria-label="Search">
+                <Search className="w-4 h-4" strokeWidth={2} />
+              </button>
+            </form>
+
             <div className="relative group" data-testid="nav-shop-dropdown">
               <Link
                 to="/shop"
@@ -63,23 +78,6 @@ export default function Navigation() {
                 </div>
               </div>
             </div>
-
-            <Link to="/contact" className="text-sm font-medium tracking-wide uppercase hover:text-[#7A1F3D] transition-colors" data-testid="nav-contact">Contact</Link>
-
-            <form onSubmit={submitSearch} className="relative" data-testid="nav-search-form">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search jewellery"
-                className="w-44 border border-[#EAE5D9] bg-white/70 rounded-full pl-4 pr-9 py-1.5 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#7A1F3D] transition-colors"
-                data-testid="nav-search-input"
-                aria-label="Search jewellery"
-              />
-              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7A1F3D]" aria-label="Search">
-                <Search className="w-4 h-4" strokeWidth={2} />
-              </button>
-            </form>
 
             {user ? (
               <div className="relative group" data-testid="nav-profile-dropdown">
@@ -173,7 +171,6 @@ export default function Navigation() {
               <Link to="/shop?type=bracelet" onClick={() => setMobileMenuOpen(false)} className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors">Bracelets</Link>
               <Link to="/shop?type=hathphool" onClick={() => setMobileMenuOpen(false)} className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors">Hathphool</Link>
             </div>
-            <Link to="/contact" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium tracking-wide uppercase hover:text-[#7A1F3D] transition-colors">Contact</Link>
             {user ? (
               <div className="space-y-2">
                 <p className="text-sm font-semibold tracking-wide uppercase text-[#1A1A1A]">Profile</p>
