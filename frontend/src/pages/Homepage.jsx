@@ -1,13 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import api from '../lib/api';
 import ProductCard from '../components/ProductCard';
 import { GROUPS, productGroup } from '../lib/productGroups';
 
+// Hero banner carousel slides.
+const HERO_SLIDES = [
+  {
+    image: '/images/hero.webp',
+    position: 'center',
+    title: 'Radiate.Timeless.Elegance',
+    subtitle: 'Exquisite Kundan, Polki, Moissanite & Semi-Precious jewellery, handcrafted with centuries of tradition.',
+    promo: true,
+    ctaLabel: 'Explore Collection',
+    ctaLink: '/shop',
+  },
+  {
+    image: '/images/sabyasachi-inspired-necklace-set-pastel-model-2.webp',
+    position: 'top',
+    title: 'First Order? 10% Off',
+    subtitle: 'Use code WELCOME10 at checkout on handcrafted pieces made for your moments.',
+    ctaLabel: 'Shop Now',
+    ctaLink: '/shop',
+  },
+  {
+    image: '/images/gulbahar-heritage-necklace-set-model-1.webp',
+    position: 'top',
+    title: 'Heritage, Handcrafted',
+    subtitle: 'Statement necklaces & sets for weddings and grand celebrations.',
+    ctaLabel: 'Shop Necklaces',
+    ctaLink: '/shop?type=necklace',
+  },
+];
+
 export default function Homepage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [slide, setSlide] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setSlide((s) => (s + 1) % HERO_SLIDES.length), 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  const goTo = (i) => setSlide((i + HERO_SLIDES.length) % HERO_SLIDES.length);
 
   useEffect(() => {
     let cancelled = false;
@@ -48,38 +85,66 @@ export default function Homepage() {
 
   return (
     <div className="min-h-screen" data-testid="homepage">
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: 'url(/images/hero.webp)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-t from-[#FDFBF7] via-[#FDFBF7]/60 to-transparent"></div>
-        </div>
+      {/* Hero Carousel */}
+      <section className="relative h-screen overflow-hidden" data-testid="hero-carousel">
+        {HERO_SLIDES.map((s, i) => (
+          <div
+            key={i}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === slide ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            aria-hidden={i !== slide}
+          >
+            <img
+              src={s.image}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ objectPosition: s.position }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/30" />
+            <div className="relative z-10 h-full flex items-center justify-center">
+              <div className="text-center max-w-3xl mx-auto px-6 text-white">
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-light tracking-tight mb-5" data-testid={i === 0 ? 'hero-title' : undefined}>
+                  {s.title}
+                </h1>
+                <p className="text-base sm:text-lg font-light leading-relaxed text-white/90 mb-6 max-w-2xl mx-auto">
+                  {s.subtitle}
+                </p>
+                {s.promo && (
+                  <div className="inline-flex items-center gap-2 bg-white/15 border border-white/40 text-white px-5 py-2 rounded-full text-sm font-medium mb-8 backdrop-blur-sm" data-testid="hero-promo">
+                    🎁 First order? Use code <span className="font-semibold tracking-wider">WELCOME10</span> for 10% off
+                  </div>
+                )}
+                <div className="flex justify-center">
+                  <Link
+                    to={s.ctaLink}
+                    className="bg-[#7A1F3D] text-white px-8 py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#5C172E] transition-all duration-300 inline-flex items-center justify-center gap-2"
+                    data-testid={i === 0 ? 'hero-shop-button' : undefined}
+                  >
+                    {s.ctaLabel} <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
 
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-light tracking-tight text-[#1A1A1A] mb-6" data-testid="hero-title">
-            Radiate.Timeless.Elegance
-          </h1>
-          <p className="text-base sm:text-lg font-light leading-relaxed text-[#1A1A1A] mb-6 max-w-2xl mx-auto" data-testid="hero-subtitle">
-            Discover exquisite Kundan, Polki, Moissanite, Semi Precious stones jewellery, handcrafted with centuries of tradition.
-          </p>
-          <div className="inline-flex items-center gap-2 bg-[#7A1F3D]/10 border border-[#7A1F3D]/30 text-[#7A1F3D] px-5 py-2 rounded-full text-sm font-medium mb-8" data-testid="hero-promo">
-            🎁 First order? Use code <span className="font-semibold tracking-wider">WELCOME10</span> for 10% off
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/shop"
-              className="bg-[#7A1F3D] text-white px-8 py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#5C172E] transition-all duration-300 inline-flex items-center justify-center gap-2"
-              data-testid="hero-shop-button"
-            >
-              Explore Collection <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+        {/* Arrows */}
+        <button onClick={() => goTo(slide - 1)} aria-label="Previous slide" className="absolute left-4 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white bg-black/20 hover:bg-black/40 rounded-full p-2 transition-colors">
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button onClick={() => goTo(slide + 1)} aria-label="Next slide" className="absolute right-4 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white bg-black/20 hover:bg-black/40 rounded-full p-2 transition-colors">
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
+        {/* Dots */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3" data-testid="hero-dots">
+          {HERO_SLIDES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-2.5 rounded-full transition-all ${i === slide ? 'bg-white w-6' : 'bg-white/50 w-2.5 hover:bg-white/80'}`}
+            />
+          ))}
         </div>
       </section>
 
