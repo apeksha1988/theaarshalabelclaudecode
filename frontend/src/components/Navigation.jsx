@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Menu, X, User, ChevronDown, Heart } from 'lucide-react';
+import { ShoppingCart, Menu, X, User, ChevronDown, Heart, Search } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -12,12 +12,22 @@ export default function Navigation() {
   const { wishlist } = useWishlist();
   const navigate = useNavigate();
 
+  const [searchQuery, setSearchQuery] = useState('');
+
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const wishlistCount = wishlist.length;
 
   const handleLogout = async () => {
     await logout();
     navigate('/');
+  };
+
+  const submitSearch = (e) => {
+    e.preventDefault();
+    const q = searchQuery.trim();
+    navigate(q ? `/shop?search=${encodeURIComponent(q)}` : '/shop');
+    setSearchQuery('');
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -56,10 +66,25 @@ export default function Navigation() {
 
             <Link to="/contact" className="text-sm font-medium tracking-wide uppercase hover:text-[#7A1F3D] transition-colors" data-testid="nav-contact">Contact</Link>
 
+            <form onSubmit={submitSearch} className="relative" data-testid="nav-search-form">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search jewellery"
+                className="w-44 border border-[#EAE5D9] bg-white/70 rounded-full pl-4 pr-9 py-1.5 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#7A1F3D] transition-colors"
+                data-testid="nav-search-input"
+                aria-label="Search jewellery"
+              />
+              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7A1F3D]" aria-label="Search">
+                <Search className="w-4 h-4" strokeWidth={2} />
+              </button>
+            </form>
+
             {user ? (
               <div className="relative group" data-testid="nav-profile-dropdown">
-                <button type="button" className="inline-flex items-center gap-1 text-sm font-medium tracking-wide uppercase hover:text-[#7A1F3D] transition-colors" data-testid="nav-profile">
-                  Profile
+                <button type="button" className="inline-flex items-center gap-1 hover:text-[#7A1F3D] transition-colors" data-testid="nav-profile" aria-label="Profile">
+                  <User className="w-5 h-5" strokeWidth={1.5} />
                   <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
                 </button>
                 <div className="absolute right-0 top-full pt-4 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 z-50">
@@ -127,6 +152,19 @@ export default function Navigation() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-4" data-testid="mobile-menu">
+            <form onSubmit={submitSearch} className="relative" data-testid="nav-search-form-mobile">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search jewellery"
+                className="w-full border border-[#EAE5D9] bg-white rounded-full pl-4 pr-10 py-2 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#7A1F3D]"
+                aria-label="Search jewellery"
+              />
+              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7A1F3D]" aria-label="Search">
+                <Search className="w-5 h-5" strokeWidth={2} />
+              </button>
+            </form>
             <div className="space-y-2" data-testid="nav-shop-mobile">
               <p className="text-sm font-semibold tracking-wide uppercase text-[#1A1A1A]">Shop Jewellery</p>
               <Link to="/shop" onClick={() => setMobileMenuOpen(false)} className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors">All</Link>

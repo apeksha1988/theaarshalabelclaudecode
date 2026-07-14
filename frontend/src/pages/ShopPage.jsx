@@ -14,6 +14,7 @@ export default function ShopPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const type = searchParams.get('type') || 'all';
   const category = searchParams.get('category') || 'all';
+  const search = (searchParams.get('search') || '').trim().toLowerCase();
 
   const selectType = (value) => {
     if (value === 'all') setSearchParams({});
@@ -35,10 +36,18 @@ export default function ShopPage() {
     fetchProducts();
   }, []);
 
-  // Filter by category (from nav/footer links) and/or type (shop buttons).
+  // Filter by category (from nav/footer links), type (shop buttons), and/or
+  // a free-text search across name, type and materials.
   let filtered = products;
   if (category !== 'all') filtered = filtered.filter((p) => p.category === category);
   if (type !== 'all') filtered = filtered.filter((p) => productGroup(p) === type);
+  if (search) {
+    filtered = filtered.filter((p) =>
+      `${p.name || ''} ${p.product_type || ''} ${p.materials || ''} ${p.description || ''}`
+        .toLowerCase()
+        .includes(search)
+    );
+  }
 
   // Sort. Items without a price ("Price on Request") sink to the bottom.
   const hasPrice = (p) => p.price !== null && p.price !== undefined;
@@ -53,7 +62,8 @@ export default function ShopPage() {
   const presentGroups = new Set(products.map(productGroup));
   const typeFilters = [{ value: 'all', label: 'All' }, ...GROUPS.filter((g) => presentGroups.has(g.key)).map((g) => ({ value: g.key, label: g.label }))];
 
-  const heading = type !== 'all' ? groupLabel(type)
+  const heading = search ? `Search: "${searchParams.get('search').trim()}"`
+    : type !== 'all' ? groupLabel(type)
     : category !== 'all' ? (CATEGORY_LABELS[category] || 'Statement Jewellery')
     : 'Statement Jewellery';
 
