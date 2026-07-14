@@ -3,51 +3,59 @@ import { useSearchParams } from 'react-router-dom';
 import api from '../lib/api';
 import ProductCard from '../components/ProductCard';
 import PromoBanner from '../components/PromoBanner';
+import { GROUPS, productGroup, groupLabel } from '../lib/productGroups';
+
+const CATEGORY_LABELS = { premium_heritage: 'Premium Heritage', oxidised: 'Oxidised' };
 
 export default function ShopPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState('price_asc');
   const [searchParams, setSearchParams] = useSearchParams();
+  const type = searchParams.get('type') || 'all';
   const category = searchParams.get('category') || 'all';
 
-  const selectCategory = (value) => {
+  const selectType = (value) => {
     if (value === 'all') setSearchParams({});
-    else setSearchParams({ category: value });
+    else setSearchParams({ type: value });
   };
-
-  // Sort a copy of the products for display. Items without a price
-  // ("Price on Request") always sink to the bottom.
-  const sortProducts = (list) => {
-    if (sortBy === 'featured') return list;
-    const hasPrice = (p) => p.price !== null && p.price !== undefined;
-    return [...list].sort((a, b) => {
-      if (!hasPrice(a) && !hasPrice(b)) return 0;
-      if (!hasPrice(a)) return 1;
-      if (!hasPrice(b)) return -1;
-      return sortBy === 'price_desc' ? b.price - a.price : a.price - b.price;
-    });
-  };
-
-  const sortedProducts = sortProducts(products);
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get('/products');
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category]);
+  }, []);
 
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-      const params = category !== 'all' ? { category } : {};
-      const response = await api.get('/products', { params });
-      setProducts(response.data);
-    } catch (error) {
-      console.error('Failed to fetch products:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Filter by category (from nav/footer links) and/or type (shop buttons).
+  let filtered = products;
+  if (category !== 'all') filtered = filtered.filter((p) => p.category === category);
+  if (type !== 'all') filtered = filtered.filter((p) => productGroup(p) === type);
+
+  // Sort. Items without a price ("Price on Request") sink to the bottom.
+  const hasPrice = (p) => p.price !== null && p.price !== undefined;
+  const sortedProducts = sortBy === 'featured' ? filtered : [...filtered].sort((a, b) => {
+    if (!hasPrice(a) && !hasPrice(b)) return 0;
+    if (!hasPrice(a)) return 1;
+    if (!hasPrice(b)) return -1;
+    return sortBy === 'price_desc' ? b.price - a.price : a.price - b.price;
+  });
+
+  // Only offer type filters that actually have products.
+  const presentGroups = new Set(products.map(productGroup));
+  const typeFilters = [{ value: 'all', label: 'All' }, ...GROUPS.filter((g) => presentGroups.has(g.key)).map((g) => ({ value: g.key, label: g.label }))];
+
+  const heading = type !== 'all' ? groupLabel(type)
+    : category !== 'all' ? (CATEGORY_LABELS[category] || 'Statement Jewellery')
+    : 'Statement Jewellery';
 
   return (
     <div className="min-h-screen pt-32 pb-20" data-testid="shop-page">
@@ -58,20 +66,16 @@ export default function ShopPage() {
         <div className="text-center mb-16">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A1F3D] mb-4" data-testid="shop-overline">Browse Our Collection</p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-light tracking-tight text-[#1A1A1A] mb-8" data-testid="shop-title">
-            Statement Jewellery
+            {heading}
           </h1>
 
-          <div className="flex justify-center gap-4 flex-wrap">
-            {[
-              { value: 'all', label: 'All' },
-              { value: 'premium_heritage', label: 'Premium Heritage' },
-              { value: 'oxidised', label: 'Oxidised' },
-            ].map((c) => (
+          <div className="flex justify-center gap-3 flex-wrap">
+            {typeFilters.map((c) => (
               <button
                 key={c.value}
-                onClick={() => selectCategory(c.value)}
-                className={`px-6 py-2 text-sm tracking-wide uppercase transition-all duration-300 ${
-                  category === c.value
+                onClick={() => selectType(c.value)}
+                className={`px-5 py-2 text-sm tracking-wide uppercase transition-all duration-300 ${
+                  type === c.value
                     ? 'bg-[#7A1F3D] text-white'
                     : 'bg-transparent border border-[#7A1F3D] text-[#7A1F3D] hover:bg-[#7A1F3D] hover:text-white'
                 }`}
@@ -105,9 +109,9 @@ export default function ShopPage() {
               <p className="mt-4 text-[#666666]">Loading products...</p>
             </div>
           </div>
-        ) : products.length === 0 ? (
+        ) : sortedProducts.length === 0 ? (
           <div className="text-center py-20" data-testid="no-products">
-            <p className="text-[#666666]">No products found.</p>
+            <p className="text-[#666666]">No products found in this category yet.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12" data-testid="products-grid">
