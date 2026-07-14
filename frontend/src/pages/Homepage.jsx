@@ -73,6 +73,44 @@ export default function Homepage() {
         </div>
       </section>
 
+      {/* Shop by Category */}
+      <section className="py-20 md:py-28 bg-[#FDFBF7]" data-testid="category-section">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="text-center mb-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A1F3D] mb-4">Explore</p>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-light tracking-tight text-[#1A1A1A]">
+              Shop by Category
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+            {[
+              { label: 'Premium Heritage', sub: 'Kundan · Polki · Moissanite', to: '/shop?category=premium_heritage', image: '/images/heritage-kundan-necklace-set-thumb.webp' },
+              { label: 'Oxidised', sub: 'Silver-tone · Statement pieces', to: '/shop?category=oxidised', image: '/images/Oxidised_Necklace-thumb.webp' },
+            ].map((c) => (
+              <Link
+                key={c.to}
+                to={c.to}
+                className="group relative block overflow-hidden aspect-[16/10]"
+                data-testid={`category-tile-${c.label.toLowerCase().replace(/\s+/g, '-')}`}
+              >
+                <img
+                  src={c.image}
+                  alt={c.label}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/35 group-hover:bg-black/45 transition-colors" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
+                  <h3 className="text-2xl md:text-3xl font-serif font-light mb-1">{c.label}</h3>
+                  <p className="text-xs md:text-sm tracking-wide opacity-90 mb-4">{c.sub}</p>
+                  <span className="text-xs uppercase tracking-[0.2em] border-b border-white/70 pb-1">Shop Now</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Collection Section */}
       <section className="py-20 md:py-32 bg-[#FDFBF7]">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
