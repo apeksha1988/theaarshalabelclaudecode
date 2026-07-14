@@ -27,10 +27,15 @@ export default function Homepage() {
     };
   }, []);
 
-  // Show the collection cheapest-first; items without a price ("Price on
-  // Request") always sort to the end.
+  // Collection order: Necklaces & Sets first, then Earrings (then any other
+  // groups), and cheapest-first within each group. Items without a price
+  // ("Price on Request") always sort to the end.
   const hasPrice = (p) => p.price !== null && p.price !== undefined;
+  const GROUP_RANK = { necklace: 0, earrings: 1, bracelet: 2, hathphool: 3 };
+  const rank = (p) => GROUP_RANK[productGroup(p)] ?? 9;
   const sortedProducts = [...products].sort((a, b) => {
+    const byGroup = rank(a) - rank(b);
+    if (byGroup !== 0) return byGroup;
     if (!hasPrice(a) && !hasPrice(b)) return 0;
     if (!hasPrice(a)) return 1;
     if (!hasPrice(b)) return -1;
