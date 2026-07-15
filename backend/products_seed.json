@@ -836,5 +836,73 @@
     "set_includes": "1 Pair of Long Statement Earrings",
     "created_at": "2026-06-29T15:34:24.602386",
     "updated_at": "2026-06-29T15:34:24.602386"
+  },
+  {
+    "product_id": "prod_a31584e48baf",
+    "name": "The Aarsha's Emerald Moissanite Bracelet",
+    "description": "A graceful statement bracelet featuring emerald-green stones framed by sparkling moissanite and delicate detailing. Antique gold-plated craftsmanship makes it a versatile heirloom-inspired piece for festive and bridal occasions.",
+    "price": 276500,
+    "currency": "INR",
+    "images": [
+      "/images/emerald-moissanite-bracelet.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Bracelet",
+    "materials": "Emerald Green Glass Stones, High-Grade Moissanite, Antique Gold-Plated Alloy, Micro CZ Accents, Adjustable Closure",
+    "availability": "In Stock",
+    "set_includes": "1 Statement Bracelet",
+    "created_at": "2026-07-15T04:11:48.269341",
+    "updated_at": "2026-07-15T04:11:48.269341"
+  },
+  {
+    "product_id": "prod_c6082ccbd306",
+    "name": "The Aarsha's Ruby Moissanite Bracelet",
+    "description": "A regal statement bracelet set with rich ruby-red stones and brilliant moissanite accents in antique gold-plated craftsmanship. A timeless piece that adds a royal touch to festive and wedding looks.",
+    "price": 276500,
+    "currency": "INR",
+    "images": [
+      "/images/ruby-moissanite-bracelet.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Bracelet",
+    "materials": "Ruby Red Glass Stones, High-Grade Moissanite, Antique Gold-Plated Alloy, Micro CZ Accents, Adjustable Closure",
+    "availability": "In Stock",
+    "set_includes": "1 Statement Bracelet",
+    "created_at": "2026-07-15T04:11:48.269341",
+    "updated_at": "2026-07-15T04:11:48.269341"
+  },
+  {
+    "product_id": "prod_a35ee937cfba",
+    "name": "The Aarsha's Emerald Polki Hathphool",
+    "description": "An exquisite hathphool (hand harness) adorned with emerald-green stones, uncut polki-inspired crystals, and pearl detailing. Connecting an adjustable bracelet to a statement ring, it drapes the hand in heritage elegance — perfect for brides and grand celebrations.",
+    "price": 424900,
+    "currency": "INR",
+    "images": [
+      "/images/emerald-polki-hathphool.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Hathphool (Hand Harness) with Ring",
+    "materials": "Emerald Green Stones, Polki-Inspired Uncut Crystals, Faux Pearls, Antique Gold-Plated Alloy, Adjustable Bracelet & Ring",
+    "availability": "In Stock",
+    "set_includes": "1 Hathphool (bracelet + attached ring)",
+    "created_at": "2026-07-15T04:11:48.269341",
+    "updated_at": "2026-07-15T04:11:48.269341"
+  },
+  {
+    "product_id": "prod_1f37efea8c9c",
+    "name": "The Aarsha's Polki Hathphool",
+    "description": "A breathtaking bridal hathphool (hand harness) featuring uncut polki-inspired crystals and pearl accents in intricate antique gold-plated work. The elegant chains connect an adjustable bracelet to a statement ring, adorning the hand with regal grace for weddings and festive grandeur.",
+    "price": 567000,
+    "currency": "INR",
+    "images": [
+      "/images/polki-hathphool.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Hathphool (Hand Harness) with Ring",
+    "materials": "Polki-Inspired Uncut Crystals, Faux Pearls, Cubic Zirconia Accents, Antique Gold-Plated Alloy, Adjustable Bracelet & Ring",
+    "availability": "In Stock",
+    "set_includes": "1 Hathphool (bracelet + attached ring)",
+    "created_at": "2026-07-15T04:11:48.269341",
+    "updated_at": "2026-07-15T04:11:48.269341"
   }
 ]
