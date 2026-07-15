@@ -7,6 +7,14 @@ import { GROUPS, productGroup, groupLabel } from '../lib/productGroups';
 
 const CATEGORY_LABELS = { premium_heritage: 'Premium Heritage', oxidised: 'Oxidised' };
 
+// Search words that mean a whole category -> the product group they map to.
+const SEARCH_GROUP_SYNONYMS = {
+  necklace: 'necklace', necklaces: 'necklace', haar: 'necklace', choker: 'necklace', chokers: 'necklace', pendant: 'necklace',
+  earring: 'earrings', earrings: 'earrings', jhumka: 'earrings', jhumkas: 'earrings', jhumki: 'earrings', chandbali: 'earrings',
+  bracelet: 'bracelet', bracelets: 'bracelet',
+  hathphool: 'hathphool',
+};
+
 export default function ShopPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,27 +44,38 @@ export default function ShopPage() {
     fetchProducts();
   }, []);
 
-  // Filter by category (from nav/footer links), type (shop buttons), and/or
-  // a free-text search across name, type and materials.
+  // Filter by category (from nav/footer links) and type (shop buttons).
   let filtered = products;
   if (category !== 'all') filtered = filtered.filter((p) => p.category === category);
   if (type !== 'all') filtered = filtered.filter((p) => productGroup(p) === type);
+
+  // Search: category words ("earrings", "necklace"…) filter by product group;
+  // other words ("emerald", "moissanite"…) match the product name. This keeps
+  // results relevant instead of matching every set that mentions "earrings".
   if (search) {
-    filtered = filtered.filter((p) =>
-      `${p.name || ''} ${p.product_type || ''} ${p.materials || ''} ${p.description || ''}`
-        .toLowerCase()
-        .includes(search)
-    );
+    const terms = search.split(/\s+/).filter(Boolean);
+    const groupTerms = terms.filter((t) => SEARCH_GROUP_SYNONYMS[t]);
+    const textTerms = terms.filter((t) => !SEARCH_GROUP_SYNONYMS[t]);
+    filtered = filtered.filter((p) => {
+      const g = productGroup(p);
+      if (groupTerms.some((t) => SEARCH_GROUP_SYNONYMS[t] !== g)) return false;
+      const name = (p.name || '').toLowerCase();
+      return textTerms.every((t) => name.includes(t));
+    });
   }
 
-  // Sort. Items without a price ("Price on Request") sink to the bottom.
   const hasPrice = (p) => p.price !== null && p.price !== undefined;
-  const sortedProducts = sortBy === 'featured' ? filtered : [...filtered].sort((a, b) => {
+  const byPrice = (a, b) => {
     if (!hasPrice(a) && !hasPrice(b)) return 0;
     if (!hasPrice(a)) return 1;
     if (!hasPrice(b)) return -1;
     return sortBy === 'price_desc' ? b.price - a.price : a.price - b.price;
-  });
+  };
+
+  // Search results sort cheapest-first; otherwise use the selected order.
+  const sortedProducts = (!search && sortBy === 'featured')
+    ? filtered
+    : [...filtered].sort(byPrice);
 
   // Only offer type filters that actually have products.
   const presentGroups = new Set(products.map(productGroup));
