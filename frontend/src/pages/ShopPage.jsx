@@ -81,8 +81,7 @@ export default function ShopPage() {
   const presentGroups = new Set(products.map(productGroup));
   const typeFilters = [{ value: 'all', label: 'All' }, ...GROUPS.filter((g) => presentGroups.has(g.key)).map((g) => ({ value: g.key, label: g.label }))];
 
-  const heading = search ? `Search: "${searchParams.get('search').trim()}"`
-    : type !== 'all' ? groupLabel(type)
+  const heading = type !== 'all' ? groupLabel(type)
     : category !== 'all' ? (CATEGORY_LABELS[category] || 'Statement Jewellery')
     : 'Statement Jewellery';
 
