@@ -92,27 +92,31 @@ export default function ShopPage() {
       </div>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="text-center mb-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A1F3D] mb-4" data-testid="shop-overline">Browse Our Collection</p>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-light tracking-tight text-[#1A1A1A] mb-8" data-testid="shop-title">
-            {heading}
-          </h1>
+          {!search && (
+            <>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A1F3D] mb-4" data-testid="shop-overline">Browse Our Collection</p>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-light tracking-tight text-[#1A1A1A] mb-8" data-testid="shop-title">
+                {heading}
+              </h1>
 
-          <div className="flex justify-center gap-3 flex-wrap">
-            {typeFilters.map((c) => (
-              <button
-                key={c.value}
-                onClick={() => selectType(c.value)}
-                className={`px-5 py-2 text-sm tracking-wide uppercase transition-all duration-300 ${
-                  type === c.value
-                    ? 'bg-[#7A1F3D] text-white'
-                    : 'bg-transparent border border-[#7A1F3D] text-[#7A1F3D] hover:bg-[#7A1F3D] hover:text-white'
-                }`}
-                data-testid={`filter-${c.value}`}
-              >
-                {c.label}
-              </button>
-            ))}
-          </div>
+              <div className="flex justify-center gap-3 flex-wrap">
+                {typeFilters.map((c) => (
+                  <button
+                    key={c.value}
+                    onClick={() => selectType(c.value)}
+                    className={`px-5 py-2 text-sm tracking-wide uppercase transition-all duration-300 ${
+                      type === c.value
+                        ? 'bg-[#7A1F3D] text-white'
+                        : 'bg-transparent border border-[#7A1F3D] text-[#7A1F3D] hover:bg-[#7A1F3D] hover:text-white'
+                    }`}
+                    data-testid={`filter-${c.value}`}
+                  >
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
 
           <div className="flex justify-center sm:justify-end items-center gap-2 mt-8">
             <label htmlFor="sort" className="text-xs uppercase tracking-wide text-[#666666]">Sort by</label>
