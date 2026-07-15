@@ -6,24 +6,36 @@ import ProductCard from '../components/ProductCard';
 import { productGroup } from '../lib/productGroups';
 
 // Rotating product images behind a fixed hero message. Product-only shots
-// so the focus stays on the jewellery.
+// (smaller -hero variants) so the focus stays on the jewellery and the
+// landing page loads fast.
 const HERO_IMAGES = [
-  { image: '/images/heritage-kundan-necklace-set.webp', position: 'center' },
-  { image: '/images/gulbahar-heritage-necklace-set.webp', position: 'center' },
-  { image: '/images/sabyasachi-inspired-necklace-set.webp', position: 'center' },
-  { image: '/images/emerald-veena-kundan-haar-set.webp', position: 'center' },
-  { image: '/images/sabyasachi-inspired-royale-necklace-set.webp', position: 'center' },
+  { image: '/images/heritage-kundan-necklace-set-hero.webp', position: 'center' },
+  { image: '/images/gulbahar-heritage-necklace-set-hero.webp', position: 'center' },
+  { image: '/images/sabyasachi-inspired-necklace-set-hero.webp', position: 'center' },
+  { image: '/images/emerald-veena-kundan-haar-set-hero.webp', position: 'center' },
+  { image: '/images/sabyasachi-inspired-royale-necklace-set-hero.webp', position: 'center' },
 ];
 
 export default function Homepage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [slide, setSlide] = useState(0);
+  // Only mount carousel images once they've been shown (plus the next one),
+  // so the landing page loads just the first image instead of all five.
+  const [shownSlides, setShownSlides] = useState(() => new Set([0, 1]));
 
   useEffect(() => {
     const id = setInterval(() => setSlide((s) => (s + 1) % HERO_IMAGES.length), 4000);
     return () => clearInterval(id);
   }, []);
+
+  useEffect(() => {
+    setShownSlides((prev) => {
+      const next = (slide + 1) % HERO_IMAGES.length;
+      if (prev.has(slide) && prev.has(next)) return prev;
+      return new Set(prev).add(slide).add(next);
+    });
+  }, [slide]);
 
   const goTo = (i) => setSlide((i + HERO_IMAGES.length) % HERO_IMAGES.length);
 
@@ -71,12 +83,16 @@ export default function Homepage() {
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === slide ? 'opacity-100' : 'opacity-0'}`}
             aria-hidden={i !== slide}
           >
-            <img
-              src={s.image}
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ objectPosition: s.position }}
-            />
+            {shownSlides.has(i) && (
+              <img
+                src={s.image}
+                alt=""
+                fetchpriority={i === 0 ? 'high' : 'auto'}
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: s.position }}
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-black/15" />
           </div>
         ))}
