@@ -5,6 +5,7 @@ import ProductCard from '../components/ProductCard';
 import PromoBanner from '../components/PromoBanner';
 import { GROUPS, productGroup, groupLabel } from '../lib/productGroups';
 import { applySeo } from '../lib/seo';
+import { SHOP_CONTENT, faqJsonLd } from '../lib/shopContent';
 
 const CATEGORY_LABELS = { premium_heritage: 'Premium Heritage', oxidised: 'Oxidised' };
 
@@ -86,14 +87,19 @@ export default function ShopPage() {
     : category !== 'all' ? (CATEGORY_LABELS[category] || 'Statement Jewellery')
     : 'Statement Jewellery';
 
+  // SEO content block for the active category (intro paragraph + FAQs).
+  const seoKey = type !== 'all' ? type : category !== 'all' ? category : 'all';
+  const content = SHOP_CONTENT[seoKey] || SHOP_CONTENT.all;
+
   useEffect(() => {
     const title = heading === 'Statement Jewellery' ? 'Shop Jewellery' : `Shop ${heading}`;
     applySeo({
       title,
-      description: `Shop handcrafted ${heading.toLowerCase()} by The Aarsha Label — Kundan, Polki & Moissanite pieces with free delivery across India.`,
+      description: content.intro.slice(0, 160),
       path: '/shop',
+      jsonLd: faqJsonLd(content.faqs),
     });
-  }, [heading]);
+  }, [heading, content]);
 
   return (
     <div className="min-h-screen pt-32 pb-20" data-testid="shop-page">
@@ -105,9 +111,13 @@ export default function ShopPage() {
           {!search && (
             <>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A1F3D] mb-4" data-testid="shop-overline">Browse Our Collection</p>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-light tracking-tight text-[#1A1A1A] mb-8" data-testid="shop-title">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-light tracking-tight text-[#1A1A1A] mb-6" data-testid="shop-title">
                 {heading}
               </h1>
+
+              <p className="max-w-3xl mx-auto text-sm md:text-base font-light leading-relaxed text-[#666666] mb-8" data-testid="shop-intro">
+                {content.intro}
+              </p>
 
               <div className="flex justify-center gap-3 flex-wrap">
                 {typeFilters.map((c) => (
@@ -161,6 +171,26 @@ export default function ShopPage() {
               <ProductCard key={product.product_id} product={product} />
             ))}
           </div>
+        )}
+
+        {/* FAQs (rich-result eligible via FAQPage JSON-LD) */}
+        {!search && (
+          <section className="max-w-3xl mx-auto mt-24" data-testid="shop-faq">
+            <h2 className="text-2xl md:text-3xl font-serif font-light text-center text-[#1A1A1A] mb-8">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-3">
+              {content.faqs.map((f) => (
+                <details key={f.q} className="group bg-[#F5F0E6] px-6 py-4">
+                  <summary className="cursor-pointer list-none flex justify-between items-center gap-4 text-sm md:text-base font-medium text-[#1A1A1A]">
+                    {f.q}
+                    <span className="text-[#7A1F3D] text-xl leading-none transition-transform duration-200 group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-3 text-sm text-[#666666] leading-relaxed">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </section>
         )}
       </div>
     </div>
