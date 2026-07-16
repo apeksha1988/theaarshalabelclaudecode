@@ -5,6 +5,7 @@ import api from '../lib/api';
 import { useCart, MAX_QTY } from '../context/CartContext';
 import TrustBadges from '../components/TrustBadges';
 import { productOrderLink } from '../lib/whatsappOrder';
+import { applySeo, productJsonLd } from '../lib/seo';
 
 export default function ProductDetailPage() {
   const { productId } = useParams();
@@ -20,6 +21,18 @@ export default function ProductDetailPage() {
     fetchProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productId]);
+
+  useEffect(() => {
+    if (!product) return;
+    const price = product.price != null ? ` — ₹${(product.price / 100).toLocaleString('en-IN')}` : '';
+    applySeo({
+      title: `${product.name}${price}`,
+      description: (product.description || '').slice(0, 160),
+      image: product.images?.[0],
+      path: `/product/${product.product_id}`,
+      jsonLd: productJsonLd(product),
+    });
+  }, [product]);
 
   const fetchProduct = async () => {
     try {

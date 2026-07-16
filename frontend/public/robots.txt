@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /checkout
+Disallow: /cart
+Disallow: /dashboard
+Disallow: /login
+Disallow: /wishlist
+
+Sitemap: https://www.theaarshalabel.com/sitemap.xml

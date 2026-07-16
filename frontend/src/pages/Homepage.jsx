@@ -4,6 +4,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import api from '../lib/api';
 import ProductCard from '../components/ProductCard';
 import { productGroup } from '../lib/productGroups';
+import { applySeo } from '../lib/seo';
 
 // Rotating product images behind a fixed hero message. Product-only shots
 // (smaller -hero variants) so the focus stays on the jewellery and the
@@ -23,6 +24,10 @@ export default function Homepage() {
   // Only mount carousel images once they've been shown (plus the next one),
   // so the landing page loads just the first image instead of all five.
   const [shownSlides, setShownSlides] = useState(() => new Set([0, 1]));
+
+  useEffect(() => {
+    applySeo({ path: '/' });
+  }, []);
 
   useEffect(() => {
     const id = setInterval(() => setSlide((s) => (s + 1) % HERO_IMAGES.length), 4000);

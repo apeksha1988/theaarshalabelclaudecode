@@ -4,6 +4,7 @@ import api from '../lib/api';
 import ProductCard from '../components/ProductCard';
 import PromoBanner from '../components/PromoBanner';
 import { GROUPS, productGroup, groupLabel } from '../lib/productGroups';
+import { applySeo } from '../lib/seo';
 
 const CATEGORY_LABELS = { premium_heritage: 'Premium Heritage', oxidised: 'Oxidised' };
 
@@ -84,6 +85,15 @@ export default function ShopPage() {
   const heading = type !== 'all' ? groupLabel(type)
     : category !== 'all' ? (CATEGORY_LABELS[category] || 'Statement Jewellery')
     : 'Statement Jewellery';
+
+  useEffect(() => {
+    const title = heading === 'Statement Jewellery' ? 'Shop Jewellery' : `Shop ${heading}`;
+    applySeo({
+      title,
+      description: `Shop handcrafted ${heading.toLowerCase()} by The Aarsha Label — Kundan, Polki & Moissanite pieces with free delivery across India.`,
+      path: '/shop',
+    });
+  }, [heading]);
 
   return (
     <div className="min-h-screen pt-32 pb-20" data-testid="shop-page">
