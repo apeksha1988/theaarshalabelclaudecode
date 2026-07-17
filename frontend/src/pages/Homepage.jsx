@@ -151,6 +151,17 @@ export default function Homepage() {
         </div>
       </section>
 
+      {/* Free delivery / trust strip */}
+      <div className="bg-[#7A1F3D] text-white text-center text-xs sm:text-sm tracking-wide px-4 py-3" data-testid="delivery-strip">
+        <span className="inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-1">
+          <span>🚚 Free Delivery across India</span>
+          <span className="hidden sm:inline opacity-40">|</span>
+          <span>💵 Cash on Delivery Available</span>
+          <span className="hidden sm:inline opacity-40">|</span>
+          <span>🎁 10% off your first order with <span className="font-semibold tracking-wider">WELCOME10</span></span>
+        </span>
+      </div>
+
       {/* Shop by Category */}
       <section className="py-20 md:py-28 bg-[#FDFBF7]" data-testid="category-section">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
