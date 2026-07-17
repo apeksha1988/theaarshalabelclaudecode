@@ -6,6 +6,7 @@ import PromoBanner from '../components/PromoBanner';
 import { GROUPS, productGroup, groupLabel } from '../lib/productGroups';
 import { applySeo } from '../lib/seo';
 import { SHOP_CONTENT, faqJsonLd } from '../lib/shopContent';
+import { getCachedProducts, setCachedProducts } from '../lib/productCache';
 
 const CATEGORY_LABELS = { premium_heritage: 'Premium Heritage', oxidised: 'Oxidised' };
 
@@ -18,8 +19,8 @@ const SEARCH_GROUP_SYNONYMS = {
 };
 
 export default function ShopPage() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState(() => getCachedProducts() || []);
+  const [loading, setLoading] = useState(() => !getCachedProducts());
   const [sortBy, setSortBy] = useState('price_asc');
   const [searchParams, setSearchParams] = useSearchParams();
   const type = searchParams.get('type') || 'all';
@@ -34,9 +35,9 @@ export default function ShopPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        setLoading(true);
         const response = await api.get('/products');
         setProducts(response.data);
+        setCachedProducts(response.data);
       } catch (error) {
         console.error('Failed to fetch products:', error);
       } finally {

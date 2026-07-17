@@ -5,6 +5,7 @@ import api from '../lib/api';
 import ProductCard from '../components/ProductCard';
 import { productGroup } from '../lib/productGroups';
 import { applySeo } from '../lib/seo';
+import { getCachedProducts, setCachedProducts } from '../lib/productCache';
 
 // Rotating product images behind a fixed hero message. Product-only shots
 // (smaller -hero variants) so the focus stays on the jewellery and the
@@ -18,8 +19,8 @@ const HERO_IMAGES = [
 ];
 
 export default function Homepage() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState(() => getCachedProducts() || []);
+  const [loading, setLoading] = useState(() => !getCachedProducts());
   const [slide, setSlide] = useState(0);
   // Only mount carousel images once they've been shown (plus the next one),
   // so the landing page loads just the first image instead of all five.
@@ -49,7 +50,10 @@ export default function Homepage() {
     const load = async () => {
       try {
         const res = await api.get('/products');
-        if (!cancelled) setProducts(res.data);
+        if (!cancelled) {
+          setProducts(res.data);
+          setCachedProducts(res.data);
+        }
       } catch (e) {
         console.error('Failed to fetch products:', e);
       } finally {
