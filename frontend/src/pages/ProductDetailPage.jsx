@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Check, Package } from 'lucide-react';
+import { ShoppingCart, Check, Package, Truck } from 'lucide-react';
 import api from '../lib/api';
 import { useCart, MAX_QTY } from '../context/CartContext';
 import TrustBadges from '../components/TrustBadges';
@@ -126,8 +126,11 @@ export default function ProductDetailPage() {
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-light tracking-tight text-[#1A1A1A] mb-6" data-testid="product-title">
               {product.name}
             </h1>
-            <p className="text-3xl font-light text-[#1A1A1A] mb-8" data-testid="product-price-detail">
+            <p className="text-3xl font-light text-[#1A1A1A] mb-3" data-testid="product-price-detail">
               {formatPrice(product.price, product.currency)}
+            </p>
+            <p className="flex items-center gap-2 text-sm font-medium text-[#388E3C] mb-8" data-testid="product-free-delivery">
+              <Truck className="w-4 h-4" strokeWidth={1.75} /> Free Delivery across India
             </p>
             
             <p className="text-base font-light leading-relaxed text-[#1A1A1A] mb-8" data-testid="product-description">
