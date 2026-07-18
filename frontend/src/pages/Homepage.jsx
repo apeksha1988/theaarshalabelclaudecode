@@ -115,8 +115,13 @@ export default function Homepage() {
             <p className="text-base sm:text-lg font-light leading-relaxed text-white/90 mb-6 max-w-2xl mx-auto" data-testid="hero-subtitle">
               Exquisite Kundan, Polki & Moissanite jewellery, handcrafted for your forever moments.
             </p>
-            <div className="inline-flex items-center gap-2 bg-white/15 border border-white/40 text-white px-5 py-2 rounded-full text-sm font-medium mb-8 backdrop-blur-sm" data-testid="hero-promo">
+            <div className="inline-flex items-center gap-2 bg-white/15 border border-white/40 text-white px-5 py-2 rounded-full text-sm font-medium mb-5 backdrop-blur-sm" data-testid="hero-promo">
               🎁 First order? Use code <span className="font-semibold tracking-wider">WELCOME10</span> for 10% off
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs sm:text-sm text-white/95 mb-8" data-testid="hero-delivery">
+              <span className="font-medium">🚚 Free Delivery across India</span>
+              <span className="opacity-40 hidden sm:inline">|</span>
+              <span className="font-medium">💵 Cash on Delivery Available</span>
             </div>
             <div className="flex justify-center">
               <Link
@@ -150,17 +155,6 @@ export default function Homepage() {
           ))}
         </div>
       </section>
-
-      {/* Free delivery / trust strip */}
-      <div className="bg-[#7A1F3D] text-white text-center text-xs sm:text-sm tracking-wide px-4 py-3" data-testid="delivery-strip">
-        <span className="inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-1">
-          <span>🚚 Free Delivery across India</span>
-          <span className="hidden sm:inline opacity-40">|</span>
-          <span>💵 Cash on Delivery Available</span>
-          <span className="hidden sm:inline opacity-40">|</span>
-          <span>🎁 10% off your first order with <span className="font-semibold tracking-wider">WELCOME10</span></span>
-        </span>
-      </div>
 
       {/* Shop by Category */}
       <section className="py-20 md:py-28 bg-[#FDFBF7]" data-testid="category-section">
