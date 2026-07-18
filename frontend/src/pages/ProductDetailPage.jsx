@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Check, Package, Truck } from 'lucide-react';
 import api from '../lib/api';
 import { useCart, MAX_QTY } from '../context/CartContext';
 import TrustBadges from '../components/TrustBadges';
+import ProductCard from '../components/ProductCard';
 import { productOrderLink } from '../lib/whatsappOrder';
 import { applySeo, productJsonLd } from '../lib/seo';
+import { productGroup } from '../lib/productGroups';
+import { getCachedProducts, setCachedProducts } from '../lib/productCache';
 
 export default function ProductDetailPage() {
   const { productId } = useParams();
@@ -14,13 +17,42 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
+  const [allProducts, setAllProducts] = useState(() => getCachedProducts() || []);
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchProduct();
+    setActiveImage(0);
+    window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productId]);
+
+  // Full catalog (for related products) — cached list shows instantly.
+  useEffect(() => {
+    let cancelled = false;
+    api.get('/products')
+      .then((res) => {
+        if (cancelled) return;
+        setAllProducts(res.data);
+        setCachedProducts(res.data);
+      })
+      .catch((e) => console.error('Failed to fetch products:', e));
+    return () => { cancelled = true; };
+  }, []);
+
+  // Related: same jewellery type first, then same collection, then nearest price.
+  const related = useMemo(() => {
+    if (!product) return [];
+    const group = productGroup(product);
+    const rank = (p) =>
+      (productGroup(p) === group ? 0 : 100) + (p.category === product.category ? 0 : 10);
+    const priceGap = (p) => Math.abs((p.price ?? 0) - (product.price ?? 0));
+    return allProducts
+      .filter((p) => p.product_id !== product.product_id)
+      .sort((a, b) => rank(a) - rank(b) || priceGap(a) - priceGap(b))
+      .slice(0, 4);
+  }, [product, allProducts]);
 
   useEffect(() => {
     if (!product) return;
@@ -257,6 +289,20 @@ export default function ProductDetailPage() {
             </div>
           </div>
         </div>
+
+        {/* Related products */}
+        {related.length > 0 && (
+          <section className="mt-24 pt-16 border-t border-[#EAE5D9]" data-testid="related-products">
+            <h2 className="text-2xl sm:text-3xl font-serif font-light text-center text-[#1A1A1A] mb-12">
+              You May Also Like
+            </h2>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+              {related.map((p) => (
+                <ProductCard key={p.product_id} product={p} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
