@@ -21,7 +21,7 @@ const SEARCH_GROUP_SYNONYMS = {
 export default function ShopPage() {
   const [products, setProducts] = useState(() => getCachedProducts() || []);
   const [loading, setLoading] = useState(() => !getCachedProducts());
-  const [sortBy, setSortBy] = useState('price_asc');
+  const [sortBy, setSortBy] = useState('featured');
   const [searchParams, setSearchParams] = useSearchParams();
   const type = searchParams.get('type') || 'all';
   const category = searchParams.get('category') || 'all';
@@ -75,10 +75,13 @@ export default function ShopPage() {
     return sortBy === 'price_desc' ? b.price - a.price : a.price - b.price;
   };
 
-  // Search results sort cheapest-first; otherwise use the selected order.
-  const sortedProducts = (!search && sortBy === 'featured')
-    ? filtered
-    : [...filtered].sort(byPrice);
+  // Default ("Featured") order: Necklaces & Sets first, then Earrings,
+  // Bracelets and Hathphool — cheapest first within each group.
+  const GROUP_RANK = { necklace: 0, earrings: 1, bracelet: 2, hathphool: 3 };
+  const groupRank = (p) => GROUP_RANK[productGroup(p)] ?? 9;
+  const byFeatured = (a, b) => (groupRank(a) - groupRank(b)) || byPrice(a, b);
+
+  const sortedProducts = [...filtered].sort(sortBy === 'featured' ? byFeatured : byPrice);
 
   // Only offer type filters that actually have products.
   const presentGroups = new Set(products.map(productGroup));
@@ -108,17 +111,14 @@ export default function ShopPage() {
         <PromoBanner />
       </div>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           {!search && (
             <>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A1F3D] mb-4" data-testid="shop-overline">Browse Our Collection</p>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-light tracking-tight text-[#1A1A1A] mb-6" data-testid="shop-title">
+              {/* Compact heading kept for SEO/structure; the descriptive intro
+                  lives below the products so the grid is visible immediately. */}
+              <h1 className="text-2xl sm:text-3xl font-serif font-light tracking-tight text-[#1A1A1A] mb-5" data-testid="shop-title">
                 {heading}
               </h1>
-
-              <p className="max-w-3xl mx-auto text-sm md:text-base font-light leading-relaxed text-[#666666] mb-8" data-testid="shop-intro">
-                {content.intro}
-              </p>
 
               <div className="flex justify-center gap-3 flex-wrap">
                 {typeFilters.map((c) => (
@@ -148,9 +148,9 @@ export default function ShopPage() {
               className="border border-[#EAE5D9] bg-white px-4 py-2 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#7A1F3D]"
               data-testid="sort-select"
             >
+              <option value="featured">Featured</option>
               <option value="price_asc">Price: Low to High</option>
               <option value="price_desc">Price: High to Low</option>
-              <option value="featured">Featured</option>
             </select>
           </div>
         </div>
@@ -174,9 +174,16 @@ export default function ShopPage() {
           </div>
         )}
 
+        {/* Category description — kept below the grid for SEO */}
+        {!search && (
+          <p className="max-w-3xl mx-auto mt-24 text-center text-sm font-light leading-relaxed text-[#666666]" data-testid="shop-intro">
+            {content.intro}
+          </p>
+        )}
+
         {/* FAQs (rich-result eligible via FAQPage JSON-LD) */}
         {!search && (
-          <section className="max-w-3xl mx-auto mt-24" data-testid="shop-faq">
+          <section className="max-w-3xl mx-auto mt-16" data-testid="shop-faq">
             <h2 className="text-2xl md:text-3xl font-serif font-light text-center text-[#1A1A1A] mb-8">
               Frequently Asked Questions
             </h2>
