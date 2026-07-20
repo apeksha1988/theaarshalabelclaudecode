@@ -1,17 +1,23 @@
-// Caches the product list in localStorage so the shop/home pages can render
-// instantly on repeat visits — even while the (possibly cold-starting)
-// backend is still responding. Fresh data replaces the cache in the
-// background on every load.
+// Instant product data so the shop/home pages never show a long spinner —
+// even while the (possibly cold-starting) Render backend is waking up.
+//
+// Order of preference:
+//   1. localStorage cache  (repeat visitors — always up to date)
+//   2. bundled snapshot    (first-time visitors — ships in the JS bundle)
+// Fresh API data replaces both in the background on every load.
+import SNAPSHOT from '../data/productsSnapshot.json';
+
 const KEY = 'aarsha_products_v1';
 
 export function getCachedProducts() {
   try {
     const raw = localStorage.getItem(KEY);
     const data = raw ? JSON.parse(raw) : null;
-    return Array.isArray(data) && data.length ? data : null;
+    if (Array.isArray(data) && data.length) return data;
   } catch {
-    return null;
+    /* storage disabled — fall through to the snapshot */
   }
+  return Array.isArray(SNAPSHOT) && SNAPSHOT.length ? SNAPSHOT : null;
 }
 
 export function setCachedProducts(data) {
