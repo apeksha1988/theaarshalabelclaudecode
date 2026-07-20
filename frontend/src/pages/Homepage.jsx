@@ -83,8 +83,10 @@ export default function Homepage() {
 
   return (
     <div className="min-h-screen" data-testid="homepage">
-      {/* Hero Carousel: rotating product images, fixed text */}
-      <section className="relative h-screen overflow-hidden" data-testid="hero-carousel">
+      {/* Hero Carousel: rotating product images, fixed text.
+          Deliberately shorter than the viewport so the collection below peeks
+          above the fold — a full-screen hero was losing ~90% of visitors. */}
+      <section className="relative h-[78vh] sm:h-[82vh] overflow-hidden" data-testid="hero-carousel">
         {/* Rotating background images */}
         {HERO_IMAGES.map((s, i) => (
           <div
@@ -157,9 +159,9 @@ export default function Homepage() {
       </section>
 
       {/* Shop by Category */}
-      <section className="py-20 md:py-28 bg-[#FDFBF7]" data-testid="category-section">
+      <section className="py-10 md:py-16 bg-[#FDFBF7]" data-testid="category-section">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A1F3D] mb-4">Explore</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-light tracking-tight text-[#1A1A1A]">
               Shop by Category
