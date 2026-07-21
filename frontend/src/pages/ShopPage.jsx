@@ -106,12 +106,12 @@ export default function ShopPage() {
   }, [heading, content]);
 
   return (
-    <div className="min-h-screen pt-32 pb-20" data-testid="shop-page">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
+    <div className="min-h-screen pt-28 sm:pt-32 pb-20" data-testid="shop-page">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-4 sm:mb-6">
         <PromoBanner />
       </div>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="text-center mb-8">
+        <div className="text-center mb-5 sm:mb-8">
           {!search && (
             <>
               {/* Compact heading kept for SEO/structure; the descriptive intro
@@ -139,7 +139,7 @@ export default function ShopPage() {
             </>
           )}
 
-          <div className="flex justify-center sm:justify-end items-center gap-2 mt-8">
+          <div className="flex justify-center sm:justify-end items-center gap-2 mt-5 sm:mt-8">
             <label htmlFor="sort" className="text-xs uppercase tracking-wide text-[#666666]">Sort by</label>
             <select
               id="sort"
@@ -167,7 +167,7 @@ export default function ShopPage() {
             <p className="text-[#666666]">No products found in this category yet.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12" data-testid="products-grid">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-12" data-testid="products-grid">
             {sortedProducts.map((product) => (
               <ProductCard key={product.product_id} product={product} />
             ))}

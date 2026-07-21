@@ -218,7 +218,7 @@ export default function Homepage() {
               <p className="text-[#666666]">No products found.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12" data-testid="home-products-grid">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-12" data-testid="home-products-grid">
               {sortedProducts.map((product) => (
                 <ProductCard key={product.product_id} product={product} />
               ))}
