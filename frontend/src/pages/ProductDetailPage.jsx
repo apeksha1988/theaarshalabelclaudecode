@@ -22,6 +22,17 @@ export default function ProductDetailPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Render instantly from the cached/snapshot list (name, price, image),
+    // then load the full product (description, all images) in the background.
+    // Avoids a 30–50s "Loading product..." wait during a Render cold start.
+    const cached = (getCachedProducts() || []).find((p) => p.product_id === productId);
+    if (cached) {
+      setProduct(cached);
+      setLoading(false);
+    } else {
+      setProduct(null);
+      setLoading(true);
+    }
     fetchProduct();
     setActiveImage(0);
     window.scrollTo(0, 0);
