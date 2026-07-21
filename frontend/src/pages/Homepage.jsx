@@ -108,8 +108,9 @@ export default function Homepage() {
           </div>
         ))}
 
-        {/* Fixed text overlay */}
-        <div className="relative z-10 h-full flex items-center justify-center pointer-events-none">
+        {/* Fixed text overlay — top padding clears the fixed nav so the
+            title never hides under it on shorter viewports. */}
+        <div className="relative z-10 h-full flex items-center justify-center pt-24 pb-6 pointer-events-none">
           <div className="text-center max-w-3xl mx-auto px-6 text-white pointer-events-auto">
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-light tracking-tight mb-5" data-testid="hero-title">
               Radiate.Timeless.Elegance
