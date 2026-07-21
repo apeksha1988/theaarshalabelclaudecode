@@ -74,6 +74,12 @@ app = FastAPI()
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
+# Lightweight health check for uptime monitors (keeps the Render service warm).
+# Accepts GET and HEAD so tools like UptimeRobot (which default to HEAD) work.
+@api_router.api_route("/health", methods=["GET", "HEAD"])
+async def health():
+    return {"status": "ok"}
+
 # Models
 class User(BaseModel):
     user_id: str
