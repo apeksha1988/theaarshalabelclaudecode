@@ -80,7 +80,7 @@ export default function ProductCard({ product }) {
       <button
         onClick={handleAddToCart}
         disabled={!hasPrice}
-        className={`mt-4 w-full px-6 py-3 text-xs tracking-[0.15em] uppercase border transition-all duration-300 flex items-center justify-center gap-2
+        className={`mt-4 w-full px-3 sm:px-6 py-3 text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.15em] uppercase whitespace-nowrap border transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2
           ${!hasPrice
             ? 'border-[#EAE5D9] text-[#999999] cursor-not-allowed'
             : added

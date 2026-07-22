@@ -19,9 +19,12 @@ export default function PromoBanner() {
       className="relative bg-[#7A1F3D] text-white text-center px-10 py-2.5"
       data-testid="promo-banner"
     >
-      <p className="text-sm tracking-wide">
-        ✨ Get <span className="font-semibold">10% OFF</span> your first order — use code{' '}
-        <span className="font-semibold tracking-wider">WELCOME10</span> at checkout ✨
+      <p className="text-xs sm:text-sm tracking-wide flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+        <span>🚚 <span className="font-semibold">Free Delivery</span> across India</span>
+        <span className="hidden sm:inline opacity-40">|</span>
+        <span>💵 Cash on Delivery</span>
+        <span className="hidden sm:inline opacity-40">|</span>
+        <span>🎁 <span className="font-semibold">10% OFF</span> first order — code <span className="font-semibold tracking-wider">WELCOME10</span></span>
       </p>
       <button
         type="button"
