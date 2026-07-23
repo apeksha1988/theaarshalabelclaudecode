@@ -496,7 +496,8 @@
     "price": 105000,
     "currency": "INR",
     "images": [
-      "/images/Rose_Earrings.webp"
+      "/images/Rose_Earrings.webp",
+      "/images/the-aarsha-s-rose-parrot-heritage-jhumkas-earrings-photo1.webp"
     ],
     "category": "oxidised",
     "product_type": "Statement Jhumka Earrings",
@@ -528,7 +529,8 @@
     "price": 150000,
     "currency": "INR",
     "images": [
-      "/images/Dark_Red_Necklace.webp"
+      "/images/Dark_Red_Necklace.webp",
+      "/images/the-aarsha-s-royal-peacock-ruby-choker-set-photo1.webp"
     ],
     "category": "oxidised",
     "product_type": "Heritage Choker Necklace Set",
@@ -561,7 +563,8 @@
     "price": 128000,
     "currency": "INR",
     "images": [
-      "/images/COlored_Necklace.webp"
+      "/images/COlored_Necklace.webp",
+      "/images/the-aarsha-s-rustic-peacock-charm-choker-set-photo1.webp"
     ],
     "category": "oxidised",
     "product_type": "Designer Choker Necklace Set",
@@ -593,7 +596,8 @@
     "price": 210000,
     "currency": "INR",
     "images": [
-      "/images/Hasli1.webp"
+      "/images/Hasli1.webp",
+      "/images/the-aarsha-s-hasli-choker-set-photo1.webp"
     ],
     "category": "oxidised",
     "product_type": "Heritage Statement Choker Necklace Set",
@@ -625,7 +629,8 @@
     "price": 124000,
     "currency": "INR",
     "images": [
-      "/images/Earrings1.webp"
+      "/images/Earrings1.webp",
+      "/images/the-aarsha-s-vintage-paisley-pearl-drops-photo1.webp"
     ],
     "category": "oxidised",
     "product_type": "Statement Jhumka Earrings",
@@ -673,7 +678,9 @@
     "price": 378000,
     "currency": "INR",
     "images": [
-      "/images/Emerald_ruby.webp"
+      "/images/Emerald_ruby.webp",
+      "/images/the-aarsha-s-mayura-pearl-heritage-chandbali-earrings-photo1.webp",
+      "/images/the-aarsha-s-mayura-pearl-heritage-chandbali-earrings-photo2.webp"
     ],
     "category": "oxidised",
     "product_type": "Statement Chandbali Earrings",
@@ -761,7 +768,8 @@
     "price": 93800,
     "currency": "INR",
     "images": [
-      "/images/Chandbali_Pink.webp"
+      "/images/Chandbali_Pink.webp",
+      "/images/the-aarsha-s-gulnaar-oxidized-chandbali-earrings-photo1.webp"
     ],
     "category": "oxidised",
     "product_type": "Oxidized Chandbali Statement Earrings",
@@ -778,7 +786,8 @@
     "price": 93800,
     "currency": "INR",
     "images": [
-      "/images/Chandbali_black.webp"
+      "/images/Chandbali_black.webp",
+      "/images/the-aarsha-s-noir-heritage-chandbali-earrings-photo1.webp"
     ],
     "category": "oxidised",
     "product_type": "Oxidized Chandbali Statement Earrings",
@@ -795,7 +804,8 @@
     "price": 84000,
     "currency": "INR",
     "images": [
-      "/images/safar-camel-cascade-earrings.webp"
+      "/images/safar-camel-cascade-earrings.webp",
+      "/images/the-aarsha-s-safar-oxidized-camel-cascade-statement-earrings-photo1.webp"
     ],
     "category": "oxidised",
     "product_type": "Oxidized Long Statement Earrings",
@@ -812,7 +822,8 @@
     "price": 91000,
     "currency": "INR",
     "images": [
-      "/images/Blck_long_earrings.webp"
+      "/images/Blck_long_earrings.webp",
+      "/images/the-aarsha-s-noor-oxidized-midnight-cascade-earrings-photo1.webp"
     ],
     "category": "oxidised",
     "product_type": "Oxidized Long Tassel Statement Earrings",
@@ -829,7 +840,8 @@
     "price": 80500,
     "currency": "INR",
     "images": [
-      "/images/Pink_Long_Earrings.webp"
+      "/images/Pink_Long_Earrings.webp",
+      "/images/the-aarsha-s-meher-oxidised-chand-ghungroo-long-earrings-photo1.webp"
     ],
     "category": "oxidised",
     "product_type": "Long Statement Oxidised Earrings",
@@ -846,7 +858,9 @@
     "price": 276500,
     "currency": "INR",
     "images": [
-      "/images/emerald-moissanite-bracelet.webp"
+      "/images/emerald-moissanite-bracelet.webp",
+      "/images/the-aarsha-s-emerald-moissanite-bracelet-photo1.webp",
+      "/images/the-aarsha-s-emerald-moissanite-bracelet-photo2.webp"
     ],
     "category": "premium_heritage",
     "product_type": "Statement Bracelet",
@@ -863,7 +877,9 @@
     "price": 276500,
     "currency": "INR",
     "images": [
-      "/images/ruby-moissanite-bracelet.webp"
+      "/images/ruby-moissanite-bracelet.webp",
+      "/images/the-aarsha-s-ruby-moissanite-bracelet-photo1.webp",
+      "/images/the-aarsha-s-ruby-moissanite-bracelet-photo2.webp"
     ],
     "category": "premium_heritage",
     "product_type": "Statement Bracelet",
@@ -880,7 +896,8 @@
     "price": 424900,
     "currency": "INR",
     "images": [
-      "/images/emerald-polki-hathphool.webp"
+      "/images/emerald-polki-hathphool.webp",
+      "/images/the-aarsha-s-emerald-polki-hathphool-photo1.webp"
     ],
     "category": "premium_heritage",
     "product_type": "Hathphool (Hand Harness) with Ring",
@@ -897,7 +914,9 @@
     "price": 567000,
     "currency": "INR",
     "images": [
-      "/images/polki-hathphool.webp"
+      "/images/polki-hathphool.webp",
+      "/images/the-aarsha-s-polki-hathphool-photo1.webp",
+      "/images/the-aarsha-s-polki-hathphool-photo2.webp"
     ],
     "category": "premium_heritage",
     "product_type": "Hathphool (Hand Harness) with Ring",
