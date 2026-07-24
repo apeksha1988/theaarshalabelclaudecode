@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
 import { useCart } from '../context/CartContext';
@@ -50,10 +50,18 @@ export default function CheckoutPage() {
     phone: '',
   });
 
-  if (cartItems.length === 0) {
-    navigate('/cart');
-    return null;
-  }
+  // Once an order is placed we clear the cart, which empties cartItems. Without
+  // this flag the empty-cart guard below would bounce the customer to /cart
+  // instead of the order confirmation page.
+  const orderPlacedRef = useRef(false);
+
+  useEffect(() => {
+    if (cartItems.length === 0 && !orderPlacedRef.current) {
+      navigate('/cart', { replace: true });
+    }
+  }, [cartItems.length, navigate]);
+
+  if (cartItems.length === 0) return null;
 
   const applyCoupon = () => {
     const result = getCoupon(couponInput, cartTotal);
@@ -111,8 +119,9 @@ export default function CheckoutPage() {
       try {
         const { data } = await api.post('/checkout/cod', payload);
         trackPurchase(data.order_id, cartItems, payableTotal / 100);
-        clearCart();
+        orderPlacedRef.current = true;
         navigate(`/checkout/result?order_id=${data.order_id}`);
+        clearCart();
       } catch (error) {
         console.error('COD checkout error:', error);
         const detail = error?.response?.data?.detail;
@@ -161,8 +170,9 @@ export default function CheckoutPage() {
             console.error('Verification error:', err);
           }
           trackPurchase(data.order_id, cartItems, (data.amount ?? payableTotal) / 100);
-          clearCart();
+          orderPlacedRef.current = true;
           navigate(`/checkout/result?order_id=${data.order_id}`);
+          clearCart();
         },
         modal: {
           ondismiss: () => setLoading(false),

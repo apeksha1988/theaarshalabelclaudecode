@@ -98,7 +98,7 @@ export default function Homepage() {
               <img
                 src={s.image}
                 alt=""
-                fetchpriority={i === 0 ? 'high' : 'auto'}
+                fetchPriority={i === 0 ? 'high' : 'auto'}
                 decoding="async"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ objectPosition: s.position }}
