@@ -134,11 +134,11 @@ export default function ProductDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product Images */}
           <div>
-            <div className="bg-[#F5F0E6] aspect-square overflow-hidden mb-4">
+            <div className="bg-[#F5F0E6] aspect-[4/5] overflow-hidden mb-4 flex items-center justify-center">
               <img
                 src={product.images[activeImage] || product.images[0]}
                 alt={product.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 data-testid="product-main-image"
               />
             </div>
