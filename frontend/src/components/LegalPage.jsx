@@ -17,6 +17,13 @@ export default function LegalPage({ title, updated, sections }) {
               {s.body.map((p, j) => (
                 <p key={j} className="text-[#444444] leading-relaxed mb-3">{p}</p>
               ))}
+              {s.bullets && (
+                <ul className="list-disc pl-6 space-y-2 text-[#444444] leading-relaxed mb-3">
+                  {s.bullets.map((b, k) => (
+                    <li key={k}>{b}</li>
+                  ))}
+                </ul>
+              )}
             </section>
           ))}
         </div>
