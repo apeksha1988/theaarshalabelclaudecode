@@ -80,6 +80,48 @@ api_router = APIRouter(prefix="/api")
 async def health():
     return {"status": "ok"}
 
+
+# Google Merchant Center product feed (auto-updating). Point a scheduled fetch
+# at https://api.theaarshalabel.com/api/google-feed.
+@api_router.get("/google-feed")
+async def google_feed():
+    import csv as _csv
+    import io as _io
+    from fastapi.responses import Response
+
+    SITE = "https://www.theaarshalabel.com"
+    cols = ["id", "title", "description", "link", "image_link", "additional_image_link",
+            "availability", "price", "brand", "condition", "google_product_category",
+            "product_type", "identifier_exists", "shipping"]
+    products = await products_collection.find({}, {"_id": 0}).to_list(1000)
+    buf = _io.StringIO()
+    w = _csv.DictWriter(buf, fieldnames=cols)
+    w.writeheader()
+    for x in products:
+        if not x.get("price"):
+            continue
+        imgs = x.get("images", []) or []
+        addl = ",".join(SITE + i for i in imgs[1:11]) if len(imgs) > 1 else ""
+        desc = (x.get("description") or x.get("name", "")).replace("\n", " ").strip()[:4900]
+        w.writerow({
+            "id": x["product_id"],
+            "title": (x.get("name", ""))[:140],
+            "description": desc,
+            "link": f"{SITE}/product/{x['product_id']}",
+            "image_link": SITE + imgs[0] if imgs else "",
+            "additional_image_link": addl,
+            "availability": "in_stock",
+            "price": f"{x['price'] / 100:.2f} INR",
+            "brand": "The Aarsha Label",
+            "condition": "new",
+            "google_product_category": "188",  # Apparel & Accessories > Jewelry
+            "product_type": x.get("product_type", ""),
+            "identifier_exists": "no",
+            "shipping": "IN:::0 INR",
+        })
+    return Response(content=buf.getvalue(), media_type="text/csv",
+                    headers={"Content-Disposition": "inline; filename=aarsha-google-feed.csv"})
+
 # Models
 class User(BaseModel):
     user_id: str
