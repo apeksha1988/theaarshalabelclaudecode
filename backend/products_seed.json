@@ -118,7 +118,9 @@
     "price": 647400,
     "currency": "INR",
     "images": [
-      "/images/sabyasachi-inspired-royale-necklace-set.webp"
+      "/images/sabyasachi-inspired-royale-necklace-set.webp",
+      "/images/the-aarsha-s-sabyasachi-inspired-royale-necklace-set-photo1.webp",
+      "/images/the-aarsha-s-sabyasachi-inspired-royale-necklace-set-photo2.webp"
     ],
     "category": "premium_heritage",
     "product_type": "Statement Necklace Set with Matching Drop Earrings",
@@ -231,7 +233,11 @@
     "price": 497000,
     "currency": "INR",
     "images": [
-      "/images/polki-choker-set.webp"
+      "/images/polki-choker-set.webp",
+      "/images/the-aarsha-s-polki-choker-set-photo1.webp",
+      "/images/the-aarsha-s-polki-choker-set-photo2.webp",
+      "/images/the-aarsha-s-polki-choker-set-photo3.webp",
+      "/images/the-aarsha-s-polki-choker-set-photo4.webp"
     ],
     "category": "premium_heritage",
     "product_type": "Polki Choker Necklace Set with Matching Stud Earrings",
@@ -284,7 +290,9 @@
     "price": 340000,
     "currency": "INR",
     "images": [
-      "/images/Crystal_set.webp"
+      "/images/Crystal_set.webp",
+      "/images/the-aarsha-s-meher-crystal-choker-photo1.webp",
+      "/images/the-aarsha-s-meher-crystal-choker-photo2.webp"
     ],
     "category": "premium_heritage",
     "product_type": "Choker Necklace Set with Matching Drop Earrings",
@@ -354,7 +362,9 @@
     "price": 180000,
     "currency": "INR",
     "images": [
-      "/images/Ruby_crystal_Set.webp"
+      "/images/Ruby_crystal_Set.webp",
+      "/images/the-aarsha-s-ruby-blossom-pendant-necklace-set-photo1.webp",
+      "/images/the-aarsha-s-ruby-blossom-pendant-necklace-set-photo2.webp"
     ],
     "category": "premium_heritage",
     "product_type": "Pendant Necklace Set with Earrings",
@@ -534,7 +544,8 @@
     "price": 124000,
     "currency": "INR",
     "images": [
-      "/images/Navy_Blue_earrings.webp"
+      "/images/Navy_Blue_earrings.webp",
+      "/images/the-aarsha-s-royal-peacock-jhumka-earrings-photo1.webp"
     ],
     "category": "oxidised",
     "product_type": "Statement Jhumka Earrings",
@@ -601,7 +612,9 @@
     "price": 150000,
     "currency": "INR",
     "images": [
-      "/images/Gold_color_necklace.webp"
+      "/images/Gold_color_necklace.webp",
+      "/images/the-aarsha-s-mayuri-blush-heritage-choker-photo1.webp",
+      "/images/the-aarsha-s-mayuri-blush-heritage-choker-photo2.webp"
     ],
     "category": "oxidised",
     "product_type": "Designer Heritage Choker Necklace Set",
@@ -634,7 +647,9 @@
     "price": 210000,
     "currency": "INR",
     "images": [
-      "/images/Hasli2.webp"
+      "/images/Hasli2.webp",
+      "/images/the-aarsha-s-mayur-ratna-hasli-choker-photo1.webp",
+      "/images/the-aarsha-s-mayur-ratna-hasli-choker-photo2.webp"
     ],
     "category": "oxidised",
     "product_type": "Heritage Statement Choker Necklace Set",
@@ -667,7 +682,9 @@
     "price": 150000,
     "currency": "INR",
     "images": [
-      "/images/DropEarrings.webp"
+      "/images/DropEarrings.webp",
+      "/images/the-aarsha-s-zariya-emerald-chandbali-earrings-photo1.webp",
+      "/images/the-aarsha-s-zariya-emerald-chandbali-earrings-photo2.webp"
     ],
     "category": "oxidised",
     "product_type": "Statement Chandbali Earrings",
