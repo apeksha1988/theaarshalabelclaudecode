@@ -12,8 +12,11 @@ import { getCachedProducts, setCachedProducts } from '../lib/productCache';
 
 export default function ProductDetailPage() {
   const { productId } = useParams();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // Seed straight from the cached snapshot so the product renders on the very
+  // first paint — no "Loading product..." spinner flash.
+  const initialCached = (getCachedProducts() || []).find((p) => p.product_id === productId);
+  const [product, setProduct] = useState(initialCached || null);
+  const [loading, setLoading] = useState(!initialCached);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
