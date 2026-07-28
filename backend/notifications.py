@@ -181,6 +181,33 @@ async def send_whatsapp_template(campaign_name: str, destination: str, user_name
         return False
 
 
+async def send_whatsapp_template_debug(campaign_name: str, destination: str, user_name: str, params: list) -> dict:
+    """Like send_whatsapp_template but returns AiSensy's raw response for debugging."""
+    if not aisensy_enabled:
+        return {"ok": False, "reason": "aisensy_not_enabled"}
+    dest = "".join(ch for ch in str(destination) if ch.isdigit())
+    payload = {
+        "apiKey": AISENSY_API_KEY,
+        "campaignName": campaign_name,
+        "destination": dest,
+        "userName": user_name or STORE_NAME,
+        "templateParams": [str(p) for p in params],
+        "source": "theaarshalabel.com",
+    }
+    try:
+        async with httpx.AsyncClient(timeout=20) as client:
+            resp = await client.post(AISENSY_API_URL, json=payload)
+        return {
+            "ok": resp.status_code < 400,
+            "status": resp.status_code,
+            "body": resp.text[:500],
+            "destination": dest,
+            "campaign": campaign_name,
+        }
+    except Exception as e:
+        return {"ok": False, "reason": str(e)}
+
+
 # ----------------------------- Message builders -----------------------------
 def _items_html(order: dict) -> str:
     rows = ""

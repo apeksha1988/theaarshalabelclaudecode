@@ -98,6 +98,21 @@ async def notifications_health():
     }
 
 
+# Diagnostic: fires the customer template to the configured OWNER number ONLY
+# (never an arbitrary destination) and returns AiSensy's raw response so we can
+# see exactly why sends are failing. Safe to remove once WhatsApp is working.
+@api_router.get("/health/notifications/test-send")
+async def notifications_test_send():
+    if not OWNER_WHATSAPP:
+        return {"error": "OWNER_WHATSAPP not set — cannot run a safe self-test"}
+    if not AISENSY_CUSTOMER_CAMPAIGN:
+        return {"error": "AISENSY_CUSTOMER_CAMPAIGN not set"}
+    return await notifications.send_whatsapp_template_debug(
+        AISENSY_CUSTOMER_CAMPAIGN, OWNER_WHATSAPP, "Test Customer",
+        ["Test Customer", "order_test123", "Rs 540"],
+    )
+
+
 # Google Merchant Center product feed (auto-updating). Point a scheduled fetch
 # at https://api.theaarshalabel.com/api/google-feed.
 @api_router.get("/google-feed")
