@@ -42,6 +42,42 @@ export const SHOP_CONTENT = {
       },
     ],
   },
+  choker: {
+    intro:
+      'Shop statement choker necklace sets online — bridal Kundan and Polki chokers, Victorian and Moissanite chokers, each handcrafted with antique gold detailing and matching earrings. A close-fitting, regal look made for weddings and festive wear. Free delivery across India.',
+    faqs: [
+      {
+        q: 'What is a choker necklace set?',
+        a: 'A choker sits high and close to the neck for a bold, regal look. Our choker sets come with matching earrings and are handcrafted in Kundan, Polki, Victorian and Moissanite styles.',
+      },
+      {
+        q: 'Are choker sets good for brides?',
+        a: 'Yes — Kundan and Polki chokers are among the most loved bridal pieces, perfect layered for the wedding day or worn solo for receptions and sangeets.',
+      },
+      {
+        q: 'What is the price range of your choker sets?',
+        a: 'Choker sets range from around ₹1,280 to ₹9,000 depending on the stones and craftsmanship.',
+      },
+    ],
+  },
+  bridal: {
+    intro:
+      'Shop bridal jewellery sets online at The Aarsha Label — handcrafted Kundan and Polki bridal chokers, layered haars and statement sets designed for your wedding day. Sabyasachi-inspired craftsmanship at a fraction of the price, each with matching earrings. Free delivery across India.',
+    faqs: [
+      {
+        q: 'What jewellery is best for a bride?',
+        a: 'Kundan and Polki choker and haar sets are our signature bridal picks — statement pieces designed for the wedding day, reception and festive functions, most with matching earrings.',
+      },
+      {
+        q: 'Is your bridal jewellery real gold?',
+        a: 'Our bridal pieces are premium handcrafted fashion jewellery — antique gold-plated with Kundan, Polki and moissanite stones. You get the heirloom bridal look without heirloom prices.',
+      },
+      {
+        q: 'Do bridal sets come with matching earrings?',
+        a: 'Yes — our bridal sets include matching earrings so you have a complete, ready-to-wear bridal look.',
+      },
+    ],
+  },
   earrings: {
     intro:
       'Shop handcrafted Indian earrings online — statement jhumkas, heritage chandbalis, oxidised silver-tone danglers and pearl drops. Lightweight, skin-friendly and made for weddings, festivals and everyday ethnic wear. Free delivery across India.',
