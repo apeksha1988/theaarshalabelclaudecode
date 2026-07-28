@@ -81,6 +81,23 @@ async def health():
     return {"status": "ok"}
 
 
+# Diagnostic: reports which notification settings are loaded (no secrets — only
+# booleans, campaign names, and the API key's last 4 chars). Used to debug why
+# WhatsApp/email order notifications aren't arriving. Safe to remove later.
+@api_router.get("/health/notifications")
+async def notifications_health():
+    key = notifications.AISENSY_API_KEY or ""
+    return {
+        "aisensy_enabled": notifications.aisensy_enabled,
+        "api_key_tail": ("…" + key[-4:]) if key else None,
+        "customer_campaign": AISENSY_CUSTOMER_CAMPAIGN,
+        "owner_campaign": AISENSY_OWNER_CAMPAIGN,
+        "owner_whatsapp_set": bool(OWNER_WHATSAPP),
+        "aisensy_api_url": notifications.AISENSY_API_URL,
+        "email_enabled": notifications.email_enabled,
+    }
+
+
 # Google Merchant Center product feed (auto-updating). Point a scheduled fetch
 # at https://api.theaarshalabel.com/api/google-feed.
 @api_router.get("/google-feed")
