@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { initAnalytics, trackPageView } from './lib/analytics';
 import { AuthProvider } from './context/AuthContext';
@@ -6,26 +6,31 @@ import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
 import Navigation from './components/Navigation';
 import ProtectedRoute from './components/ProtectedRoute';
+import WhatsAppButton from './components/WhatsAppButton';
+import Footer from './components/Footer';
+// Core shopping funnel — loaded eagerly so it paints instantly.
 import Homepage from './pages/Homepage';
 import ShopPage from './pages/ShopPage';
 import ProductDetailPage from './pages/ProductDetailPage';
-import CartPage from './pages/CartPage';
-import CheckoutPage from './pages/CheckoutPage';
-import CheckoutResultPage from './pages/CheckoutResultPage';
-import LoginPage from './pages/LoginPage';
-import ForgotPasswordPage from './pages/ForgotPasswordPage';
-import ResetPasswordPage from './pages/ResetPasswordPage';
-import DashboardPage from './pages/DashboardPage';
-import AdminOrdersPage from './pages/AdminOrdersPage';
-import WishlistPage from './pages/WishlistPage';
-import ContactPage from './pages/ContactPage';
-import RefundPolicyPage from './pages/RefundPolicyPage';
-import ShippingPolicyPage from './pages/ShippingPolicyPage';
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
-import TermsPage from './pages/TermsPage';
-import WhatsAppButton from './components/WhatsAppButton';
-import Footer from './components/Footer';
 import '@/App.css';
+
+// Everything else is code-split: these chunks load only when their route is
+// visited, so a first-time shopper doesn't download checkout/admin/policy code
+// just to see the homepage.
+const CartPage = lazy(() => import('./pages/CartPage'));
+const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
+const CheckoutResultPage = lazy(() => import('./pages/CheckoutResultPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'));
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const AdminOrdersPage = lazy(() => import('./pages/AdminOrdersPage'));
+const WishlistPage = lazy(() => import('./pages/WishlistPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const RefundPolicyPage = lazy(() => import('./pages/RefundPolicyPage'));
+const ShippingPolicyPage = lazy(() => import('./pages/ShippingPolicyPage'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
+const TermsPage = lazy(() => import('./pages/TermsPage'));
 
 function AppRoutes() {
   const location = useLocation();
@@ -41,6 +46,7 @@ function AppRoutes() {
   return (
     <>
       <Navigation />
+      <Suspense fallback={<div className="min-h-screen" />}>
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/shop" element={<ShopPage />} />
@@ -74,6 +80,7 @@ function AppRoutes() {
           }
         />
       </Routes>
+      </Suspense>
       <Footer />
       <WhatsAppButton />
     </>
