@@ -81,38 +81,6 @@ async def health():
     return {"status": "ok"}
 
 
-# Diagnostic: reports which notification settings are loaded (no secrets — only
-# booleans, campaign names, and the API key's last 4 chars). Used to debug why
-# WhatsApp/email order notifications aren't arriving. Safe to remove later.
-@api_router.get("/health/notifications")
-async def notifications_health():
-    key = notifications.AISENSY_API_KEY or ""
-    return {
-        "aisensy_enabled": notifications.aisensy_enabled,
-        "api_key_tail": ("…" + key[-4:]) if key else None,
-        "customer_campaign": AISENSY_CUSTOMER_CAMPAIGN,
-        "owner_campaign": AISENSY_OWNER_CAMPAIGN,
-        "owner_whatsapp_set": bool(OWNER_WHATSAPP),
-        "aisensy_api_url": notifications.AISENSY_API_URL,
-        "email_enabled": notifications.email_enabled,
-    }
-
-
-# Diagnostic: fires the customer template to the configured OWNER number ONLY
-# (never an arbitrary destination) and returns AiSensy's raw response so we can
-# see exactly why sends are failing. Safe to remove once WhatsApp is working.
-@api_router.get("/health/notifications/test-send")
-async def notifications_test_send():
-    if not OWNER_WHATSAPP:
-        return {"error": "OWNER_WHATSAPP not set — cannot run a safe self-test"}
-    if not AISENSY_CUSTOMER_CAMPAIGN:
-        return {"error": "AISENSY_CUSTOMER_CAMPAIGN not set"}
-    return await notifications.send_whatsapp_template_debug(
-        AISENSY_CUSTOMER_CAMPAIGN, OWNER_WHATSAPP, "Test Customer",
-        ["Test Customer", "order_test123", "Rs 540"],
-    )
-
-
 # Google Merchant Center product feed (auto-updating). Point a scheduled fetch
 # at https://api.theaarshalabel.com/api/google-feed.
 @api_router.get("/google-feed")
