@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import api from '../lib/api';
 import ProductCard from '../components/ProductCard';
+import UnboxingVideo from '../components/UnboxingVideo';
 import { productGroup } from '../lib/productGroups';
 import { applySeo } from '../lib/seo';
 import { getCachedProducts, setCachedProducts } from '../lib/productCache';
@@ -227,6 +228,9 @@ export default function Homepage() {
           )}
         </div>
       </section>
+
+      {/* Real customer unboxing (click-to-play; no impact on page load) */}
+      <UnboxingVideo />
     </div>
   );
 }
