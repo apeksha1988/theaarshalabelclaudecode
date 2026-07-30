@@ -5,6 +5,7 @@ import api from '../lib/api';
 import { useCart, MAX_QTY } from '../context/CartContext';
 import TrustBadges from '../components/TrustBadges';
 import ProductCard from '../components/ProductCard';
+import ProductReviews, { ProductRatingInline } from '../components/ProductReviews';
 import { productOrderLink } from '../lib/whatsappOrder';
 import { applySeo, productJsonLd } from '../lib/seo';
 import { productGroup } from '../lib/productGroups';
@@ -169,9 +170,10 @@ export default function ProductDetailPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A1F3D] mb-4" data-testid="product-category">
               {product.product_type || product.category}
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-light tracking-tight text-[#1A1A1A] mb-6" data-testid="product-title">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-light tracking-tight text-[#1A1A1A] mb-4" data-testid="product-title">
               {product.name}
             </h1>
+            <ProductRatingInline productId={product.product_id} />
             <p className="text-3xl font-light text-[#1A1A1A] mb-3" data-testid="product-price-detail">
               {formatPrice(product.price, product.currency)}
             </p>
@@ -303,6 +305,9 @@ export default function ProductDetailPage() {
             </div>
           </div>
         </div>
+
+        {/* Customer reviews */}
+        <ProductReviews productId={product.product_id} />
 
         {/* Related products */}
         {related.length > 0 && (
