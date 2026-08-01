@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from '../lib/api';
-import { Mail, Check, Send } from 'lucide-react';
+import { Mail, Check, Send, MessageCircle, MapPin, Clock } from 'lucide-react';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -31,8 +31,48 @@ export default function ContactPage() {
             Contact Us
           </h1>
           <p className="text-[#666666]">
-            Questions about a piece, a custom request, or your order? Send us a message and we'll get back to you.
+            Questions about a piece, a custom request, or your order? Reach us any of the ways below and we'll get back to you.
           </p>
+        </div>
+
+        {/* Visible business contact details (transparency + trust) */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-10" data-testid="contact-details">
+          <a
+            href="mailto:support@theaarshalabel.com"
+            className="flex items-start gap-3 bg-[#F5F0E6] p-5 hover:bg-[#efe8da] transition-colors"
+          >
+            <Mail className="w-5 h-5 text-[#7A1F3D] mt-0.5 shrink-0" />
+            <span>
+              <span className="block text-xs uppercase tracking-wide text-[#666666]">Email</span>
+              <span className="text-[#1A1A1A]">support@theaarshalabel.com</span>
+            </span>
+          </a>
+          <a
+            href="https://wa.me/917310768702"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-start gap-3 bg-[#F5F0E6] p-5 hover:bg-[#efe8da] transition-colors"
+          >
+            <MessageCircle className="w-5 h-5 text-[#7A1F3D] mt-0.5 shrink-0" />
+            <span>
+              <span className="block text-xs uppercase tracking-wide text-[#666666]">WhatsApp</span>
+              <span className="text-[#1A1A1A]">+91 73107 68702</span>
+            </span>
+          </a>
+          <div className="flex items-start gap-3 bg-[#F5F0E6] p-5">
+            <MapPin className="w-5 h-5 text-[#7A1F3D] mt-0.5 shrink-0" />
+            <span>
+              <span className="block text-xs uppercase tracking-wide text-[#666666]">Location</span>
+              <span className="text-[#1A1A1A]">Bangalore, Karnataka, India</span>
+            </span>
+          </div>
+          <div className="flex items-start gap-3 bg-[#F5F0E6] p-5">
+            <Clock className="w-5 h-5 text-[#7A1F3D] mt-0.5 shrink-0" />
+            <span>
+              <span className="block text-xs uppercase tracking-wide text-[#666666]">Hours</span>
+              <span className="text-[#1A1A1A]">Mon–Sat, 10 AM – 7 PM IST</span>
+            </span>
+          </div>
         </div>
 
         {sent ? (

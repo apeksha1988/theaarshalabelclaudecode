@@ -12,6 +12,9 @@ export default function Footer() {
             <p className="text-sm text-[#A89F92] leading-relaxed">
               Handcrafted Kundan, Polki &amp; contemporary jewellery — heritage craftsmanship for the modern woman.
             </p>
+            <p className="text-sm text-[#A89F92] leading-relaxed mt-3">
+              Bangalore, Karnataka, India
+            </p>
           </div>
 
           <div>
@@ -36,6 +39,7 @@ export default function Footer() {
           <div>
             <h4 className="text-xs uppercase tracking-[0.2em] text-[#A89F92] mb-4">Contact</h4>
             <ul className="space-y-2 text-sm">
+              <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
               <li><a href="mailto:support@theaarshalabel.com" className="hover:text-white transition-colors">support@theaarshalabel.com</a></li>
               <li><a href="https://wa.me/917310768702" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">WhatsApp: +91 73107 68702</a></li>
