@@ -198,6 +198,10 @@ export default function Homepage() {
         </div>
       </section>
 
+      {/* Real customer unboxing — placed above the collection so shoppers see
+          the trust signal early, while products still stay near the top. */}
+      <UnboxingVideo />
+
       {/* Collection Section */}
       <section className="py-20 md:py-32 bg-[#FDFBF7]">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -228,9 +232,6 @@ export default function Homepage() {
           )}
         </div>
       </section>
-
-      {/* Real customer unboxing (click-to-play; no impact on page load) */}
-      <UnboxingVideo />
     </div>
   );
 }
