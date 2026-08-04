@@ -43,16 +43,24 @@ export default function CartPage() {
           <div className="lg:col-span-2 space-y-6">
             {cartItems.map((item) => (
               <div key={item.product_id} className="flex gap-6 pb-6 border-b border-[#EAE5D9]" data-testid={`cart-item-${item.product_id}`}>
-                <div className="w-32 h-32 bg-[#F5F0E6] overflow-hidden flex-shrink-0">
+                <Link
+                  to={`/product/${item.product_id}`}
+                  className="w-32 h-32 bg-[#F5F0E6] overflow-hidden flex-shrink-0 block"
+                  aria-label={`View ${item.name}`}
+                >
                   <img
                     src={item.images[0]}
                     alt={item.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
                     data-testid="cart-item-image"
                   />
-                </div>
+                </Link>
                 <div className="flex-1">
-                  <h3 className="text-lg font-serif font-medium text-[#1A1A1A] mb-2" data-testid="cart-item-name">{item.name}</h3>
+                  <h3 className="text-lg font-serif font-medium text-[#1A1A1A] mb-2" data-testid="cart-item-name">
+                    <Link to={`/product/${item.product_id}`} className="hover:text-[#7A1F3D] transition-colors">
+                      {item.name}
+                    </Link>
+                  </h3>
                   <p className="text-sm text-[#666666] mb-4" data-testid="cart-item-price">₹{(item.price / 100).toLocaleString('en-IN')}</p>
                   <div className="flex items-center gap-4">
                     <button
