@@ -40,7 +40,7 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div className="group flex flex-col" data-testid={`product-card-${product.product_id}`}>
+    <div className="group flex flex-col h-full" data-testid={`product-card-${product.product_id}`}>
       <Link to={`/product/${product.product_id}`} className="block">
         <div className="relative bg-[#F5F0E6] w-full aspect-[4/5] overflow-hidden mb-4">
           <img
@@ -72,7 +72,7 @@ export default function ProductCard({ product }) {
         <h3 className="text-lg font-serif font-medium text-[#1A1A1A] leading-snug" data-testid="product-name">
           {product.name}
         </h3>
-        <p className="text-base text-[#7A1F3D] mt-1 font-light tracking-wide" data-testid="product-price">
+        <p className="text-base text-[#7A1F3D] mt-1 mb-4 font-light tracking-wide" data-testid="product-price">
           {formatPrice(product.price)}
         </p>
       </Link>
@@ -80,7 +80,7 @@ export default function ProductCard({ product }) {
       <button
         onClick={handleAddToCart}
         disabled={!hasPrice}
-        className={`mt-4 w-full px-3 sm:px-6 py-3 text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.15em] uppercase whitespace-nowrap border transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2
+        className={`mt-auto w-full px-3 sm:px-6 py-3 text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.15em] uppercase whitespace-nowrap border transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2
           ${!hasPrice
             ? 'border-[#EAE5D9] text-[#999999] cursor-not-allowed'
             : added
