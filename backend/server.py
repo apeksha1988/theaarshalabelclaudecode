@@ -55,6 +55,8 @@ OWNER_WHATSAPP = os.getenv("OWNER_WHATSAPP")
 # AiSensy WhatsApp template campaign names (created in the AiSensy dashboard)
 AISENSY_CUSTOMER_CAMPAIGN = os.getenv("AISENSY_CUSTOMER_CAMPAIGN")
 AISENSY_OWNER_CAMPAIGN = os.getenv("AISENSY_OWNER_CAMPAIGN")
+AISENSY_ABANDONED_CAMPAIGN = os.getenv("AISENSY_ABANDONED_CAMPAIGN")
+TASKS_TOKEN = os.getenv("TASKS_TOKEN")  # shared secret guarding scheduled-task endpoints
 
 # Cash on Delivery surcharge (in paise). Override with COD_FEE_PAISE.
 COD_FEE_PAISE = int(os.getenv("COD_FEE_PAISE", "15000"))  # ₹150 default
@@ -1020,6 +1022,43 @@ async def notify_order_status(order: dict):
         await notifications.send_email(order.get("email"), subj, html, text)
     except Exception as e:
         logging.error("notify_order_status failed: %s", e)
+
+
+# Abandoned-checkout WhatsApp reminders. A scheduled job (GitHub Actions cron)
+# calls this with ?token=TASKS_TOKEN. It nudges people who started checkout —
+# so we already have their phone — but didn't pay within ~1 hour. Each order is
+# reminded at most once (guarded by abandoned_reminded_at).
+@api_router.api_route("/tasks/abandoned-reminders", methods=["GET", "POST"])
+async def abandoned_reminders(request: Request):
+    if not TASKS_TOKEN or request.query_params.get("token") != TASKS_TOKEN:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    if not (notifications.aisensy_enabled and AISENSY_ABANDONED_CAMPAIGN):
+        return {"skipped": "abandoned-cart WhatsApp not configured"}
+
+    now = datetime.now(timezone.utc)
+    query = {
+        "status": "pending_payment",
+        "created_at": {"$lte": now - timedelta(minutes=60), "$gte": now - timedelta(hours=24)},
+        "abandoned_reminded_at": {"$exists": False},
+    }
+    sent = 0
+    async for order in orders_collection.find(query, {"_id": 0}):
+        phone = _to_e164((order.get("shipping_address") or {}).get("phone"))
+        name = (order.get("shipping_address") or {}).get("name") or "there"
+        if not phone:
+            continue
+        # Claim the order first so an overlapping run never double-sends.
+        guard = await orders_collection.update_one(
+            {"order_id": order["order_id"], "abandoned_reminded_at": {"$exists": False}},
+            {"$set": {"abandoned_reminded_at": now}},
+        )
+        if guard.modified_count == 1:
+            ok = await notifications.send_whatsapp_template(
+                AISENSY_ABANDONED_CAMPAIGN, phone, name, [name],
+            )
+            if ok:
+                sent += 1
+    return {"sent": sent}
 
 
 # Webhook handler

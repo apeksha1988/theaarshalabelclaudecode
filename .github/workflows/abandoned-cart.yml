@@ -1,0 +1,21 @@
+name: Abandoned-cart reminders
+
+# Every 30 minutes, ask the API to WhatsApp people who started checkout but
+# didn't pay within ~1 hour. The API no-ops if AiSensy isn't configured.
+# Requires a repo secret TASKS_TOKEN matching the backend's TASKS_TOKEN env var.
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger abandoned-cart reminders
+        run: |
+          curl -fsS --max-time 60 \
+            "https://api.theaarshalabel.com/api/tasks/abandoned-reminders?token=${{ secrets.TASKS_TOKEN }}" \
+            && echo "Reminders run" \
+            || echo "Run failed (will retry next cron)"
