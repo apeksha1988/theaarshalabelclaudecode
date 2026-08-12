@@ -22,7 +22,7 @@ export default function PromoBanner() {
     >
       <Link to="/festive" className="block hover:opacity-95 transition-opacity">
         <p className="text-xs sm:text-sm tracking-wide flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-          <span>🪔 <span className="font-semibold text-[#F0C96B]">Festive Edit</span> — Teej &amp; Rakhi ready ✨</span>
+          <span><span className="font-semibold text-[#F0C96B]">Festive Edit</span> — Teej &amp; Rakhi ready ✨</span>
           <span className="hidden sm:inline opacity-40">|</span>
           <span>🎁 <span className="font-semibold">10% OFF</span> code <span className="font-semibold tracking-wider">WELCOME10</span></span>
           <span className="hidden sm:inline opacity-40">|</span>

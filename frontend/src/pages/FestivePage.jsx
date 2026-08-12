@@ -47,7 +47,7 @@ export default function FestivePage() {
         <div className="absolute inset-0 opacity-[0.08] pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(circle at 20% 20%, #F0C96B 0, transparent 25%), radial-gradient(circle at 80% 30%, #F0C96B 0, transparent 22%)' }} />
         <div className="relative max-w-3xl mx-auto px-6">
-          <p className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-[#F0C96B] mb-4">🪔 The Festive Edit</p>
+          <p className="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-[#F0C96B] mb-4">The Festive Edit</p>
           <h1 className="font-serif font-light text-3xl sm:text-5xl leading-tight mb-4" data-testid="festive-title">
             Celebrate Teej &amp; Rakhi in Your Finest
           </h1>
