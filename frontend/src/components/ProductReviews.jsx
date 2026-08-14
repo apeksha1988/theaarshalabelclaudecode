@@ -1,6 +1,43 @@
-import React from 'react';
-import { Star, BadgeCheck } from 'lucide-react';
+import React, { useState } from 'react';
+import { Star, BadgeCheck, Play } from 'lucide-react';
 import { reviewsForProduct, ratingSummary } from '../lib/reviews';
+
+// Click-to-play customer video review. The video only downloads when tapped
+// (poster-first), so it never adds weight to the page load.
+function ReviewVideo({ src, poster, name }) {
+  const [playing, setPlaying] = useState(false);
+  return (
+    <div className="w-full max-w-[240px] mx-auto aspect-[9/16] bg-[#EFE8DA] rounded-md overflow-hidden mb-3 border border-[#EAE5D9]">
+      {playing ? (
+        <video
+          src={src}
+          poster={poster}
+          controls
+          autoPlay
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover"
+          data-testid="review-video-player"
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={() => setPlaying(true)}
+          className="group relative w-full h-full"
+          aria-label={`Play video review from ${name}`}
+          data-testid="review-video-play"
+        >
+          <img src={poster} alt={`Video review from ${name}`} loading="lazy" className="w-full h-full object-cover" />
+          <span className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+            <span className="flex items-center justify-center w-12 h-12 rounded-full bg-white/90 shadow group-hover:scale-105 transition-transform">
+              <Play className="w-5 h-5 text-[#7A1F3D] ml-0.5" fill="#7A1F3D" />
+            </span>
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
 
 const GOLD = '#C99A2E';
 
@@ -81,7 +118,9 @@ export default function ProductReviews({ productId }) {
               <span className="text-xs text-[#999999]">{formatDate(r.date)}</span>
             </div>
 
-            {r.image ? (
+            {r.video ? (
+              <ReviewVideo src={r.video} poster={r.poster} name={r.name} />
+            ) : r.image ? (
               <img
                 src={r.image}
                 alt={`Review from ${r.name}`}
