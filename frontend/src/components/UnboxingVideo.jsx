@@ -20,7 +20,7 @@ const VIDEOS = [
 function VideoCard({ src, poster, label }) {
   const [playing, setPlaying] = useState(false);
   return (
-    <div className="w-full max-w-[300px] aspect-[9/16] bg-[#F5F0E6] overflow-hidden rounded-lg shadow-lg">
+    <div className="w-full max-w-[210px] aspect-[9/16] bg-[#F5F0E6] overflow-hidden rounded-lg shadow-lg">
       {playing ? (
         <video
           src={src}
@@ -42,8 +42,8 @@ function VideoCard({ src, poster, label }) {
         >
           <img src={poster} alt={label} loading="lazy" className="w-full h-full object-cover" />
           <span className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
-            <span className="flex items-center justify-center w-16 h-16 rounded-full bg-white/90 shadow-lg group-hover:scale-105 transition-transform">
-              <Play className="w-7 h-7 text-[#7A1F3D] ml-1" fill="#7A1F3D" />
+            <span className="flex items-center justify-center w-12 h-12 rounded-full bg-white/90 shadow-lg group-hover:scale-105 transition-transform">
+              <Play className="w-5 h-5 text-[#7A1F3D] ml-0.5" fill="#7A1F3D" />
             </span>
           </span>
         </button>
@@ -54,8 +54,8 @@ function VideoCard({ src, poster, label }) {
 
 export default function UnboxingVideo() {
   return (
-    <section className="max-w-7xl mx-auto px-6 md:px-12 py-16 sm:py-24" data-testid="unboxing-video">
-      <div className="text-center mb-10">
+    <section className="max-w-7xl mx-auto px-6 md:px-12 py-12 sm:py-16" data-testid="unboxing-video">
+      <div className="text-center mb-8">
         <p className="text-[11px] uppercase tracking-[0.2em] text-[#7A1F3D] mb-3">Straight from our customers</p>
         <h2 className="text-2xl sm:text-3xl font-serif font-light text-[#1A1A1A]">
           Loved &amp; Worn
