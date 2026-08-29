@@ -1,7 +1,9 @@
-// Google Analytics 4 (GA4) + Meta (Facebook) Pixel.
-// IDs are read from build-time env vars; both no-op gracefully if unset.
+// Google Analytics 4 (GA4) + Meta (Facebook) Pixel + Microsoft Clarity + Hotjar.
+// IDs are read from build-time env vars; each no-ops gracefully if unset.
 const GA_ID = process.env.REACT_APP_GA_ID;
 const PIXEL_ID = process.env.REACT_APP_META_PIXEL_ID;
+const CLARITY_ID = process.env.REACT_APP_CLARITY_ID;
+const HOTJAR_ID = process.env.REACT_APP_HOTJAR_ID;
 
 let started = false;
 
@@ -35,6 +37,31 @@ export function initAnalytics() {
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
     /* eslint-enable */
     window.fbq('init', PIXEL_ID);
+  }
+
+  // --- Microsoft Clarity (session recordings + heatmaps, free & unlimited) ---
+  if (CLARITY_ID) {
+    /* eslint-disable */
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+      t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, 'clarity', 'script', CLARITY_ID);
+    /* eslint-enable */
+  }
+
+  // --- Hotjar (session recordings + heatmaps) ---
+  if (HOTJAR_ID) {
+    /* eslint-disable */
+    (function (h, o, t, j, a, r) {
+      h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments); };
+      h._hjSettings = { hjid: Number(HOTJAR_ID), hjsv: 6 };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script'); r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    /* eslint-enable */
   }
 }
 
