@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingBag, Check, Heart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import { isOutOfStock } from '../lib/stock';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
@@ -17,7 +18,8 @@ export default function ProductCard({ product }) {
   };
 
   const hasPrice = product.price !== null && product.price !== undefined;
-  const isLimited = /limited|exclusive/i.test(product.availability || '');
+  const soldOut = isOutOfStock(product);
+  const isLimited = !soldOut && /limited|exclusive/i.test(product.availability || '');
 
   // Use a lightweight card thumbnail (…-thumb.webp) for the grid; fall back to
   // the full image if a thumbnail doesn't exist for this product.
@@ -33,7 +35,7 @@ export default function ProductCard({ product }) {
     // The card is wrapped in a Link — keep the click from navigating.
     e.preventDefault();
     e.stopPropagation();
-    if (!hasPrice) return;
+    if (!hasPrice || soldOut) return;
     addToCart(product, 1);
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
@@ -52,10 +54,14 @@ export default function ProductCard({ product }) {
             }}
             alt={product.name}
             loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${soldOut ? 'opacity-60 grayscale-[35%]' : ''}`}
             data-testid="product-image"
           />
-          {isLimited && (
+          {soldOut ? (
+            <span className="absolute top-3 left-3 bg-[#1A1A1A]/85 text-white text-[10px] font-medium tracking-[0.15em] uppercase px-3 py-1 backdrop-blur-sm" data-testid="sold-out-badge">
+              Sold Out
+            </span>
+          ) : isLimited && (
             <span className="absolute top-3 left-3 bg-[#7A1F3D]/90 text-white text-[10px] font-medium tracking-[0.15em] uppercase px-3 py-1 backdrop-blur-sm">
               {product.availability}
             </span>
@@ -79,16 +85,20 @@ export default function ProductCard({ product }) {
 
       <button
         onClick={handleAddToCart}
-        disabled={!hasPrice}
+        disabled={!hasPrice || soldOut}
         className={`mt-auto w-full px-3 sm:px-6 py-3 text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.15em] uppercase whitespace-nowrap border transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2
-          ${!hasPrice
+          ${soldOut
+            ? 'border-[#EAE5D9] text-[#999999] cursor-not-allowed'
+            : !hasPrice
             ? 'border-[#EAE5D9] text-[#999999] cursor-not-allowed'
             : added
               ? 'border-[#7A1F3D] bg-[#7A1F3D] text-white'
               : 'border-[#7A1F3D] text-[#7A1F3D] hover:bg-[#7A1F3D] hover:text-white'}`}
         data-testid="add-to-cart-button"
       >
-        {!hasPrice ? (
+        {soldOut ? (
+          'Sold Out'
+        ) : !hasPrice ? (
           'Enquire to Order'
         ) : added ? (
           <>

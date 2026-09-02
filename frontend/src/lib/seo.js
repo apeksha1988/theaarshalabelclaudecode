@@ -46,6 +46,8 @@ export function applySeo({ title, description, image, path, jsonLd } = {}) {
   }
 }
 
+import { isOutOfStock } from './stock';
+
 // schema.org Product structured data -> price/availability rich results.
 export function productJsonLd(product) {
   const data = {
@@ -62,7 +64,9 @@ export function productJsonLd(product) {
       url: `${BASE_URL}/product/${product.product_id}`,
       priceCurrency: product.currency || 'INR',
       price: (product.price / 100).toFixed(0),
-      availability: 'https://schema.org/InStock',
+      availability: isOutOfStock(product)
+        ? 'https://schema.org/OutOfStock'
+        : 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/NewCondition',
     };
   }
