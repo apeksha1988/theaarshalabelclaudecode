@@ -995,5 +995,25 @@
     "set_includes": "1 Choker Necklace + 1 Pair of Matching Statement Earrings",
     "created_at": "2026-09-09T00:00:00.000000",
     "updated_at": "2026-09-09T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_88e3773f9266",
+    "name": "The Aarsha's Noorani Polki Kundan Floral Choker Set",
+    "description": "A regal floral choker featuring luminous uncut-style stones arranged in bold flower motifs and finished in a rich antique gold-tone setting. The statement centrepieces are surrounded by delicate sparkling accents, while matching floral earrings complete the look. An elegant choice for weddings, festive celebrations, mehendi, sangeet and traditional occasion wear.",
+    "price": 773500,
+    "currency": "INR",
+    "images": [
+      "/images/noorani-polki-kundan-floral-choker-set.webp",
+      "/images/noorani-polki-kundan-floral-choker-set-model-1.webp",
+      "/images/noorani-polki-kundan-floral-choker-set-model-2.webp",
+      "/images/noorani-polki-kundan-floral-choker-set-model-3.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Polki-Kundan Floral Choker Necklace Set",
+    "materials": "Gold-tone Alloy Base, Polki/Kundan-style Uncut Stones, Clear CZ/Crystal Accent Stones, Antique-Gold Finish",
+    "availability": "In Stock",
+    "set_includes": "1 Choker Necklace + 1 Pair of Matching Floral Statement Earrings",
+    "created_at": "2026-09-09T00:00:00.000000",
+    "updated_at": "2026-09-09T00:00:00.000000"
   }
 ]
