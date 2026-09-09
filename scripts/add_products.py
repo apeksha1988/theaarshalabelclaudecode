@@ -33,6 +33,8 @@ PRODUCTS = [
         "images": [
             "/images/meher-champagne-polki-choker-set.webp",
             "/images/meher-champagne-polki-choker-set-model-1.webp",
+            "/images/meher-champagne-polki-choker-set-model-2.webp",
+            "/images/meher-champagne-polki-choker-set-model-3.webp",
         ],
         "category": "premium_heritage",
         "product_type": "Statement Choker Necklace Set",
