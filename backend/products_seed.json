@@ -975,5 +975,23 @@
     "set_includes": "1 Hathphool (bracelet + attached ring)",
     "created_at": "2026-07-15T04:11:48.269341",
     "updated_at": "2026-07-15T04:11:48.269341"
+  },
+  {
+    "product_id": "prod_e1ff33acd5c0",
+    "name": "The Aarsha's Meher Champagne Polki Choker Set",
+    "description": "An opulent statement choker featuring an intricate arrangement of champagne-toned and soft smoky stones, framed with sparkling crystal accents in a rich gold-tone setting. The layered geometric composition gives the piece a regal, vintage-inspired character while the matching oversized earrings complete the luxurious look. Perfect for weddings, festive occasions, sangeet celebrations and statement ethnic styling.",
+    "price": 735000,
+    "currency": "INR",
+    "images": [
+      "/images/meher-champagne-polki-choker-set.webp",
+      "/images/meher-champagne-polki-choker-set-model-1.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Choker Necklace Set",
+    "materials": "Gold-tone Alloy Base, Polki-style Faceted Stones, Champagne and Smoky-Grey Stones, Clear Crystal/CZ Accent Stones, Antique-inspired Gold-tone Setting",
+    "availability": "In Stock",
+    "set_includes": "1 Choker Necklace + 1 Pair of Matching Statement Earrings",
+    "created_at": "2026-09-09T00:00:00.000000",
+    "updated_at": "2026-09-09T00:00:00.000000"
   }
 ]
