@@ -1015,5 +1015,24 @@
     "set_includes": "1 Choker Necklace + 1 Pair of Matching Floral Statement Earrings",
     "created_at": "2026-09-09T00:00:00.000000",
     "updated_at": "2026-09-09T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_d3922611d678",
+    "name": "The Aarsha's Sitara Pachi Kundan Choker Set",
+    "description": "A distinctive statement choker inspired by celestial and floral forms, featuring an artistic combination of star, crescent moon, lotus, floral and geometric motifs. The irregular arrangement gives the piece a contemporary character while retaining the richness of traditional Indian Kundan-style jewellery. Paired with oversized floral stud earrings, it works beautifully for festive occasions, mehendi, sangeet and modern ethnic looks.",
+    "price": 703500,
+    "currency": "INR",
+    "images": [
+      "/images/sitara-pachi-kundan-choker-set.webp",
+      "/images/sitara-pachi-kundan-choker-set-model-1.webp",
+      "/images/sitara-pachi-kundan-choker-set-model-2.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Pachi Kundan Statement Choker Necklace Set",
+    "materials": "Gold-tone Metal Base, White Kundan-style Stones, Clear Crystal/CZ Accents, Enamel Detailing",
+    "availability": "In Stock",
+    "set_includes": "1 Choker Necklace + 1 Pair of Matching Floral Stud Earrings",
+    "created_at": "2026-09-09T00:00:00.000000",
+    "updated_at": "2026-09-09T00:00:00.000000"
   }
 ]
