@@ -335,6 +335,54 @@ def order_status_update_for_customer(order: dict):
     return subject, html, text
 
 
+def b2b_inquiry_for_owner(inq: dict):
+    """Email to the owner about a new B2B/wholesale inquiry."""
+    rows = [
+        ("Business", inq.get("business_name")),
+        ("Contact", inq.get("contact_name")),
+        ("Phone", inq.get("phone")),
+        ("Email", inq.get("email")),
+        ("City", inq.get("city")),
+        ("Business type", inq.get("business_type")),
+        ("Expected volume", inq.get("monthly_volume")),
+        ("Message", inq.get("message")),
+    ]
+    subject = f"New B2B inquiry — {inq.get('business_name', '')}"
+    body_rows = "".join(
+        f"<tr><td style='padding:6px 12px;border-bottom:1px solid #eee;color:#666'>{k}</td>"
+        f"<td style='padding:6px 12px;border-bottom:1px solid #eee'><b>{v}</b></td></tr>"
+        for k, v in rows if v
+    )
+    html = f"""
+    <div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#1A1A1A">
+      <h2 style="color:#7A1F3D">New wholesale / B2B inquiry</h2>
+      <p>A business just filled out the "Partner with us" form:</p>
+      <table style="width:100%;border-collapse:collapse;margin:12px 0">{body_rows}</table>
+      <p style="color:#666">Reply on WhatsApp or email to follow up — {STORE_NAME}</p>
+    </div>"""
+    text = "New B2B inquiry\n\n" + "\n".join(f"{k}: {v}" for k, v in rows if v)
+    return subject, html, text
+
+
+def b2b_inquiry_whatsapp_text(inq: dict) -> str:
+    parts = [
+        "🤝 *New B2B / wholesale inquiry*",
+        f"Business: {inq.get('business_name','')}",
+        f"Contact: {inq.get('contact_name','')}",
+        f"Phone: {inq.get('phone','')}",
+        f"Email: {inq.get('email','')}",
+    ]
+    if inq.get("city"):
+        parts.append(f"City: {inq['city']}")
+    if inq.get("business_type"):
+        parts.append(f"Type: {inq['business_type']}")
+    if inq.get("monthly_volume"):
+        parts.append(f"Volume: {inq['monthly_volume']}")
+    if inq.get("message"):
+        parts.append(f"Note: {inq['message']}")
+    return "\n".join(parts)
+
+
 def whatsapp_order_text(order: dict, for_owner: bool) -> str:
     oid = order.get("order_id", "")
     total = format_inr(order.get("total"))

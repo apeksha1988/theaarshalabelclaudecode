@@ -29,6 +29,9 @@ const WishlistPage = lazy(() => import('./pages/WishlistPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const FestivePage = lazy(() => import('./pages/FestivePage'));
+const B2BPage = lazy(() => import('./pages/B2BPage'));
+const B2BCataloguePage = lazy(() => import('./pages/B2BCataloguePage'));
+const AdminB2BPage = lazy(() => import('./pages/AdminB2BPage'));
 const RefundPolicyPage = lazy(() => import('./pages/RefundPolicyPage'));
 const ShippingPolicyPage = lazy(() => import('./pages/ShippingPolicyPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
@@ -60,6 +63,8 @@ function AppRoutes() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/festive" element={<FestivePage />} />
+        <Route path="/b2b" element={<B2BPage />} />
+        <Route path="/b2b/catalogue" element={<B2BCataloguePage />} />
         <Route path="/refund-policy" element={<RefundPolicyPage />} />
         <Route path="/shipping-policy" element={<ShippingPolicyPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
@@ -80,6 +85,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute adminOnly>
               <AdminOrdersPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/b2b"
+          element={
+            <ProtectedRoute adminOnly>
+              <AdminB2BPage />
             </ProtectedRoute>
           }
         />

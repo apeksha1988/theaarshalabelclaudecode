@@ -37,6 +37,7 @@ payments_collection = db.payments
 webhook_events_collection = db.webhook_events
 contact_messages_collection = db.contact_messages
 password_resets_collection = db.password_resets
+b2b_inquiries_collection = db.b2b_inquiries
 
 # Razorpay client
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
@@ -56,6 +57,7 @@ OWNER_WHATSAPP = os.getenv("OWNER_WHATSAPP")
 AISENSY_CUSTOMER_CAMPAIGN = os.getenv("AISENSY_CUSTOMER_CAMPAIGN")
 AISENSY_OWNER_CAMPAIGN = os.getenv("AISENSY_OWNER_CAMPAIGN")
 AISENSY_ABANDONED_CAMPAIGN = os.getenv("AISENSY_ABANDONED_CAMPAIGN")
+AISENSY_B2B_CAMPAIGN = os.getenv("AISENSY_B2B_CAMPAIGN")  # owner alert for B2B/wholesale inquiries
 TASKS_TOKEN = os.getenv("TASKS_TOKEN")  # shared secret guarding scheduled-task endpoints
 
 # Cash on Delivery surcharge (in paise). Override with COD_FEE_PAISE.
@@ -159,6 +161,16 @@ class ProductCreate(BaseModel):
     images: List[str]
     category: str
     dodo_product_id: Optional[str] = None
+
+class B2BInquiry(BaseModel):
+    business_name: str
+    contact_name: str
+    email: str
+    phone: str
+    city: Optional[str] = None
+    business_type: Optional[str] = None      # Boutique, Reseller, Salon, Event Stylist, Other
+    monthly_volume: Optional[str] = None      # expected pieces / order size
+    message: Optional[str] = None
 
 class OrderItem(BaseModel):
     product_id: str
@@ -939,6 +951,25 @@ async def update_custom_request_status(request_id: str, status: str, request: Re
     req = await custom_requests_collection.find_one({"request_id": request_id}, {"_id": 0})
     return req
 
+# B2B / wholesale inquiry routes
+@api_router.post("/b2b/inquiry")
+async def create_b2b_inquiry(data: B2BInquiry):
+    """Public: a business submits a wholesale/partnership inquiry. Stored for the
+    owner's tracker, with an instant email + WhatsApp alert to the owner."""
+    doc = data.model_dump()
+    doc["inquiry_id"] = f"b2b_{uuid.uuid4().hex[:12]}"
+    doc["status"] = "new"
+    doc["created_at"] = datetime.now(timezone.utc)
+    await b2b_inquiries_collection.insert_one(dict(doc))
+    _fire(notify_b2b_inquiry(doc))  # email + WhatsApp to the owner
+    return {"ok": True, "inquiry_id": doc["inquiry_id"]}
+
+@api_router.get("/admin/b2b-inquiries")
+async def get_b2b_inquiries(request: Request):
+    """Owner's tracker: every business that filled the B2B form, newest first."""
+    await require_admin(request)
+    return await b2b_inquiries_collection.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+
 # --- Notifications ---
 _bg_tasks = set()
 
@@ -1013,6 +1044,33 @@ async def notify_order_paid(order: dict):
                 await notifications.send_whatsapp(OWNER_WHATSAPP, notifications.whatsapp_order_text(order, for_owner=True))
     except Exception as e:
         logging.error("notify_order_paid failed: %s", e)
+
+
+async def notify_b2b_inquiry(inquiry: dict):
+    """Alert the owner about a new B2B/wholesale inquiry (email + WhatsApp).
+    Each channel no-ops gracefully if it isn't configured."""
+    try:
+        if OWNER_EMAIL:
+            subj, html, text = notifications.b2b_inquiry_for_owner(inquiry)
+            await notifications.send_email(OWNER_EMAIL, subj, html, text)
+
+        if OWNER_WHATSAPP:
+            contact = inquiry.get("contact_name") or "Someone"
+            business = inquiry.get("business_name") or ""
+            phone = inquiry.get("phone") or ""
+            if notifications.aisensy_enabled and AISENSY_B2B_CAMPAIGN:
+                # Owner B2B template params: {{1}} contact name, {{2}} business, {{3}} phone
+                await notifications.send_whatsapp_template(
+                    AISENSY_B2B_CAMPAIGN, OWNER_WHATSAPP, "Owner",
+                    [contact, business, phone],
+                )
+            else:
+                # Fallback: Twilio free-form (works if Twilio is configured).
+                await notifications.send_whatsapp(
+                    OWNER_WHATSAPP, notifications.b2b_inquiry_whatsapp_text(inquiry)
+                )
+    except Exception as e:
+        logging.error("notify_b2b_inquiry failed: %s", e)
 
 
 async def notify_order_status(order: dict):

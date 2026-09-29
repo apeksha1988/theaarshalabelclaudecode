@@ -23,6 +23,7 @@ export default function Footer() {
               <li><Link to="/shop" className="hover:text-white transition-colors">All Jewellery</Link></li>
               <li><Link to="/shop?category=premium_heritage" className="hover:text-white transition-colors">Premium Heritage</Link></li>
               <li><Link to="/shop?category=oxidised" className="hover:text-white transition-colors">Oxidised</Link></li>
+              <li><Link to="/b2b" className="hover:text-white transition-colors">Wholesale / B2B</Link></li>
             </ul>
           </div>
 

@@ -93,6 +93,14 @@ export default function Navigation() {
               </div>
             </div>
 
+            <Link
+              to="/b2b"
+              className="text-sm font-medium tracking-wide uppercase hover:text-[#7A1F3D] transition-colors"
+              data-testid="nav-b2b"
+            >
+              Wholesale
+            </Link>
+
             {user ? (
               <div className="relative group" data-testid="nav-profile-dropdown">
                 <button type="button" className="inline-flex items-center gap-1 hover:text-[#7A1F3D] transition-colors" data-testid="nav-profile" aria-label="Profile">
@@ -109,7 +117,10 @@ export default function Navigation() {
                       )}
                     </Link>
                     {user.role === 'admin' && (
-                      <Link to="/admin" className="block px-5 py-2.5 text-sm tracking-wide uppercase text-[#1A1A1A] hover:bg-[#F5F0E6] hover:text-[#7A1F3D] transition-colors" data-testid="nav-admin">Admin</Link>
+                      <>
+                        <Link to="/admin" className="block px-5 py-2.5 text-sm tracking-wide uppercase text-[#1A1A1A] hover:bg-[#F5F0E6] hover:text-[#7A1F3D] transition-colors" data-testid="nav-admin">Admin</Link>
+                        <Link to="/admin/b2b" className="block px-5 py-2.5 text-sm tracking-wide uppercase text-[#1A1A1A] hover:bg-[#F5F0E6] hover:text-[#7A1F3D] transition-colors" data-testid="nav-admin-b2b">B2B Inquiries</Link>
+                      </>
                     )}
                     <button onClick={handleLogout} className="block w-full text-left px-5 py-2.5 text-sm tracking-wide uppercase text-[#1A1A1A] hover:bg-[#F5F0E6] hover:text-[#7A1F3D] transition-colors" data-testid="nav-logout">Logout</button>
                   </div>
@@ -185,13 +196,17 @@ export default function Navigation() {
               <Link to="/shop?type=bracelet" onClick={() => setMobileMenuOpen(false)} className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors">Bracelets</Link>
               <Link to="/shop?type=hathphool" onClick={() => setMobileMenuOpen(false)} className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors">Hathphool</Link>
             </div>
+            <Link to="/b2b" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium tracking-wide uppercase hover:text-[#7A1F3D] transition-colors" data-testid="nav-b2b-mobile">Wholesale / B2B</Link>
             {user ? (
               <div className="space-y-2">
                 <p className="text-sm font-semibold tracking-wide uppercase text-[#1A1A1A]">Profile</p>
                 <Link to="/dashboard" className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors" onClick={() => setMobileMenuOpen(false)}>My Profile</Link>
                 <Link to="/wishlist" className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors" onClick={() => setMobileMenuOpen(false)}>Wishlist{wishlistCount > 0 ? ` (${wishlistCount})` : ''}</Link>
                 {user.role === 'admin' && (
-                  <Link to="/admin" className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors" onClick={() => setMobileMenuOpen(false)}>Admin</Link>
+                  <>
+                    <Link to="/admin" className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors" onClick={() => setMobileMenuOpen(false)}>Admin</Link>
+                    <Link to="/admin/b2b" className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors" onClick={() => setMobileMenuOpen(false)}>B2B Inquiries</Link>
+                  </>
                 )}
                 <button onClick={() => { handleLogout(); setMobileMenuOpen(false); }} className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors text-left w-full">Logout</button>
               </div>
