@@ -26,6 +26,9 @@ export default function B2BCataloguePage() {
 
   const inr = (p) => (p == null ? 'On request' : `₹${(p / 100).toLocaleString('en-IN')}`);
 
+  // Oxidised jewellery is excluded from the wholesale catalogue.
+  const catalogue = products.filter((p) => p.category !== 'oxidised');
+
   return (
     <div className="min-h-screen pt-28 sm:pt-32 pb-20" data-testid="b2b-catalogue-page">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -54,7 +57,7 @@ export default function B2BCataloguePage() {
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#EAE5D9] pt-6 mt-8 mb-8">
-          <p className="text-sm text-[#666666]">{products.length} designs available for wholesale</p>
+          <p className="text-sm text-[#666666]">{catalogue.length} designs available for wholesale</p>
           <Link to="/b2b#partner-form"
             className="inline-flex items-center gap-2 bg-[#7A1F3D] text-white px-6 py-3 text-sm tracking-[0.1em] uppercase hover:bg-[#5C172E] transition-colors">
             Request wholesale pricing <ArrowRight className="w-4 h-4" />
@@ -62,11 +65,11 @@ export default function B2BCataloguePage() {
         </div>
 
         {/* Product grid */}
-        {products.length === 0 ? (
+        {catalogue.length === 0 ? (
           <p className="text-center py-16 text-[#666666]">Loading the catalogue…</p>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8" data-testid="b2b-catalogue-grid">
-            {products.map((p) => {
+            {catalogue.map((p) => {
               const img = (p.images && p.images[0]) || '';
               const thumb = img.replace(/\.webp$/i, '-thumb.webp');
               return (
