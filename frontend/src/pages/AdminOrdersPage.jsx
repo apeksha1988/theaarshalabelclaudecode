@@ -31,7 +31,7 @@ export default function AdminOrdersPage() {
   const paidOrders = orders.filter((o) => o.status === 'paid' || o.status === 'cod_confirmed');
 
   const downloadCsv = () => {
-    const cols = ['order_id', 'date', 'payment', 'customer_name', 'phone', 'email', 'address_line1', 'address_line2', 'city', 'state', 'postal_code', 'country', 'items', 'amount_inr', 'fulfillment_status'];
+    const cols = ['order_id', 'date', 'payment', 'customer_name', 'phone', 'email', 'address_line1', 'address_line2', 'city', 'state', 'postal_code', 'country', 'items', 'coupon', 'amount_inr', 'fulfillment_status'];
     const rows = paidOrders.map((o) => {
       const a = o.shipping_address || {};
       const pay = o.status === 'cod_confirmed' ? 'COD (collect cash)' : 'Prepaid';
@@ -39,6 +39,7 @@ export default function AdminOrdersPage() {
         o.order_id, (o.created_at || '').slice(0, 16), pay, a.name || '', a.phone || '', o.email || '',
         a.line1 || '', a.line2 || '', a.city || '', a.state || '', a.postal_code || '', a.country || '',
         (o.items || []).map((it) => `${it.quantity || 1}x ${it.name || ''}`).join('; '),
+        o.coupon || '',
         ((o.total || 0) / 100).toFixed(0), o.fulfillment_status || 'processing',
       ];
     });
@@ -130,6 +131,11 @@ function AdminOrderCard({ order }) {
             {order.status === 'cod_confirmed' && (
               <span className="text-[10px] font-semibold uppercase tracking-wide bg-[#7A1F3D] text-white px-2 py-0.5 rounded" data-testid="cod-badge">
                 COD · collect cash
+              </span>
+            )}
+            {order.coupon && (
+              <span className="text-[10px] font-semibold uppercase tracking-wide bg-[#2E7D32] text-white px-2 py-0.5 rounded" data-testid="coupon-badge">
+                Coupon · {order.coupon}
               </span>
             )}
           </div>

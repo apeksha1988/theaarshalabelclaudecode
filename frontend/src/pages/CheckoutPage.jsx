@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { CreditCard } from 'lucide-react';
 import { trackBeginCheckout, trackPurchase } from '../lib/analytics';
 import TrustBadges from '../components/TrustBadges';
-import { getCoupon } from '../lib/coupons';
+import { getCoupon, getSavedCoupon } from '../lib/coupons';
 
 // Cash on Delivery surcharge in paise (must match backend COD_FEE_PAISE).
 const COD_FEE = 15000; // ₹150
@@ -60,6 +60,17 @@ export default function CheckoutPage() {
       navigate('/cart', { replace: true });
     }
   }, [cartItems.length, navigate]);
+
+  // Auto-apply a coupon that arrived via an influencer link.
+  useEffect(() => {
+    const saved = getSavedCoupon();
+    if (!saved) return;
+    const result = getCoupon(saved, cartTotal);
+    if (result.valid) {
+      setCoupon(result);
+      setCouponInput(result.code);
+    }
+  }, [cartTotal]);
 
   if (cartItems.length === 0) return null;
 

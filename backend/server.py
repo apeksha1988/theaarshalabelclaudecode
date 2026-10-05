@@ -215,6 +215,7 @@ class CheckoutRequest(BaseModel):
 # (frontend/src/lib/coupons.js) for display; the server value is authoritative.
 COUPONS = {
     "WELCOME10": 10,
+    "PALAK15": 15,  # influencer: Palak Malhotra (@beautybrunchess)
 }
 
 def apply_coupon(subtotal: int, code: Optional[str]):
