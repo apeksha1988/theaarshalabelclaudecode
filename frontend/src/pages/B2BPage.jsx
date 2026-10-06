@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Gem, TrendingUp, Truck, Sparkles, Users, BadgeCheck, BookOpen, ArrowRight, Check, Send } from 'lucide-react';
 import api from '../lib/api';
 import { applySeo } from '../lib/seo';
-import { BULK_TIERS, BUSINESS_TYPES } from '../lib/b2b';
+import { BUSINESS_TYPES } from '../lib/b2b';
 
 const BENEFITS = [
   { icon: Gem, title: 'Genuinely handcrafted', text: 'Kundan, Polki, oxidised & moissanite pieces made in small batches — quality your customers can feel.' },
@@ -88,25 +88,6 @@ export default function B2BPage() {
             </div>
           ))}
         </div>
-      </section>
-
-      {/* Bulk discount tiers */}
-      <section className="max-w-5xl mx-auto px-6 md:px-12 mt-20">
-        <div className="text-center mb-8">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#7A1F3D] mb-2">Bulk pricing</p>
-          <h2 className="font-serif font-light text-2xl sm:text-3xl text-[#1A1A1A]">The more you order, the more you save</h2>
-          <p className="text-sm text-[#666666] mt-2">Wholesale discounts off retail, applied to your order. Mix &amp; match any designs.</p>
-        </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {BULK_TIERS.map((t) => (
-            <div key={t.label}
-              className={`rounded-lg p-6 text-center border ${t.highlight ? 'border-[#7A1F3D] bg-[#7A1F3D] text-white' : 'border-[#EAE5D9] bg-white text-[#1A1A1A]'}`}>
-              <p className={`text-xs uppercase tracking-[0.12em] mb-3 ${t.highlight ? 'text-[#F0C96B]' : 'text-[#7A1F3D]'}`}>{t.label}</p>
-              <p className="font-serif text-2xl font-light leading-tight">{t.discount}</p>
-            </div>
-          ))}
-        </div>
-        <p className="text-center text-xs text-[#999999] mt-4">Larger or repeat orders? We'll build a custom quote just for you.</p>
       </section>
 
       {/* Catalogue callout */}
