@@ -4,7 +4,6 @@ import { ArrowLeft, ArrowRight, BookOpen } from 'lucide-react';
 import api from '../lib/api';
 import { applySeo } from '../lib/seo';
 import { getCachedProducts, setCachedProducts } from '../lib/productCache';
-import { BULK_TIERS } from '../lib/b2b';
 
 export default function B2BCataloguePage() {
   const [products, setProducts] = useState(() => getCachedProducts() || []);
@@ -41,20 +40,9 @@ export default function B2BCataloguePage() {
           <h1 className="font-serif font-light text-3xl sm:text-4xl text-[#1A1A1A]">B2B Wholesale Catalogue</h1>
         </div>
         <p className="text-sm text-[#666666] max-w-2xl">
-          Our full handcrafted range, available at wholesale bulk pricing. Prices shown are retail —
-          your discount applies by order size:
+          Our full handcrafted range, available for wholesale. Prices shown are retail — request your
+          wholesale price list below.
         </p>
-
-        {/* Bulk tiers */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-6 mb-4">
-          {BULK_TIERS.map((t) => (
-            <div key={t.label}
-              className={`rounded-lg p-4 text-center border ${t.highlight ? 'border-[#7A1F3D] bg-[#7A1F3D] text-white' : 'border-[#EAE5D9] bg-[#F5F0E6] text-[#1A1A1A]'}`}>
-              <p className={`text-[11px] uppercase tracking-[0.1em] mb-1 ${t.highlight ? 'text-[#F0C96B]' : 'text-[#7A1F3D]'}`}>{t.label}</p>
-              <p className="font-serif text-xl font-light">{t.discount}</p>
-            </div>
-          ))}
-        </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#EAE5D9] pt-6 mt-8 mb-8">
           <p className="text-sm text-[#666666]">{catalogue.length} designs available for wholesale</p>
