@@ -1120,10 +1120,18 @@ async def abandoned_reminders(request: Request):
     return {"sent": sent}
 
 
-# Publish newly-added catalog products. Inserts any product in
-# products_seed.json (deployed with the backend) whose product_id isn't already
-# in the live DB; existing products are never modified. Guarded by TASKS_TOKEN,
-# reads trusted in-repo data only, and is safe to re-run.
+# Product IDs to permanently remove from the live catalog. Add an id here to
+# retire a product (the sync endpoint deletes it); only these exact ids are
+# ever deleted, so the blast radius is explicit.
+RETIRED_PRODUCT_IDS = {
+    "prod_e55cf53ba9ed",  # The Aarsha's Ruby Feather Statement Jhumkas (Earcuff)
+}
+
+# Publish newly-added catalog products and retire listed ones. Inserts any
+# product in products_seed.json (deployed with the backend) whose product_id
+# isn't already in the live DB, and deletes any id in RETIRED_PRODUCT_IDS;
+# other existing products are never modified. Guarded by TASKS_TOKEN, reads
+# trusted in-repo data only, and is safe to re-run.
 @api_router.api_route("/tasks/sync-products", methods=["GET", "POST"])
 async def sync_products(request: Request):
     if not TASKS_TOKEN or request.query_params.get("token") != TASKS_TOKEN:
@@ -1139,15 +1147,20 @@ async def sync_products(request: Request):
     inserted = []
     for p in seed:
         pid = p.get("product_id")
-        if not pid:
+        if not pid or pid in RETIRED_PRODUCT_IDS:
             continue
         if await products_collection.find_one({"product_id": pid}, {"_id": 1}):
             continue
         await products_collection.insert_one(dict(p))
         inserted.append(p.get("name", pid))
 
+    retired = 0
+    if RETIRED_PRODUCT_IDS:
+        res = await products_collection.delete_many({"product_id": {"$in": list(RETIRED_PRODUCT_IDS)}})
+        retired = res.deleted_count
+
     total = await products_collection.count_documents({})
-    return {"inserted": inserted, "inserted_count": len(inserted), "total": total}
+    return {"inserted": inserted, "inserted_count": len(inserted), "retired": retired, "total": total}
 
 
 # Webhook handler
