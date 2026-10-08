@@ -1017,5 +1017,63 @@
     "set_includes": "1 Choker Necklace + 1 Pair of Matching Floral Stud Earrings",
     "created_at": "2026-09-09T00:00:00.000000",
     "updated_at": "2026-09-09T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_1b619ea9a03c",
+    "name": "The Aarsha's Zareen Emerald Heritage Necklace Set",
+    "description": "An opulent statement necklace inspired by vintage Indian artistry, the Zareen Emerald Heritage Necklace Set combines an intricately patterned antique-gold collar with a striking emerald-green centre stone. The sculptural central motif is embellished with sparkling white stones in a contrasting silver-toned setting, giving the piece a distinctive dual-tone finish. Coordinating statement earrings mirror the green centre stone and ornate stonework, making this set ideal for weddings, festive celebrations, cocktail evenings and occasion wear.",
+    "price": 224000,
+    "currency": "INR",
+    "images": [
+      "/images/zareen-emerald-heritage-necklace-set.webp",
+      "/images/zareen-emerald-heritage-necklace-set-model-1.webp",
+      "/images/zareen-emerald-heritage-necklace-set-model-2.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Necklace & Earrings Set",
+    "materials": "Gold-tone imitation base, Antique-finish metalwork, Emerald-green imitation stones, Clear white CZ-style stones, Baguette & marquise-cut white stone detailing, Pearl/bead detailing, Adjustable dori closure",
+    "availability": "Limited Pieces",
+    "set_includes": "1 Statement Necklace + 1 Pair of Matching Earrings",
+    "created_at": "2026-10-06T00:00:00.000000",
+    "updated_at": "2026-10-06T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_cdcbae914628",
+    "name": "The Aarsha's Mayura Silver Jhumka Earrings",
+    "description": "A striking fusion of traditional Indian craftsmanship and contemporary artistry, the Mayura Silver Jhumka Earrings feature an oversized circular stud flowing into a soft grey rectangular stone framed by beautifully detailed peacock motifs. The design finishes with a classic ribbed jhumka dome surrounded by delicate pearl drops. The oxidised silver finish gives the earrings an artisanal, heirloom-inspired character, making them especially beautiful with sarees, handloom ensembles, kurtas and Indo-Western looks.",
+    "price": 105000,
+    "currency": "INR",
+    "images": [
+      "/images/mayura-silver-jhumka-earrings.webp",
+      "/images/mayura-silver-jhumka-earrings-model-1.webp",
+      "/images/mayura-silver-jhumka-earrings-model-2.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Oxidised Silver Statement Jhumka Earrings",
+    "materials": "Oxidised Silver-tone Metal/Alloy, Grey Rectangular Semi-precious-look Stone, Sculpted Peacock Motifs, Textured Silver-tone Circular Studs, Ribbed Metal Jhumka Domes, Cream/Ivory Faux Pearl Drops",
+    "availability": "Limited Pieces",
+    "set_includes": "1 Pair of Statement Jhumka Earrings (2 earrings)",
+    "created_at": "2026-10-06T00:00:00.000000",
+    "updated_at": "2026-10-06T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_9c114c150a99",
+    "name": "The Aarsha's Ruhani Ruby Peacock Heritage Necklace Set",
+    "description": "The Ruhani Ruby Peacock Heritage Necklace Set is a striking celebration of traditional Indian design, featuring intricate antique-gold peacock motifs and rich ruby-red statement stones. The sculpted collar is embellished with luminous white stones and finished with three ornate hanging motifs, with the larger centre pendant creating a dramatic focal point. Matching peacock earrings complete the look. Regal yet artistic, this set is designed for weddings, festive celebrations, sangeet evenings and statement ethnic styling.",
+    "price": 780000,
+    "currency": "INR",
+    "images": [
+      "/images/ruhani-ruby-peacock-heritage-necklace-set.webp",
+      "/images/ruhani-ruby-peacock-heritage-necklace-set-model-1.webp",
+      "/images/ruhani-ruby-peacock-heritage-necklace-set-model-2.webp",
+      "/images/ruhani-ruby-peacock-heritage-necklace-set-model-3.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Antique Gold Statement Necklace Set",
+    "materials": "Antique Gold-tone Imitation Base, Large Faceted Ruby-red Imitation Stones, White Kundan-style Stones, Teardrop White Stone Embellishments, Carved Peacock Motifs, Small Red Accent Stones, Adjustable Golden Dori with Bead Detailing",
+    "availability": "Limited Pieces",
+    "set_includes": "1 Statement Necklace + 1 Pair of Matching Peacock Earrings",
+    "created_at": "2026-10-06T00:00:00.000000",
+    "updated_at": "2026-10-06T00:00:00.000000"
   }
 ]
