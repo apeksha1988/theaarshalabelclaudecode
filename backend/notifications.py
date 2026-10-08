@@ -364,6 +364,43 @@ def b2b_inquiry_for_owner(inq: dict):
     return subject, html, text
 
 
+def stock_interest_for_owner(req: dict):
+    """Email to the owner: a shopper wants a sold-out piece."""
+    subject = f"Stock request — {req.get('product_name', '')}"
+    rows = [
+        ("Product", req.get("product_name")),
+        ("Customer", req.get("name")),
+        ("Phone", req.get("phone")),
+        ("Email", req.get("email")),
+    ]
+    body_rows = "".join(
+        f"<tr><td style='padding:6px 12px;border-bottom:1px solid #eee;color:#666'>{k}</td>"
+        f"<td style='padding:6px 12px;border-bottom:1px solid #eee'><b>{v}</b></td></tr>"
+        for k, v in rows if v
+    )
+    html = f"""
+    <div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#1A1A1A">
+      <h2 style="color:#7A1F3D">Someone wants a sold-out piece</h2>
+      <p>A shopper asked to be notified when this comes back in stock:</p>
+      <table style="width:100%;border-collapse:collapse;margin:12px 0">{body_rows}</table>
+      <p style="color:#666">Restock it and let them know — {STORE_NAME}</p>
+    </div>"""
+    text = "Stock request\n\n" + "\n".join(f"{k}: {v}" for k, v in rows if v)
+    return subject, html, text
+
+
+def stock_interest_whatsapp_text(req: dict) -> str:
+    parts = [
+        "🔔 *Sold-out piece wanted*",
+        f"Product: {req.get('product_name','')}",
+        f"Customer: {req.get('name','')}",
+        f"Phone: {req.get('phone','')}",
+    ]
+    if req.get("email"):
+        parts.append(f"Email: {req['email']}")
+    return "\n".join(parts)
+
+
 def b2b_inquiry_whatsapp_text(inq: dict) -> str:
     parts = [
         "🤝 *New B2B / wholesale inquiry*",

@@ -38,6 +38,7 @@ webhook_events_collection = db.webhook_events
 contact_messages_collection = db.contact_messages
 password_resets_collection = db.password_resets
 b2b_inquiries_collection = db.b2b_inquiries
+stock_notifications_collection = db.stock_notifications
 
 # Razorpay client
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
@@ -171,6 +172,13 @@ class B2BInquiry(BaseModel):
     business_type: Optional[str] = None      # Boutique, Reseller, Salon, Event Stylist, Other
     monthly_volume: Optional[str] = None      # expected pieces / order size
     message: Optional[str] = None
+
+class StockNotifyRequest(BaseModel):
+    product_id: str
+    product_name: str
+    name: str
+    phone: str
+    email: Optional[str] = None
 
 class OrderItem(BaseModel):
     product_id: str
@@ -971,6 +979,25 @@ async def get_b2b_inquiries(request: Request):
     await require_admin(request)
     return await b2b_inquiries_collection.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
 
+# Sold-out "notify me" / waitlist routes
+@api_router.post("/stock-notify")
+async def create_stock_notify(data: StockNotifyRequest):
+    """Public: a shopper asks to be told when a sold-out piece is back. Stored
+    for the owner's tracker, with an instant email + WhatsApp alert."""
+    doc = data.model_dump()
+    doc["request_id"] = f"stk_{uuid.uuid4().hex[:12]}"
+    doc["status"] = "waiting"
+    doc["created_at"] = datetime.now(timezone.utc)
+    await stock_notifications_collection.insert_one(dict(doc))
+    _fire(notify_stock_interest(doc))
+    return {"ok": True, "request_id": doc["request_id"]}
+
+@api_router.get("/admin/stock-notifications")
+async def get_stock_notifications(request: Request):
+    """Owner's tracker: everyone waiting on a sold-out piece, newest first."""
+    await require_admin(request)
+    return await stock_notifications_collection.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+
 # --- Notifications ---
 _bg_tasks = set()
 
@@ -1072,6 +1099,21 @@ async def notify_b2b_inquiry(inquiry: dict):
                 )
     except Exception as e:
         logging.error("notify_b2b_inquiry failed: %s", e)
+
+
+async def notify_stock_interest(req: dict):
+    """Alert the owner that a shopper wants a sold-out piece (email + WhatsApp).
+    Email is the reliable channel; WhatsApp is best-effort."""
+    try:
+        if OWNER_EMAIL:
+            subj, html, text = notifications.stock_interest_for_owner(req)
+            await notifications.send_email(OWNER_EMAIL, subj, html, text)
+        if OWNER_WHATSAPP:
+            await notifications.send_whatsapp(
+                OWNER_WHATSAPP, notifications.stock_interest_whatsapp_text(req)
+            )
+    except Exception as e:
+        logging.error("notify_stock_interest failed: %s", e)
 
 
 async def notify_order_status(order: dict):

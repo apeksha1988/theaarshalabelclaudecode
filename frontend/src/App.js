@@ -33,6 +33,7 @@ const FestivePage = lazy(() => import('./pages/FestivePage'));
 const B2BPage = lazy(() => import('./pages/B2BPage'));
 const B2BCataloguePage = lazy(() => import('./pages/B2BCataloguePage'));
 const AdminB2BPage = lazy(() => import('./pages/AdminB2BPage'));
+const AdminStockNotifyPage = lazy(() => import('./pages/AdminStockNotifyPage'));
 const RefundPolicyPage = lazy(() => import('./pages/RefundPolicyPage'));
 const ShippingPolicyPage = lazy(() => import('./pages/ShippingPolicyPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
@@ -95,6 +96,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute adminOnly>
               <AdminB2BPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/stock-notify"
+          element={
+            <ProtectedRoute adminOnly>
+              <AdminStockNotifyPage />
             </ProtectedRoute>
           }
         />

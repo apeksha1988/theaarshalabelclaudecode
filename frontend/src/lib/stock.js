@@ -8,6 +8,8 @@
 // (from the catalog) says so, e.g. "Out of Stock" / "Sold Out".
 const OUT_OF_STOCK_IDS = new Set([
   'prod_ee13ecea43b5', // The Aarsha's Ruhani Ruby Necklace Set
+  'prod_454688661f78', // The Aarsha's Celeste Layered Pendant Necklace Set
+  'prod_20cb89a73b48', // The Aarsha's Gulmohar Hasli Necklace Set
 ]);
 
 export function isOutOfStock(product) {
