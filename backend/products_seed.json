@@ -1075,5 +1075,123 @@
     "set_includes": "1 Statement Necklace + 1 Pair of Matching Peacock Earrings",
     "created_at": "2026-10-06T00:00:00.000000",
     "updated_at": "2026-10-06T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_4e298cd184a3",
+    "name": "The Aarsha's Simhavati Royal Heritage Necklace Set",
+    "description": "Inspired by the grandeur of India's royal heritage, the Simhavati Royal Heritage Necklace Set is a magnificent expression of traditional artistry and regal sophistication. At its heart lies a beautifully sculpted golden lion motif — symbolising courage, strength and royalty — surrounded by intricate floral patterns, emerald-green and ruby-pink accents, and ornate gold-tone detailing. The design features patterned triangular elements, delicate pearl borders, soft blush-pink stones and elegant aqua-green drops, while antique silver-tone ghungroos, lustrous pearls and vibrant pink bead hangings add graceful movement. Complemented by matching statement earrings with blush-pink stones and aqua-green ovals, this ensemble balances boldness and femininity — perfect for weddings, festive celebrations, sangeet ceremonies and special occasions.",
+    "price": 316800,
+    "currency": "INR",
+    "images": [
+      "/images/simhavati-royal-heritage-necklace-set.webp",
+      "/images/simhavati-royal-heritage-necklace-set-model-1.webp",
+      "/images/simhavati-royal-heritage-necklace-set-model-2.webp",
+      "/images/simhavati-royal-heritage-necklace-set-model-3.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Heritage Statement Necklace Set",
+    "materials": "Brass Base Metal, Aqua-green Cabochon-style Stones, Blush-pink Decorative Stones, White Pearl-like Beads & Pearl Borders, Sculpted Gold-tone Lion Motif, Antique Silver-tone Ghungroos, Gold-tone Ornamental Detailing, Pink & Lavender Hanging Bead Drops",
+    "availability": "In Stock",
+    "set_includes": "1 Statement Necklace + 1 Pair of Matching Statement Earrings",
+    "created_at": "2026-10-09T00:00:00.000000",
+    "updated_at": "2026-10-09T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_1f7b59e6c451",
+    "name": "The Aarsha's Mayurika Royal Meenakari Heritage Choker Set",
+    "description": "A beautiful fusion of royal heritage and vibrant artistry, the Mayurika Choker Set features peacock-inspired Meenakari detailing, striking aqua-blue and ruby-red stones, delicate pearls, and colourful bead drops. Designed to bring a touch of regal elegance to every celebration.",
+    "price": 384300,
+    "currency": "INR",
+    "images": [
+      "/images/mayurika-royal-meenakari-heritage-choker-set.webp",
+      "/images/mayurika-royal-meenakari-heritage-choker-set-model-1.webp",
+      "/images/mayurika-royal-meenakari-heritage-choker-set-model-2.webp",
+      "/images/mayurika-royal-meenakari-heritage-choker-set-model-3.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Traditional Meenakari Statement Choker Set",
+    "materials": "Brass Base Metal, Aqua-blue Oval Cabochon Stone, Ruby-red Geometric Imitation Stones, Green/Blue/Multicolour Accent Stones, Red-Green-Blue Meenakari Enamel Work, White Pearl-like Beads & Pearl Borders, Antique Silver-tone Ghungroos, Gold-tone Decorative Elements, Pink & Purple Hanging Bead Drops, Peacock & Floral Motifs, Adjustable Black Woven Dori",
+    "availability": "In Stock",
+    "set_includes": "1 Statement Choker Necklace + 1 Pair of Matching Statement Earrings",
+    "created_at": "2026-10-09T00:00:00.000000",
+    "updated_at": "2026-10-09T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_a18bec95c0eb",
+    "name": "The Aarsha's Royal Pichwai Heritage Choker Set",
+    "description": "A celebration of India's artistic heritage, the Royal Pichwai Choker Set features traditional Pichwai-inspired cow motifs, vibrant ruby and emerald-toned stones, a delicate blush-pink centrepiece, lustrous pearls, and antique metallic detailing. A timeless statement of elegance for your most cherished celebrations.",
+    "price": 384300,
+    "currency": "INR",
+    "images": [
+      "/images/royal-pichwai-heritage-choker-set.webp",
+      "/images/royal-pichwai-heritage-choker-set-model-1.webp",
+      "/images/royal-pichwai-heritage-choker-set-model-2.webp",
+      "/images/royal-pichwai-heritage-choker-set-model-3.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Traditional Heritage Choker Set",
+    "materials": "Brass Base Metal, Ruby-red & Emerald-green Imitation Stones, Blush-pink Heart-shaped Centre Element, Pichwai-inspired Cow Motifs in Purple Enamel, White Kundan-style Stones, Multicoloured Accent Stones, White Pearl-like Beads & Pearl Borders, Antique Silver-tone Ghungroos, Gold-tone Decorative Elements, Aqua-green & Emerald Hanging Bead Drops, Adjustable Black Woven Dori",
+    "availability": "In Stock",
+    "set_includes": "1 Statement Choker Necklace + 1 Pair of Matching Statement Earrings",
+    "created_at": "2026-10-09T00:00:00.000000",
+    "updated_at": "2026-10-09T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_d35932067494",
+    "name": "The Aarsha's Rangmahal Multicolour Heritage Choker Set",
+    "description": "A vibrant expression of royal elegance, the Rangmahal Heritage Choker Set brings together multicolour gemstones, intricate enamel-inspired artistry, delicate pearls, and antique metallic accents. Designed to make every celebration unforgettable.",
+    "price": 348300,
+    "currency": "INR",
+    "images": [
+      "/images/rangmahal-multicolour-heritage-choker-set.webp",
+      "/images/rangmahal-multicolour-heritage-choker-set-model-1.webp",
+      "/images/rangmahal-multicolour-heritage-choker-set-model-2.webp",
+      "/images/rangmahal-multicolour-heritage-choker-set-model-3.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Multicolour Heritage Choker Set",
+    "materials": "Brass Base Metal, Multicolour Imitation Gemstones (Emerald Green, Golden Yellow, Purple, Ruby Pink), Deep Blue & Green Accent Stones, Geometric/Oval/Teardrop Settings, White Pearl-like Beads & Pearl Borders, Multicolour Enamel-style Detailing, Antique Silver-tone Ghungroos, Gold-tone Decorative Drops, Pink/Lavender/Ruby Hanging Beads, Adjustable Black Woven Dori",
+    "availability": "In Stock",
+    "set_includes": "1 Statement Choker Necklace + 1 Pair of Matching Statement Earrings",
+    "created_at": "2026-10-09T00:00:00.000000",
+    "updated_at": "2026-10-09T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_2ff8b26a38eb",
+    "name": "The Aarsha's Neelmayura Royal Meenakari Heritage Choker Set",
+    "description": "An exquisite expression of royal heritage, the Neelmayura Choker Set features vibrant emerald-green stones, royal blue floral motifs, delicate pearls, intricate Meenakari-inspired detailing, and graceful lavender bead drops. A timeless statement piece designed to elevate your most cherished celebrations.",
+    "price": 361800,
+    "currency": "INR",
+    "images": [
+      "/images/neelmayura-royal-meenakari-heritage-choker-set.webp",
+      "/images/neelmayura-royal-meenakari-heritage-choker-set-model-1.webp",
+      "/images/neelmayura-royal-meenakari-heritage-choker-set-model-2.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Meenakari Heritage Choker Set",
+    "materials": "Brass Base Metal, Emerald-green Geometric Imitation Stones, Blush-pink Centre Stone, Royal Blue/Ruby-pink/Green Accent Stones, Multicolour Meenakari Enamel Floral Detailing, White Pearl-like Beads & Pearl Borders, Floral/Paisley/Ornamental Motifs, Antique Silver-tone Ghungroos, Gold-tone Decorative Elements, Lavender-purple & Blush-pink Hanging Beads, Adjustable Black Woven Dori",
+    "availability": "In Stock",
+    "set_includes": "1 Statement Choker Necklace + 1 Pair of Matching Statement Earrings",
+    "created_at": "2026-10-09T00:00:00.000000",
+    "updated_at": "2026-10-09T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_0541d7c66264",
+    "name": "The Aarsha's Gulraaj Royal Meenakari Heritage Choker Set",
+    "description": "Inspired by the richness of Indian heritage, the Gulraaj Choker Set showcases vibrant ruby-red and emerald-green stones, intricate Meenakari-inspired detailing, delicate pearl embellishments, and an ornate antique silver-tone pendant. Finished with graceful multicoloured bead drops and matching statement earrings, this exquisite ensemble adds a regal touch to every celebration.",
+    "price": 541800,
+    "currency": "INR",
+    "images": [
+      "/images/gulraaj-royal-meenakari-heritage-choker-set.webp",
+      "/images/gulraaj-royal-meenakari-heritage-choker-set-model-1.webp",
+      "/images/gulraaj-royal-meenakari-heritage-choker-set-model-2.webp"
+    ],
+    "category": "oxidised",
+    "product_type": "Traditional Meenakari Statement Choker Set",
+    "materials": "Brass Base Metal, Ruby-red Hexagonal & Emerald-green Circular Imitation Stones, Red/Green/White Accent Stones, Multicolour Meenakari Enamel Floral & Paisley Detailing, White Pearl-like Beads & Borders, Engraved Antique Silver-tone Central Pendant, Gold-tone Paisley Motifs & Ghungroos, Emerald/Coral-pink/Mint-green Bead Drops, Adjustable Black Braided Dori",
+    "availability": "In Stock",
+    "set_includes": "1 Statement Choker Necklace + 1 Pair of Matching Statement Earrings",
+    "created_at": "2026-10-09T00:00:00.000000",
+    "updated_at": "2026-10-09T00:00:00.000000"
   }
 ]
