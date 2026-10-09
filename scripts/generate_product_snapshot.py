@@ -17,7 +17,7 @@ API = "https://api.theaarshalabel.com/api/products"
 OUT = Path(__file__).resolve().parent.parent / "frontend" / "src" / "data" / "productsSnapshot.json"
 
 # Fields needed by ProductCard + grid sorting/filtering (not full descriptions).
-FIELDS = ["product_id", "name", "price", "currency", "images", "category", "product_type", "availability"]
+FIELDS = ["product_id", "name", "price", "currency", "images", "category", "product_type", "availability", "created_at"]
 
 
 def main():

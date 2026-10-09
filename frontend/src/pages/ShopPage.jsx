@@ -49,7 +49,7 @@ function FilterGroup({ title, options, active, onSelect, testidPrefix }) {
 export default function ShopPage() {
   const [products, setProducts] = useState(() => getCachedProducts() || []);
   const [loading, setLoading] = useState(() => !getCachedProducts());
-  const [sortBy, setSortBy] = useState('featured');
+  const [sortBy, setSortBy] = useState('newest');
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const type = searchParams.get('type') || 'all';
@@ -116,13 +116,22 @@ export default function ShopPage() {
     return sortBy === 'price_desc' ? b.price - a.price : a.price - b.price;
   };
 
-  // Default ("Featured") order: Necklaces & Sets first, then Earrings,
-  // Bracelets and Hathphool — cheapest first within each group.
+  // "Featured" order: Necklaces & Sets first, then Earrings, Bracelets and
+  // Hathphool — cheapest first within each group.
   const GROUP_RANK = { necklace: 0, earrings: 1, bracelet: 2, hathphool: 3 };
   const groupRank = (p) => GROUP_RANK[productGroup(p)] ?? 9;
   const byFeatured = (a, b) => (groupRank(a) - groupRank(b)) || byPrice(a, b);
 
-  const sortedProducts = [...filtered].sort(sortBy === 'featured' ? byFeatured : byPrice);
+  // Default ("Newest") order: most recently added products first.
+  const byNewest = (a, b) => {
+    const da = a.created_at || '';
+    const db = b.created_at || '';
+    if (da !== db) return da > db ? -1 : 1;
+    return byFeatured(a, b);
+  };
+
+  const comparator = sortBy === 'newest' ? byNewest : sortBy === 'featured' ? byFeatured : byPrice;
+  const sortedProducts = [...filtered].sort(comparator);
 
   // Shop by Type (material) filter buttons.
   const typeFilters = [
@@ -233,6 +242,7 @@ export default function ShopPage() {
                   className="border border-[#EAE5D9] bg-white px-3 sm:px-4 py-2 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#7A1F3D]"
                   data-testid="sort-select"
                 >
+                  <option value="newest">Newest</option>
                   <option value="featured">Featured</option>
                   <option value="price_asc">Price: Low to High</option>
                   <option value="price_desc">Price: High to Low</option>
