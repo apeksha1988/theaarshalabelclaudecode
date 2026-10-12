@@ -998,6 +998,15 @@ async def get_stock_notifications(request: Request):
     await require_admin(request)
     return await stock_notifications_collection.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
 
+@api_router.get("/admin/abandoned-checkouts")
+async def get_abandoned_checkouts(request: Request):
+    """Online checkouts that were started (phone captured) but never paid —
+    so the owner can follow up on WhatsApp. Newest first."""
+    await require_admin(request)
+    return await orders_collection.find(
+        {"status": "pending_payment"}, {"_id": 0}
+    ).sort("created_at", -1).to_list(500)
+
 # --- Notifications ---
 _bg_tasks = set()
 

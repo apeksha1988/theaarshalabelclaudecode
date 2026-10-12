@@ -34,6 +34,7 @@ const B2BPage = lazy(() => import('./pages/B2BPage'));
 const B2BCataloguePage = lazy(() => import('./pages/B2BCataloguePage'));
 const AdminB2BPage = lazy(() => import('./pages/AdminB2BPage'));
 const AdminStockNotifyPage = lazy(() => import('./pages/AdminStockNotifyPage'));
+const AdminAbandonedPage = lazy(() => import('./pages/AdminAbandonedPage'));
 const RefundPolicyPage = lazy(() => import('./pages/RefundPolicyPage'));
 const ShippingPolicyPage = lazy(() => import('./pages/ShippingPolicyPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
@@ -104,6 +105,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute adminOnly>
               <AdminStockNotifyPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/abandoned"
+          element={
+            <ProtectedRoute adminOnly>
+              <AdminAbandonedPage />
             </ProtectedRoute>
           }
         />
