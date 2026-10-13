@@ -39,6 +39,7 @@ contact_messages_collection = db.contact_messages
 password_resets_collection = db.password_resets
 b2b_inquiries_collection = db.b2b_inquiries
 stock_notifications_collection = db.stock_notifications
+leads_collection = db.leads
 
 # Razorpay client
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
@@ -179,6 +180,11 @@ class StockNotifyRequest(BaseModel):
     name: str
     phone: str
     email: Optional[str] = None
+
+class LeadCapture(BaseModel):
+    contact: str                       # a WhatsApp number or an email
+    source: Optional[str] = None       # e.g. "cart-popup", "exit-intent"
+    has_cart: Optional[bool] = None
 
 class OrderItem(BaseModel):
     product_id: str
@@ -997,6 +1003,35 @@ async def get_stock_notifications(request: Request):
     """Owner's tracker: everyone waiting on a sold-out piece, newest first."""
     await require_admin(request)
     return await stock_notifications_collection.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+
+# Lead capture (discount popup) routes
+@api_router.post("/lead")
+async def create_lead(data: LeadCapture):
+    """Public: a visitor leaves their WhatsApp/email for the 10% code. Stored so
+    the owner can follow up / retarget — deduped by contact."""
+    contact = (data.contact or "").strip()
+    if not contact:
+        raise HTTPException(status_code=400, detail="Contact required")
+    is_email = "@" in contact
+    await leads_collection.update_one(
+        {"contact": contact},
+        {"$set": {
+            "contact": contact,
+            "type": "email" if is_email else "phone",
+            "source": data.source or "popup",
+            "has_cart": bool(data.has_cart),
+            "updated_at": datetime.now(timezone.utc),
+        },
+         "$setOnInsert": {"created_at": datetime.now(timezone.utc)}},
+        upsert=True,
+    )
+    return {"ok": True}
+
+@api_router.get("/admin/leads")
+async def get_leads(request: Request):
+    """Owner's tracker: everyone who left contact details via the popup."""
+    await require_admin(request)
+    return await leads_collection.find({}, {"_id": 0}).sort("created_at", -1).to_list(2000)
 
 @api_router.get("/admin/abandoned-checkouts")
 async def get_abandoned_checkouts(request: Request):

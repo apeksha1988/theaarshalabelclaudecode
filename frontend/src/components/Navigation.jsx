@@ -122,6 +122,7 @@ export default function Navigation() {
                         <Link to="/admin/b2b" className="block px-5 py-2.5 text-sm tracking-wide uppercase text-[#1A1A1A] hover:bg-[#F5F0E6] hover:text-[#7A1F3D] transition-colors" data-testid="nav-admin-b2b">B2B Inquiries</Link>
                         <Link to="/admin/stock-notify" className="block px-5 py-2.5 text-sm tracking-wide uppercase text-[#1A1A1A] hover:bg-[#F5F0E6] hover:text-[#7A1F3D] transition-colors" data-testid="nav-admin-stock">Sold-Out Requests</Link>
                         <Link to="/admin/abandoned" className="block px-5 py-2.5 text-sm tracking-wide uppercase text-[#1A1A1A] hover:bg-[#F5F0E6] hover:text-[#7A1F3D] transition-colors" data-testid="nav-admin-abandoned">Abandoned Carts</Link>
+                        <Link to="/admin/leads" className="block px-5 py-2.5 text-sm tracking-wide uppercase text-[#1A1A1A] hover:bg-[#F5F0E6] hover:text-[#7A1F3D] transition-colors" data-testid="nav-admin-leads">Leads</Link>
                       </>
                     )}
                     <button onClick={handleLogout} className="block w-full text-left px-5 py-2.5 text-sm tracking-wide uppercase text-[#1A1A1A] hover:bg-[#F5F0E6] hover:text-[#7A1F3D] transition-colors" data-testid="nav-logout">Logout</button>
@@ -210,6 +211,7 @@ export default function Navigation() {
                     <Link to="/admin/b2b" className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors" onClick={() => setMobileMenuOpen(false)}>B2B Inquiries</Link>
                     <Link to="/admin/stock-notify" className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors" onClick={() => setMobileMenuOpen(false)}>Sold-Out Requests</Link>
                     <Link to="/admin/abandoned" className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors" onClick={() => setMobileMenuOpen(false)}>Abandoned Carts</Link>
+                    <Link to="/admin/leads" className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors" onClick={() => setMobileMenuOpen(false)}>Leads</Link>
                   </>
                 )}
                 <button onClick={() => { handleLogout(); setMobileMenuOpen(false); }} className="block pl-4 text-sm tracking-wide uppercase text-[#666666] hover:text-[#7A1F3D] transition-colors text-left w-full">Logout</button>

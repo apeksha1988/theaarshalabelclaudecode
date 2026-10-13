@@ -8,6 +8,7 @@ import { WishlistProvider } from './context/WishlistContext';
 import Navigation from './components/Navigation';
 import ProtectedRoute from './components/ProtectedRoute';
 import WhatsAppButton from './components/WhatsAppButton';
+import EmailCapturePopup from './components/EmailCapturePopup';
 import Footer from './components/Footer';
 // Core shopping funnel — loaded eagerly so it paints instantly.
 import Homepage from './pages/Homepage';
@@ -35,6 +36,7 @@ const B2BCataloguePage = lazy(() => import('./pages/B2BCataloguePage'));
 const AdminB2BPage = lazy(() => import('./pages/AdminB2BPage'));
 const AdminStockNotifyPage = lazy(() => import('./pages/AdminStockNotifyPage'));
 const AdminAbandonedPage = lazy(() => import('./pages/AdminAbandonedPage'));
+const AdminLeadsPage = lazy(() => import('./pages/AdminLeadsPage'));
 const RefundPolicyPage = lazy(() => import('./pages/RefundPolicyPage'));
 const ShippingPolicyPage = lazy(() => import('./pages/ShippingPolicyPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
@@ -116,10 +118,19 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/leads"
+          element={
+            <ProtectedRoute adminOnly>
+              <AdminLeadsPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       </Suspense>
       <Footer />
       <WhatsAppButton />
+      <EmailCapturePopup />
     </>
   );
 }
