@@ -31,6 +31,12 @@ const loadRazorpayScript = () =>
 
 export default function CheckoutPage() {
   const { cartItems, cartTotal, clearCart } = useCart();
+  // Coupons (e.g. WELCOME10) don't stack on festive-sale items, so they only
+  // discount the non-sale portion of the cart. Mirrors the backend.
+  const couponBase = cartItems.reduce(
+    (sum, it) => ((it.discount_percent || (it.mrp && it.mrp > it.price)) ? sum : sum + it.price * it.quantity),
+    0,
+  );
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -65,7 +71,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     const saved = getSavedCoupon();
     if (!saved) return;
-    const result = getCoupon(saved, cartTotal);
+    const result = getCoupon(saved, couponBase);
     if (result.valid) {
       setCoupon(result);
       setCouponInput(result.code);
@@ -75,7 +81,7 @@ export default function CheckoutPage() {
   if (cartItems.length === 0) return null;
 
   const applyCoupon = () => {
-    const result = getCoupon(couponInput, cartTotal);
+    const result = getCoupon(couponInput, couponBase);
     if (result.valid) {
       setCoupon(result);
       setCouponError('');

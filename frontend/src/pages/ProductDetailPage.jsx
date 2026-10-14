@@ -134,6 +134,8 @@ export default function ProductDetailPage() {
 
   const hasPrice = product.price !== null && product.price !== undefined;
   const soldOut = isOutOfStock(product);
+  const onSale = !soldOut && product.mrp && product.mrp > product.price;
+  const discountPct = product.discount_percent || (onSale ? Math.round((1 - product.price / product.mrp) * 100) : 0);
 
   return (
     <div className="min-h-screen pt-32 pb-20" data-testid="product-detail-page">
@@ -177,9 +179,20 @@ export default function ProductDetailPage() {
               {product.name}
             </h1>
             <ProductRatingInline productId={product.product_id} />
-            <p className="text-3xl font-light text-[#1A1A1A] mb-3" data-testid="product-price-detail">
-              {formatPrice(product.price, product.currency)}
-            </p>
+            <div className="mb-3" data-testid="product-price-detail">
+              <div className="flex items-baseline gap-3 flex-wrap">
+                <span className="text-3xl font-light text-[#1A1A1A]">{formatPrice(product.price, product.currency)}</span>
+                {onSale && (
+                  <>
+                    <span className="text-xl text-[#999999] line-through">₹{(product.mrp / 100).toLocaleString('en-IN')}</span>
+                    <span className="text-xs font-semibold uppercase tracking-wide bg-[#C0672A] text-white px-2 py-1 rounded" data-testid="sale-badge-detail">{discountPct}% Off</span>
+                  </>
+                )}
+              </div>
+              {onSale && (
+                <p className="text-sm text-[#C0672A] font-medium mt-1">Festive offer — you save ₹{((product.mrp - product.price) / 100).toLocaleString('en-IN')}</p>
+              )}
+            </div>
             <p className="flex items-center gap-2 text-sm font-medium text-[#388E3C] mb-8" data-testid="product-free-delivery">
               <Truck className="w-4 h-4" strokeWidth={1.75} /> Free Delivery across India
             </p>

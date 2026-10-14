@@ -232,6 +232,30 @@ COUPONS = {
     "PALAK15": 15,  # influencer: Palak Malhotra (@beautybrunchess)
 }
 
+# Festive sale: product_id -> % off. These products get a struck-through original
+# price (mrp) + a discount badge, and are EXCLUDED from stacking coupons like
+# WELCOME10. Applied to the live catalog via the /tasks/apply-sale endpoint.
+FESTIVE_SALE = {
+    "prod_2c1607507522": 25,  # Rosé Moissanite Layered Necklace Set
+    "prod_d96b4b7460b2": 25,  # Rajsi Emerald Choker Set
+    "prod_d9fc5a7711c8": 25,  # Heritage Kundan Necklace Set
+    "prod_76f21f56fc05": 25,  # Sage Hexa Luxe Necklace Set
+    "prod_750b0227fcc6": 25,  # Mint Rosé Royale Choker Set
+    "prod_22a71bc12c02": 25,  # Emerald Stag Statement Necklace Set
+    "prod_969e8f8b70b7": 25,  # Navratna Pearl Choker Set
+    "prod_bbf6965c3d1d": 25,  # Polki Emerald Choker Set
+    "prod_0804a64c3cac": 25,  # Gulbahar Heritage Necklace Set
+    "prod_1d11803d941c": 25,  # Mint Vine Necklace Set
+    "prod_c9160c450f91": 25,  # Jewel Spectrum Statement Choker Set
+    "prod_86304978f91d": 25,  # Sabyasachi Inspired Necklace Set
+    "prod_d1e64363dd84": 25,  # Ruby Royale Victorian Choker Set
+    "prod_9c114c150a99": 25,  # Ruhani Ruby Peacock Heritage Necklace Set
+    "prod_88e3773f9266": 25,  # Noorani Polki Kundan Floral Choker Set
+    "prod_d38ff0247883": 25,  # Emerald Veena Kundan Haar Set
+    "prod_e1ff33acd5c0": 25,  # Meher Champagne Polki Choker Set
+    "prod_d3922611d678": 25,  # Sitara Pachi Kundan Choker Set
+}
+
 def apply_coupon(subtotal: int, code: Optional[str]):
     """Return (discount_amount_paise, normalized_code) for a subtotal in paise.
     Unknown/empty codes yield no discount."""
@@ -701,7 +725,9 @@ async def create_checkout_order(data: CheckoutRequest, request: Request):
         )
 
     subtotal = sum(item.price * item.quantity for item in data.items)
-    discount, coupon_code = apply_coupon(subtotal, data.coupon)
+    # Coupons don't stack on festive-sale items — only non-sale items count.
+    coupon_base = sum(item.price * item.quantity for item in data.items if item.product_id not in FESTIVE_SALE)
+    discount, coupon_code = apply_coupon(coupon_base, data.coupon)
     total = subtotal - discount
     currency = data.currency or "INR"
     order_id = f"order_{uuid.uuid4().hex[:12]}"
@@ -784,7 +810,9 @@ async def create_cod_order(data: CheckoutRequest, request: Request):
     """Place a Cash on Delivery order. No online payment; a COD surcharge is
     added to the total and the order is confirmed immediately."""
     subtotal = sum(item.price * item.quantity for item in data.items)
-    discount, coupon_code = apply_coupon(subtotal, data.coupon)
+    # Coupons don't stack on festive-sale items — only non-sale items count.
+    coupon_base = sum(item.price * item.quantity for item in data.items if item.product_id not in FESTIVE_SALE)
+    discount, coupon_code = apply_coupon(coupon_base, data.coupon)
     total = subtotal - discount + COD_FEE_PAISE
     currency = data.currency or "INR"
     order_id = f"order_{uuid.uuid4().hex[:12]}"
@@ -1247,6 +1275,44 @@ async def sync_products(request: Request):
 
     total = await products_collection.count_documents({})
     return {"inserted": inserted, "inserted_count": len(inserted), "retired": retired, "total": total}
+
+
+# Apply (or refresh) the festive sale: set each FESTIVE_SALE product's price to
+# the discounted amount, keeping `mrp` = the original for the struck-through
+# display, and `discount_percent` for the badge. Any product that was on sale
+# but is no longer in FESTIVE_SALE is restored to its original price.
+# Idempotent (recomputes from mrp each run). Guarded by TASKS_TOKEN.
+@api_router.api_route("/tasks/apply-sale", methods=["GET", "POST"])
+async def apply_sale(request: Request):
+    if not TASKS_TOKEN or request.query_params.get("token") != TASKS_TOKEN:
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    applied = []
+    for pid, pct in FESTIVE_SALE.items():
+        p = await products_collection.find_one({"product_id": pid}, {"_id": 0, "price": 1, "mrp": 1})
+        if not p:
+            continue
+        original = p.get("mrp") or p.get("price")
+        if not original:
+            continue
+        sale_price = round(original * (100 - pct) / 10000) * 100  # whole-rupee
+        await products_collection.update_one(
+            {"product_id": pid},
+            {"$set": {"mrp": original, "price": sale_price, "discount_percent": pct}},
+        )
+        applied.append(pid)
+
+    restored = []
+    async for p in products_collection.find({"mrp": {"$exists": True}}, {"_id": 0, "product_id": 1, "mrp": 1}):
+        pid = p.get("product_id")
+        if pid and pid not in FESTIVE_SALE:
+            await products_collection.update_one(
+                {"product_id": pid},
+                {"$set": {"price": p["mrp"]}, "$unset": {"mrp": "", "discount_percent": ""}},
+            )
+            restored.append(pid)
+
+    return {"applied": len(applied), "restored": len(restored)}
 
 
 # Webhook handler

@@ -20,6 +20,8 @@ export default function ProductCard({ product }) {
   const hasPrice = product.price !== null && product.price !== undefined;
   const soldOut = isOutOfStock(product);
   const isLimited = !soldOut && /limited|exclusive/i.test(product.availability || '');
+  const onSale = !soldOut && product.mrp && product.mrp > product.price;
+  const discountPct = product.discount_percent || (onSale ? Math.round((1 - product.price / product.mrp) * 100) : 0);
 
   // Use a lightweight card thumbnail (…-thumb.webp) for the grid; fall back to
   // the full image if a thumbnail doesn't exist for this product.
@@ -61,11 +63,15 @@ export default function ProductCard({ product }) {
             <span className="absolute top-3 left-3 bg-[#1A1A1A]/85 text-white text-[10px] font-medium tracking-[0.15em] uppercase px-3 py-1 backdrop-blur-sm" data-testid="sold-out-badge">
               Sold Out
             </span>
-          ) : isLimited && (
+          ) : onSale ? (
+            <span className="absolute top-3 left-3 bg-[#C0672A] text-white text-[10px] font-semibold tracking-[0.15em] uppercase px-3 py-1 backdrop-blur-sm" data-testid="sale-badge">
+              {discountPct}% Off
+            </span>
+          ) : isLimited ? (
             <span className="absolute top-3 left-3 bg-[#7A1F3D]/90 text-white text-[10px] font-medium tracking-[0.15em] uppercase px-3 py-1 backdrop-blur-sm">
               {product.availability}
             </span>
-          )}
+          ) : null}
           <button
             onClick={handleWishlist}
             aria-label={wished ? 'Remove from wishlist' : 'Add to wishlist'}
@@ -78,8 +84,11 @@ export default function ProductCard({ product }) {
         <h3 className="text-lg font-serif font-medium text-[#1A1A1A] leading-snug" data-testid="product-name">
           {product.name}
         </h3>
-        <p className="text-base text-[#7A1F3D] mt-1 mb-4 font-light tracking-wide" data-testid="product-price">
-          {formatPrice(product.price)}
+        <p className="text-base mt-1 mb-4 font-light tracking-wide" data-testid="product-price">
+          <span className="text-[#7A1F3D]">{formatPrice(product.price)}</span>
+          {onSale && (
+            <span className="text-[#999999] line-through text-sm ml-2">₹{(product.mrp / 100).toLocaleString('en-IN')}</span>
+          )}
         </p>
       </Link>
 
