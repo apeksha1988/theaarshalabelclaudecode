@@ -54,6 +54,15 @@ function AppRoutes() {
     trackPageView(location.pathname + location.search);
   }, [location]);
 
+  // Reset scroll to the top on each route change, so pages like the cart or
+  // checkout open at the top instead of keeping the previous page's scroll
+  // position (which lands you at the footer). Skip when navigating to an
+  // in-page anchor (#hash), e.g. /b2b#partner-form.
+  useEffect(() => {
+    if (!location.hash) window.scrollTo(0, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+
   return (
     <>
       <Navigation />
