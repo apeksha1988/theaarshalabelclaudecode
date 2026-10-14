@@ -76,7 +76,7 @@ export default function CheckoutPage() {
       setCoupon(result);
       setCouponInput(result.code);
     }
-  }, [cartTotal]);
+  }, [couponBase]);
 
   if (cartItems.length === 0) return null;
 
