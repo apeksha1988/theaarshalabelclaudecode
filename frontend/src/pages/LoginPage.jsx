@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../lib/api';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, User } from 'lucide-react';
 import GoogleSignInButton from '../components/GoogleSignInButton';
+import { applySeo } from '../lib/seo';
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,6 +13,10 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  useEffect(() => {
+    applySeo({ title: isLogin ? 'Login' : 'Create Account', path: '/login', noindex: true });
+  }, [isLogin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { applySeo } from '../lib/seo';
 
 export default function LegalPage({ title, updated, sections }) {
+  useEffect(() => {
+    applySeo({ title });
+  }, [title]);
+
   return (
     <div className="min-h-screen pt-32 pb-20" data-testid="legal-page">
       <div className="max-w-3xl mx-auto px-6">

@@ -17,11 +17,13 @@ function setMeta(attr, key, content) {
 }
 
 // Apply SEO tags for the current page. Call from a useEffect.
-export function applySeo({ title, description, image, path, jsonLd } = {}) {
+export function applySeo({ title, description, image, path, jsonLd, noindex } = {}) {
   const fullTitle = title ? `${title} | ${SITE}` : DEFAULT_TITLE;
   const desc = description || DEFAULT_DESCRIPTION;
 
   document.title = fullTitle;
+  // Keep search engines off pages that shouldn't be indexed (e.g. 404).
+  setMeta('name', 'robots', noindex ? 'noindex, follow' : 'index, follow');
   setMeta('name', 'description', desc);
   setMeta('property', 'og:title', fullTitle);
   setMeta('property', 'og:description', desc);

@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
 import { useCart, MAX_QTY } from '../context/CartContext';
 import PromoBanner from '../components/PromoBanner';
 import { cartOrderLink } from '../lib/whatsappOrder';
+import { applySeo } from '../lib/seo';
 
 export default function CartPage() {
   const { cartItems, updateQuantity, removeFromCart, cartTotal, clearCart } = useCart();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    applySeo({ title: 'Shopping Cart', path: '/cart' });
+  }, []);
 
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen pt-32 pb-20 flex items-center justify-center" data-testid="empty-cart">
         <div className="text-center">
           <ShoppingBag className="w-16 h-16 text-[#EAE5D9] mx-auto mb-6" strokeWidth={1} />
-          <h2 className="text-2xl font-serif font-light text-[#1A1A1A] mb-4">Your cart is empty</h2>
+          <h1 className="text-2xl font-serif font-light text-[#1A1A1A] mb-4">Your cart is empty</h1>
           <p className="text-[#666666] mb-8">Discover our beautiful collection</p>
           <Link
             to="/shop"

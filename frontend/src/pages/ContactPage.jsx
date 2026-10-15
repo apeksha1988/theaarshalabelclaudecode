@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../lib/api';
 import { Mail, Check, Send, MessageCircle, MapPin, Clock } from 'lucide-react';
+import { applySeo } from '../lib/seo';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    applySeo({
+      title: 'Contact Us',
+      description: 'Get in touch with The Aarsha Label — email, WhatsApp, and support hours. We typically respond within 1–2 business days.',
+      path: '/contact',
+    });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

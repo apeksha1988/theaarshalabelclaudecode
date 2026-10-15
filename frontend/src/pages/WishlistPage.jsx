@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { useWishlist } from '../context/WishlistContext';
 import ProductCard from '../components/ProductCard';
+import { applySeo } from '../lib/seo';
 
 export default function WishlistPage() {
   const { wishlist } = useWishlist();
+
+  useEffect(() => {
+    applySeo({ title: 'My Wishlist', path: '/wishlist', noindex: true });
+  }, []);
 
   return (
     <div className="min-h-screen pt-32 pb-20" data-testid="wishlist-page">

@@ -177,7 +177,7 @@ export default function Navigation() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 space-y-4" data-testid="mobile-menu">
+          <div className="md:hidden -mx-6 px-6 py-4 space-y-4 bg-[#FDFBF7] border-t border-[#EAE5D9] shadow-lg" data-testid="mobile-menu">
             <form onSubmit={submitSearch} className="relative" data-testid="nav-search-form-mobile">
               <input
                 type="text"

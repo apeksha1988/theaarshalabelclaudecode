@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 // Store WhatsApp number (digits incl. country code). Falls back to the store
 // number so the button always shows; override with REACT_APP_WHATSAPP_NUMBER.
@@ -6,7 +7,10 @@ const DEFAULT_NUMBER = '917310768702';
 const NUMBER = (process.env.REACT_APP_WHATSAPP_NUMBER || DEFAULT_NUMBER).replace(/[^0-9]/g, '');
 
 export default function WhatsAppButton() {
-  if (!NUMBER) return null;
+  const { pathname } = useLocation();
+  // Hide on cart/checkout, where the floating button overlaps the order
+  // summary and the "Order on WhatsApp" note.
+  if (!NUMBER || /^\/(cart|checkout)/.test(pathname)) return null;
 
   const href = `https://wa.me/${NUMBER}?text=${encodeURIComponent(
     "Hi! I'd like to know more about your jewellery."

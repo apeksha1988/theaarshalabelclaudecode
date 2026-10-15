@@ -175,7 +175,14 @@ export default function ShopPage() {
     </div>
   ) : sortedProducts.length === 0 ? (
     <div className="text-center py-20" data-testid="no-products">
-      <p className="text-[#666666]">No products found in this category yet.</p>
+      {search ? (
+        <>
+          <p className="text-[#1A1A1A] mb-2">No results for &ldquo;{search}&rdquo;.</p>
+          <p className="text-sm text-[#666666]">Try a different search, or <button onClick={clearAll} className="text-[#7A1F3D] underline">browse all jewellery</button>.</p>
+        </>
+      ) : (
+        <p className="text-[#666666]">No products found in this category yet.</p>
+      )}
     </div>
   ) : (
     <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-12" data-testid="products-grid">

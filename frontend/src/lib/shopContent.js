@@ -12,7 +12,7 @@ export const SHOP_CONTENT = {
       },
       {
         q: 'Is delivery really free across India?',
-        a: 'Yes! Every order ships free anywhere in India. Most orders are dispatched within 2–3 business days and you receive tracking updates by email.',
+        a: 'Yes! Every order ships free anywhere in India. Most orders are dispatched within 2–5 business days and you receive tracking updates by email.',
       },
       {
         q: 'Do you offer Cash on Delivery (COD)?',
