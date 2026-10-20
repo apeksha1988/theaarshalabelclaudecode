@@ -256,6 +256,7 @@ FESTIVE_SALE = {
     "prod_d3922611d678": 25,  # Sitara Pachi Kundan Choker Set
     "prod_39c78f59c568": 10,  # Ruby Blossom Pendant Necklace Set (10% feature)
     "prod_74162792d329": 10,  # Hasli Choker Set (10% feature)
+    "prod_1db8b00b890c": 10,  # Mayur Ratna Hasli Choker (10% feature)
 }
 
 def apply_coupon(subtotal: int, code: Optional[str]):
