@@ -63,7 +63,7 @@ AISENSY_B2B_CAMPAIGN = os.getenv("AISENSY_B2B_CAMPAIGN")  # owner alert for B2B/
 TASKS_TOKEN = os.getenv("TASKS_TOKEN")  # shared secret guarding scheduled-task endpoints
 
 # Cash on Delivery surcharge (in paise). Override with COD_FEE_PAISE.
-COD_FEE_PAISE = int(os.getenv("COD_FEE_PAISE", "15000"))  # ₹150 default
+COD_FEE_PAISE = int(os.getenv("COD_FEE_PAISE", "4900"))  # ₹49 default
 
 # Google Sign-In (the Client ID is public; safe as a default).
 GOOGLE_CLIENT_ID = os.getenv(

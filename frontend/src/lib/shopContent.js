@@ -12,11 +12,11 @@ export const SHOP_CONTENT = {
       },
       {
         q: 'Is delivery really free across India?',
-        a: 'Yes! Every order ships free anywhere in India. Most orders are dispatched within 2–5 business days and you receive tracking updates by email.',
+        a: 'Yes! Every order ships free anywhere in India. Orders are dispatched within 2–3 business days and typically delivered in 4–7 business days, with tracking updates by email.',
       },
       {
         q: 'Do you offer Cash on Delivery (COD)?',
-        a: 'Yes, Cash on Delivery is available across India with a small ₹150 handling charge. You can also pay online via UPI, cards or net banking.',
+        a: 'Yes, Cash on Delivery is available across India with a small ₹49 handling charge. You can also pay online via UPI, cards or net banking.',
       },
       {
         q: 'Is the jewellery real gold?',

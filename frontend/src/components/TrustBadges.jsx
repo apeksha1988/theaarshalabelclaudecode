@@ -3,7 +3,7 @@ import { ShieldCheck, Truck, PackageCheck, Gem } from 'lucide-react';
 
 const BADGES = [
   { icon: ShieldCheck, title: '100% Secure Payment', sub: 'Encrypted & safe checkout' },
-  { icon: Truck, title: 'Free Delivery', sub: 'Ships in 2–5 business days' },
+  { icon: Truck, title: 'Free Delivery', sub: 'Dispatch in 2–3 days' },
   { icon: PackageCheck, title: 'Quality Checked', sub: 'Inspected before dispatch' },
   { icon: Gem, title: 'Handcrafted Quality', sub: 'Authentic, made with care' },
 ];

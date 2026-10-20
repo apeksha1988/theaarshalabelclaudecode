@@ -10,13 +10,13 @@ export default function ShippingPolicyPage() {
         {
           heading: 'Processing Time',
           body: [
-            "Orders are processed and dispatched within 2–5 business days of payment confirmation. Made-to-order or limited-edition pieces may take a little longer; we'll keep you updated.",
+            "Orders are processed and dispatched within 2–3 business days of payment confirmation. Made-to-order or limited-edition pieces may take a little longer; we'll keep you updated.",
           ],
         },
         {
           heading: 'Delivery Time & Coverage',
           body: [
-            "We currently ship across India. Estimated delivery is 5–10 business days from dispatch, depending on your location. Remote areas may take longer.",
+            "We currently ship across India. Estimated delivery is 4–7 business days from dispatch, depending on your location. Remote areas may take longer.",
             "You will receive tracking details by email/WhatsApp once your order ships.",
           ],
         },

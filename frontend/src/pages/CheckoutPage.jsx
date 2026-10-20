@@ -9,7 +9,7 @@ import TrustBadges from '../components/TrustBadges';
 import { getCoupon, getSavedCoupon } from '../lib/coupons';
 
 // Cash on Delivery surcharge in paise (must match backend COD_FEE_PAISE).
-const COD_FEE = 15000; // ₹150
+const COD_FEE = 4900; // ₹49
 
 // Lazily load Razorpay Checkout only when needed (on the checkout page).
 const loadRazorpayScript = () =>
