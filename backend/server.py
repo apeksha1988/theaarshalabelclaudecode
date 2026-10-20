@@ -254,6 +254,7 @@ FESTIVE_SALE = {
     "prod_d38ff0247883": 25,  # Emerald Veena Kundan Haar Set
     "prod_e1ff33acd5c0": 25,  # Meher Champagne Polki Choker Set
     "prod_d3922611d678": 25,  # Sitara Pachi Kundan Choker Set
+    "prod_39c78f59c568": 10,  # Ruby Blossom Pendant Necklace Set (10% feature)
 }
 
 def apply_coupon(subtotal: int, code: Optional[str]):
