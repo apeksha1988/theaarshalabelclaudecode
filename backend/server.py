@@ -254,9 +254,37 @@ FESTIVE_SALE = {
     "prod_d38ff0247883": 25,  # Emerald Veena Kundan Haar Set
     "prod_e1ff33acd5c0": 25,  # Meher Champagne Polki Choker Set
     "prod_d3922611d678": 25,  # Sitara Pachi Kundan Choker Set
-    "prod_39c78f59c568": 10,  # Ruby Blossom Pendant Necklace Set (10% feature)
-    "prod_74162792d329": 10,  # Hasli Choker Set (10% feature)
-    "prod_1db8b00b890c": 10,  # Mayur Ratna Hasli Choker (10% feature)
+    # 10% off: necklace/choker sets priced ₹1,500–3,000.
+    "prod_39c78f59c568": 10,  # Ruby Blossom Pendant Necklace Set
+    "prod_74162792d329": 10,  # Hasli Choker Set
+    "prod_1db8b00b890c": 10,  # Mayur Ratna Hasli Choker
+    "prod_8adbbed04f4f": 10,  # Mayuri Blush Heritage Choker
+    "prod_7396fe6ed362": 10,  # Royal Peacock Ruby Choker Set
+    "prod_72d9c83b548d": 10,  # Rajsi Antique Silver Necklace
+    "prod_1b619ea9a03c": 10,  # Zareen Emerald Heritage Necklace Set
+    "prod_7e9d3843e2d1": 10,  # Celeste Crystal Drop Necklace Set
+    "prod_9f2bdd677b73": 10,  # Crystal Choker Set
+    "prod_1357f1d2784f": 10,  # Sabyasachi Inspired Necklace Set (Pastel)
+    # 20% off: necklace/choker sets priced ₹3,000–5,000.
+    "prod_5d0ebc8b82dd": 20,  # Noor Double-Layer Moissanite Necklace Set
+    "prod_4e298cd184a3": 20,  # Simhavati Royal Heritage Necklace Set
+    "prod_454688661f78": 20,  # Celeste Layered Pendant Necklace Set (sold out)
+    "prod_9b9f071280cc": 20,  # Meher Crystal Necklace Set
+    "prod_d35932067494": 20,  # Rangmahal Multicolour Heritage Choker Set
+    "prod_2ff8b26a38eb": 20,  # Neelmayura Royal Meenakari Heritage Choker Set
+    "prod_a18bec95c0eb": 20,  # Royal Pichwai Heritage Choker Set
+    "prod_1f7b59e6c451": 20,  # Mayurika Royal Meenakari Heritage Choker Set
+    "prod_454b4aa7ad7e": 20,  # Ruby Emerald Layered Necklace Set
+    "prod_ee13ecea43b5": 20,  # Ruhani Ruby Necklace Set (sold out)
+    "prod_a9c7cf2e38b1": 20,  # Crystal Moissanite Necklace Set
+    "prod_20cb89a73b48": 20,  # Gulmohar Hasli Necklace Set (sold out)
+    "prod_a0a987b5053e": 20,  # Lavender Bloom Statement Necklace Set
+    "prod_9540f629317e": 20,  # Polki Choker Set
+    # 25% off: necklace/choker sets priced ₹5,000–7,000.
+    "prod_0541d7c66264": 25,  # Gulraaj Royal Meenakari Heritage Choker Set
+    "prod_8bfc94ce9e54": 25,  # Emerald Bloom Statement Collar Set
+    "prod_f743a0956aca": 25,  # Sabyasachi Inspired Royale Necklace Set
+    "prod_571462e0744b": 25,  # Emerald Noor Polki Choker Set
 }
 
 def apply_coupon(subtotal: int, code: Optional[str]):
