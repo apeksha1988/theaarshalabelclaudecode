@@ -5,6 +5,7 @@ import { useCart, MAX_QTY } from '../context/CartContext';
 import PromoBanner from '../components/PromoBanner';
 import { cartOrderLink } from '../lib/whatsappOrder';
 import { applySeo } from '../lib/seo';
+import { BULK_OFFER, piecesToUnlock } from '../lib/promo';
 
 export default function CartPage() {
   const { cartItems, updateQuantity, removeFromCart, cartTotal, clearCart } = useCart();
@@ -106,6 +107,17 @@ export default function CartPage() {
           <div className="lg:col-span-1">
             <div className="bg-[#F5F0E6] p-8 sticky top-32">
               <h2 className="text-2xl font-serif font-medium text-[#1A1A1A] mb-6" data-testid="order-summary-title">Order Summary</h2>
+              {BULK_OFFER.enabled && (
+                piecesToUnlock(cartItems) > 0 ? (
+                  <div className="mb-6 bg-[#FBF3E7] border border-[#E6D4B5] text-[#8A6A1F] text-sm px-4 py-3 text-center" data-testid="bulk-offer-nudge">
+                    🎁 Add {piecesToUnlock(cartItems)} more {piecesToUnlock(cartItems) === 1 ? 'piece' : 'pieces'} to get <span className="font-semibold">{BULK_OFFER.percent}% OFF</span> your order!
+                  </div>
+                ) : (
+                  <div className="mb-6 bg-[#EAF4EA] border border-[#BEE3BE] text-[#2E7D32] text-sm px-4 py-3 text-center font-medium" data-testid="bulk-offer-unlocked">
+                    🎉 You've unlocked {BULK_OFFER.percent}% OFF — applied at checkout!
+                  </div>
+                )
+              )}
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-base">
                   <span className="text-[#666666]">Subtotal</span>

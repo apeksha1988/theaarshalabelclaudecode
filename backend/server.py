@@ -267,6 +267,28 @@ def apply_coupon(subtotal: int, code: Optional[str]):
     discount = (subtotal * pct) // 100
     return discount, code.strip().upper()
 
+# Automatic order-size offer: buy BULK_OFFER_MIN_QTY+ items, get BULK_OFFER_PCT%
+# off the non-sale subtotal. Mirrors frontend lib/promo.js. It does NOT stack
+# with festive-sale items (those are excluded from coupon_base) and does NOT
+# stack with a coupon code — the customer gets whichever single discount is
+# larger. Toggle/retune via env vars without a code change.
+BULK_OFFER_ENABLED = os.getenv("BULK_OFFER_ENABLED", "true").strip().lower() != "false"
+BULK_OFFER_MIN_QTY = int(os.getenv("BULK_OFFER_MIN_QTY", "2"))
+BULK_OFFER_PCT = int(os.getenv("BULK_OFFER_PCT", "20"))
+
+def best_discount(items, coupon_base: int, code: Optional[str]):
+    """Return (discount_paise, label) applying the better of the coupon code or
+    the automatic buy-N offer. Both apply only to the non-sale subtotal
+    (coupon_base) and never stack with each other or with festive pricing."""
+    coupon_discount, coupon_code = apply_coupon(coupon_base, code)
+    total_qty = sum(item.quantity for item in items)
+    bulk_discount = 0
+    if BULK_OFFER_ENABLED and total_qty >= BULK_OFFER_MIN_QTY:
+        bulk_discount = (coupon_base * BULK_OFFER_PCT) // 100
+    if bulk_discount > coupon_discount:
+        return bulk_discount, f"BUY{BULK_OFFER_MIN_QTY}GET{BULK_OFFER_PCT}"
+    return coupon_discount, coupon_code
+
 class CheckoutResponse(BaseModel):
     checkout_url: str
     order_id: str
@@ -727,7 +749,7 @@ async def create_checkout_order(data: CheckoutRequest, request: Request):
     subtotal = sum(item.price * item.quantity for item in data.items)
     # Coupons don't stack on festive-sale items — only non-sale items count.
     coupon_base = sum(item.price * item.quantity for item in data.items if item.product_id not in FESTIVE_SALE)
-    discount, coupon_code = apply_coupon(coupon_base, data.coupon)
+    discount, coupon_code = best_discount(data.items, coupon_base, data.coupon)
     total = subtotal - discount
     currency = data.currency or "INR"
     order_id = f"order_{uuid.uuid4().hex[:12]}"
@@ -812,7 +834,7 @@ async def create_cod_order(data: CheckoutRequest, request: Request):
     subtotal = sum(item.price * item.quantity for item in data.items)
     # Coupons don't stack on festive-sale items — only non-sale items count.
     coupon_base = sum(item.price * item.quantity for item in data.items if item.product_id not in FESTIVE_SALE)
-    discount, coupon_code = apply_coupon(coupon_base, data.coupon)
+    discount, coupon_code = best_discount(data.items, coupon_base, data.coupon)
     total = subtotal - discount + COD_FEE_PAISE
     currency = data.currency or "INR"
     order_id = f"order_{uuid.uuid4().hex[:12]}"

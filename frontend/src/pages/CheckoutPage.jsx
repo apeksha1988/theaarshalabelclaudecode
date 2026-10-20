@@ -7,6 +7,7 @@ import { CreditCard } from 'lucide-react';
 import { trackBeginCheckout, trackPurchase } from '../lib/analytics';
 import TrustBadges from '../components/TrustBadges';
 import { getCoupon, getSavedCoupon } from '../lib/coupons';
+import { BULK_OFFER, bulkDiscount } from '../lib/promo';
 
 // Cash on Delivery surcharge in paise (must match backend COD_FEE_PAISE).
 const COD_FEE = 4900; // ₹49
@@ -97,7 +98,12 @@ export default function CheckoutPage() {
     setCouponError('');
   };
 
-  const discount = coupon?.valid ? coupon.discount : 0;
+  // The customer gets the better of their coupon or the automatic buy-N offer —
+  // the two never stack. Mirrors the backend's best_discount().
+  const couponDiscount = coupon?.valid ? coupon.discount : 0;
+  const autoBulk = bulkDiscount(cartItems, couponBase);
+  const bulkWins = autoBulk > couponDiscount;
+  const discount = Math.max(autoBulk, couponDiscount);
   const codFee = paymentMethod === 'cod' ? COD_FEE : 0;
   const payableTotal = cartTotal - discount + codFee;
 
@@ -427,6 +433,12 @@ export default function CheckoutPage() {
                   </div>
                 ))}
                 <div className="border-t border-[#EAE5D9] pt-4 space-y-3">
+                  {/* Automatic buy-N offer */}
+                  {autoBulk > 0 && (
+                    <div className="text-sm bg-[#EAF4EA] text-[#2E7D32] font-medium px-3 py-2 text-center" data-testid="bulk-offer-applied">
+                      🎉 Buy {BULK_OFFER.minQty}+ offer: {BULK_OFFER.percent}% off applied
+                    </div>
+                  )}
                   {/* Coupon */}
                   {coupon?.valid ? (
                     <div className="flex justify-between items-center text-sm bg-[#EAF4EA] px-3 py-2" data-testid="coupon-applied">
@@ -467,7 +479,7 @@ export default function CheckoutPage() {
                   </div>
                   {discount > 0 && (
                     <div className="flex justify-between text-base" data-testid="checkout-discount">
-                      <span className="text-[#666666]">Discount</span>
+                      <span className="text-[#666666]">{bulkWins ? `Buy ${BULK_OFFER.minQty}+ offer (${BULK_OFFER.percent}% off)` : 'Discount'}</span>
                       <span className="text-[#2E7D32] font-medium">− ₹{(discount / 100).toLocaleString('en-IN')}</span>
                     </div>
                   )}
