@@ -4,6 +4,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import api from '../lib/api';
 import ProductCard from '../components/ProductCard';
 import UnboxingVideo from '../components/UnboxingVideo';
+import PromoBanner from '../components/PromoBanner';
 import { productGroup } from '../lib/productGroups';
 import { applySeo } from '../lib/seo';
 import { getCachedProducts, setCachedProducts } from '../lib/productCache';
@@ -120,7 +121,7 @@ export default function Homepage() {
               Exquisite Kundan, Polki & Moissanite jewellery, handcrafted for your forever moments.
             </p>
             <div className="inline-flex items-center gap-2 bg-white/15 border border-white/40 text-white px-5 py-2 rounded-full text-sm font-medium mb-5 backdrop-blur-sm" data-testid="hero-promo">
-              🎁 First order? Use code <span className="font-semibold tracking-wider">WELCOME10</span> for 10% off
+              🎁 Festive Sale — up to <span className="font-semibold tracking-wider">40% off</span> select sets
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs sm:text-sm text-white/95 mb-8" data-testid="hero-delivery">
               <span className="font-medium">🚚 Free Delivery across India</span>
@@ -159,6 +160,8 @@ export default function Homepage() {
           ))}
         </div>
       </section>
+
+      <PromoBanner />
 
       {/* Shop by Category */}
       <section className="py-10 md:py-16 bg-[#FDFBF7]" data-testid="category-section">

@@ -3,9 +3,8 @@
 // (backend/server.py BULK_OFFER_* + best_discount). The backend value is
 // authoritative for the amount actually charged; this is only for the UI.
 //
-// The offer never stacks: it applies only to the non-sale ("couponBase")
-// portion of the cart, and the customer gets whichever is larger — this offer
-// or a coupon code (20% already beats WELCOME10/PALAK15).
+// The offer applies only to the non-sale portion of the cart (items already
+// on sale are excluded, same as on the backend).
 export const BULK_OFFER = {
   enabled: true,
   minQty: 2,

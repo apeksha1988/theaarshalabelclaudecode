@@ -14,7 +14,7 @@ function waLink(phone, name, itemName) {
   const msg =
     `Hi ${name || 'there'}, this is The Aarsha Label 💛 ` +
     `I noticed you were looking at ${itemName ? `"${itemName}"` : 'one of our pieces'} but didn't finish your order. ` +
-    `Can I help you complete it? Here's 10% off with code WELCOME10 — free delivery & Cash on Delivery available.`;
+    `Can I help you complete it? We have free delivery & Cash on Delivery across India, and up to 40% off select sets right now.`;
   return `https://wa.me/${digits}?text=${encodeURIComponent(msg)}`;
 }
 

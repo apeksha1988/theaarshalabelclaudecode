@@ -4,7 +4,7 @@
 export const SHOP_CONTENT = {
   all: {
     intro:
-      'Shop handcrafted statement jewellery online at The Aarsha Label — exquisite Kundan, Polki and Moissanite necklace sets, chokers, earrings, bracelets and hathphools crafted with heritage artistry. Free delivery across India, Cash on Delivery available, and 10% off your first order with code WELCOME10.',
+      'Shop handcrafted statement jewellery online at The Aarsha Label — exquisite Kundan, Polki and Moissanite necklace sets, chokers, earrings, bracelets and hathphools crafted with heritage artistry. Free delivery across India, Cash on Delivery available, and up to 40% off select sets this festive season.',
     faqs: [
       {
         q: 'What kind of jewellery does The Aarsha Label sell?',

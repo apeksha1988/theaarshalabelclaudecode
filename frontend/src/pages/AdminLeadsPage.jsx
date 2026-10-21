@@ -40,7 +40,7 @@ export default function AdminLeadsPage() {
   }
 
   const waFor = (phone) => `https://wa.me/${(phone || '').replace(/\D/g, '')}?text=${encodeURIComponent(
-    "Hi! Thanks for your interest in The Aarsha Label 💛 Here's your 10% off code: WELCOME10 — free delivery & COD across India. Can I help you pick a piece?"
+    "Hi! Thanks for your interest in The Aarsha Label 💛 We have free delivery & COD across India, and up to 40% off select sets right now. Can I help you pick a piece?"
   )}`;
 
   return (

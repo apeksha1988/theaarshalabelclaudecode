@@ -24,7 +24,7 @@ export default function FestivePage() {
     applySeo({
       title: 'Festive Collection — Teej & Raksha Bandhan',
       description:
-        'Shop handcrafted festive jewellery for Teej, Raksha Bandhan and the festive season — Kundan, Polki, oxidised & statement sets. Free delivery, COD, 10% off with WELCOME10.',
+        'Shop handcrafted festive jewellery for Teej, Raksha Bandhan and the festive season — Kundan, Polki, oxidised & statement sets. Free delivery, COD, and up to 40% off select sets.',
       path: '/festive',
     });
   }, []);
@@ -56,7 +56,7 @@ export default function FestivePage() {
             dressing up, and the perfect gift for someone you love.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs sm:text-sm mb-8">
-            <span className="flex items-center gap-1.5"><Gift className="w-4 h-4 text-[#F0C96B]" /> 10% off — <b>WELCOME10</b></span>
+            <span className="flex items-center gap-1.5"><Gift className="w-4 h-4 text-[#F0C96B]" /> Up to <b>40% off</b></span>
             <span className="flex items-center gap-1.5"><Truck className="w-4 h-4 text-[#F0C96B]" /> Free delivery</span>
             <span className="flex items-center gap-1.5"><IndianRupee className="w-4 h-4 text-[#F0C96B]" /> Cash on Delivery</span>
           </div>
@@ -100,7 +100,7 @@ export default function FestivePage() {
       <div id="festive-grid" className="max-w-7xl mx-auto px-6 md:px-12 mt-16 scroll-mt-28">
         <div className="text-center mb-8">
           <h2 className="font-serif font-light text-2xl sm:text-3xl text-[#1A1A1A]">Shop the Festive Collection</h2>
-          <p className="text-sm text-[#666666] mt-2">Every piece handcrafted · real photos · 10% off with WELCOME10</p>
+          <p className="text-sm text-[#666666] mt-2">Every piece handcrafted · real photos · up to 40% off select sets</p>
         </div>
         {sorted.length === 0 ? (
           <p className="text-center py-16 text-[#666666]">Loading the collection…</p>

@@ -225,12 +225,10 @@ class CheckoutRequest(BaseModel):
     redirect_url: str
     coupon: Optional[str] = None
 
-# Discount coupons: code -> percentage off. Kept in sync with the frontend
-# (frontend/src/lib/coupons.js) for display; the server value is authoritative.
-COUPONS = {
-    "WELCOME10": 10,
-    "PALAK15": 15,  # influencer: Palak Malhotra (@beautybrunchess)
-}
+# Discount coupons removed (Oct 2026) — the site runs a price-tiered sale +
+# automatic buy-2 offer instead. An empty table means no code is ever valid;
+# apply_coupon() and best_discount() still work (they just return 0 for codes).
+COUPONS = {}
 
 # Price-tiered sale: product_id -> % off. These products get a struck-through
 # original price (mrp) + a discount badge, and are EXCLUDED from stacking

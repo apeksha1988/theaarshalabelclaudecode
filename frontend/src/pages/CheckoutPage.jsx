@@ -6,7 +6,6 @@ import { useAuth } from '../context/AuthContext';
 import { CreditCard } from 'lucide-react';
 import { trackBeginCheckout, trackPurchase } from '../lib/analytics';
 import TrustBadges from '../components/TrustBadges';
-import { getCoupon, getSavedCoupon } from '../lib/coupons';
 import { BULK_OFFER, bulkDiscount } from '../lib/promo';
 
 // Cash on Delivery surcharge in paise (must match backend COD_FEE_PAISE).
@@ -32,18 +31,15 @@ const loadRazorpayScript = () =>
 
 export default function CheckoutPage() {
   const { cartItems, cartTotal, clearCart } = useCart();
-  // Coupons (e.g. WELCOME10) don't stack on festive-sale items, so they only
-  // discount the non-sale portion of the cart. Mirrors the backend.
-  const couponBase = cartItems.reduce(
+  // The automatic buy-2 offer applies only to the non-sale portion of the cart
+  // (items already on sale are excluded). Mirrors the backend.
+  const saleBase = cartItems.reduce(
     (sum, it) => ((it.discount_percent || (it.mrp && it.mrp > it.price)) ? sum : sum + it.price * it.quantity),
     0,
   );
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [couponInput, setCouponInput] = useState('');
-  const [coupon, setCoupon] = useState(null); // { valid, code, percent, discount }
-  const [couponError, setCouponError] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('online'); // 'online' | 'cod'
   const [formData, setFormData] = useState({
     email: user?.email || '',
@@ -68,42 +64,10 @@ export default function CheckoutPage() {
     }
   }, [cartItems.length, navigate]);
 
-  // Auto-apply a coupon that arrived via an influencer link.
-  useEffect(() => {
-    const saved = getSavedCoupon();
-    if (!saved) return;
-    const result = getCoupon(saved, couponBase);
-    if (result.valid) {
-      setCoupon(result);
-      setCouponInput(result.code);
-    }
-  }, [couponBase]);
-
   if (cartItems.length === 0) return null;
 
-  const applyCoupon = () => {
-    const result = getCoupon(couponInput, couponBase);
-    if (result.valid) {
-      setCoupon(result);
-      setCouponError('');
-    } else {
-      setCoupon(null);
-      setCouponError('That code is not valid. Please check and try again.');
-    }
-  };
-
-  const removeCoupon = () => {
-    setCoupon(null);
-    setCouponInput('');
-    setCouponError('');
-  };
-
-  // The customer gets the better of their coupon or the automatic buy-N offer —
-  // the two never stack. Mirrors the backend's best_discount().
-  const couponDiscount = coupon?.valid ? coupon.discount : 0;
-  const autoBulk = bulkDiscount(cartItems, couponBase);
-  const bulkWins = autoBulk > couponDiscount;
-  const discount = Math.max(autoBulk, couponDiscount);
+  // Automatic buy-N offer (applies to the non-sale portion only).
+  const discount = bulkDiscount(cartItems, saleBase);
   const codFee = paymentMethod === 'cod' ? COD_FEE : 0;
   const payableTotal = cartTotal - discount + codFee;
 
@@ -123,7 +87,7 @@ export default function CheckoutPage() {
         image: item.images[0],
       })),
       currency: 'INR',
-      coupon: coupon?.valid ? coupon.code : null,
+      coupon: null,
       shipping_address: {
         name: formData.name,
         line1: formData.line1,
@@ -434,42 +398,9 @@ export default function CheckoutPage() {
                 ))}
                 <div className="border-t border-[#EAE5D9] pt-4 space-y-3">
                   {/* Automatic buy-N offer */}
-                  {autoBulk > 0 && (
+                  {discount > 0 && (
                     <div className="text-sm bg-[#EAF4EA] text-[#2E7D32] font-medium px-3 py-2 text-center" data-testid="bulk-offer-applied">
                       🎉 Buy {BULK_OFFER.minQty}+ offer: {BULK_OFFER.percent}% off applied
-                    </div>
-                  )}
-                  {/* Coupon */}
-                  {coupon?.valid ? (
-                    <div className="flex justify-between items-center text-sm bg-[#EAF4EA] px-3 py-2" data-testid="coupon-applied">
-                      <span className="text-[#2E7D32] font-medium">
-                        Coupon {coupon.code} applied ({coupon.percent}% off)
-                      </span>
-                      <button type="button" onClick={removeCoupon} className="text-[#666666] hover:text-[#7A1F3D] text-xs uppercase tracking-wide">
-                        Remove
-                      </button>
-                    </div>
-                  ) : (
-                    <div>
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={couponInput}
-                          onChange={(e) => setCouponInput(e.target.value)}
-                          placeholder="Discount code"
-                          className="flex-1 border border-[#EAE5D9] bg-white px-3 py-2 text-sm focus:outline-none focus:border-[#7A1F3D] uppercase"
-                          data-testid="coupon-input"
-                        />
-                        <button
-                          type="button"
-                          onClick={applyCoupon}
-                          className="border border-[#7A1F3D] text-[#7A1F3D] px-4 py-2 text-sm uppercase tracking-wide hover:bg-[#7A1F3D] hover:text-white transition-colors"
-                          data-testid="coupon-apply"
-                        >
-                          Apply
-                        </button>
-                      </div>
-                      {couponError && <p className="text-xs text-[#D32F2F] mt-1" data-testid="coupon-error">{couponError}</p>}
                     </div>
                   )}
 
@@ -479,7 +410,7 @@ export default function CheckoutPage() {
                   </div>
                   {discount > 0 && (
                     <div className="flex justify-between text-base" data-testid="checkout-discount">
-                      <span className="text-[#666666]">{bulkWins ? `Buy ${BULK_OFFER.minQty}+ offer (${BULK_OFFER.percent}% off)` : 'Discount'}</span>
+                      <span className="text-[#666666]">Buy {BULK_OFFER.minQty}+ offer ({BULK_OFFER.percent}% off)</span>
                       <span className="text-[#2E7D32] font-medium">− ₹{(discount / 100).toLocaleString('en-IN')}</span>
                     </div>
                   )}

@@ -4,10 +4,10 @@ import { X, Gift } from 'lucide-react';
 import api from '../lib/api';
 import { useCart } from '../context/CartContext';
 
-// A one-time discount popup that captures a visitor's WhatsApp/email (for the
-// 10% code) so the owner can follow up with people who don't finish checkout.
-// Shows once per visitor, on exit-intent (desktop) or after a delay (mobile);
-// never on checkout/admin pages.
+// A one-time lead-capture popup that saves a visitor's WhatsApp/email so the
+// owner can follow up (festive sale + new drops) with people who don't finish
+// checkout. Shows once per visitor, on exit-intent (desktop) or after a delay
+// (mobile); never on checkout/admin pages.
 const DONE_KEY = 'aarsha_lead_done';
 
 export default function EmailCapturePopup() {
@@ -65,25 +65,22 @@ export default function EmailCapturePopup() {
         <div className="bg-gradient-to-br from-[#5C172E] to-[#7A1F3D] text-center px-6 py-7 text-white">
           <Gift className="w-9 h-9 mx-auto text-[#F0C96B] mb-2" strokeWidth={1.5} />
           <h2 className="font-serif text-2xl">
-            {status === 'done' ? 'You’re in! 🎉' : (hasCart ? 'Don’t leave it behind ✨' : 'Here’s 10% off 🎁')}
+            {status === 'done' ? 'You’re in! 🎉' : (hasCart ? 'Don’t leave it behind ✨' : 'Festive Sale is on ✨')}
           </h2>
         </div>
 
         <div className="px-6 py-6">
           {status === 'done' ? (
             <div className="text-center">
-              <p className="text-sm text-[#1A1A1A] mb-3">Your code is ready — use it at checkout:</p>
-              <div className="inline-flex items-center gap-2 bg-[#F5F0E6] border border-dashed border-[#7A1F3D] px-5 py-3 rounded">
-                <span className="font-serif text-xl tracking-[0.15em] text-[#7A1F3D] font-semibold">WELCOME10</span>
-              </div>
-              <p className="text-xs text-[#666666] mt-3">10% off · Free delivery · Cash on Delivery across India 💛</p>
+              <p className="text-sm text-[#1A1A1A] mb-2">Thank you — you’re on the list! 💛</p>
+              <p className="text-xs text-[#666666]">We’ll send you our festive offers &amp; first dibs on new drops. Free delivery &amp; Cash on Delivery across India.</p>
             </div>
           ) : (
             <>
               <p className="text-sm text-[#666666] text-center mb-4">
                 {hasCart
-                  ? 'Get 10% off the pieces in your cart. Drop your WhatsApp number or email and we’ll send your code + a reminder.'
-                  : 'Get 10% off your first order. Drop your WhatsApp number or email and we’ll send your code + first dibs on new drops.'}
+                  ? 'Leave your WhatsApp number or email and we’ll save your cart + send you our best festive offers.'
+                  : 'Join for early access to new drops and our festive sale — up to 40% off select sets. Drop your WhatsApp number or email.'}
               </p>
               <form onSubmit={submit} className="space-y-3">
                 <input
@@ -98,10 +95,10 @@ export default function EmailCapturePopup() {
                   className="w-full bg-[#7A1F3D] text-white px-6 py-3 text-sm tracking-[0.1em] uppercase hover:bg-[#5C172E] transition-colors disabled:opacity-60"
                   data-testid="lead-submit"
                 >
-                  {status === 'sending' ? 'Sending…' : 'Get my 10% off'}
+                  {status === 'sending' ? 'Sending…' : 'Keep me posted'}
                 </button>
               </form>
-              <p className="text-[11px] text-[#999999] text-center mt-3">No spam — just your code and occasional new arrivals.</p>
+              <p className="text-[11px] text-[#999999] text-center mt-3">No spam — just new arrivals and festive offers.</p>
             </>
           )}
         </div>

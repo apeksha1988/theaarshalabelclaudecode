@@ -1,7 +1,6 @@
 import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { initAnalytics, trackPageView } from './lib/analytics';
-import { captureCouponFromUrl } from './lib/coupons';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
@@ -48,7 +47,6 @@ function AppRoutes() {
 
   useEffect(() => {
     initAnalytics();
-    captureCouponFromUrl();
   }, []);
 
   useEffect(() => {
