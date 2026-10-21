@@ -330,7 +330,7 @@ def apply_coupon(subtotal: int, code: Optional[str]):
 # with festive-sale items (those are excluded from coupon_base) and does NOT
 # stack with a coupon code — the customer gets whichever single discount is
 # larger. Toggle/retune via env vars without a code change.
-BULK_OFFER_ENABLED = os.getenv("BULK_OFFER_ENABLED", "true").strip().lower() != "false"
+BULK_OFFER_ENABLED = os.getenv("BULK_OFFER_ENABLED", "false").strip().lower() != "false"
 BULK_OFFER_MIN_QTY = int(os.getenv("BULK_OFFER_MIN_QTY", "2"))
 BULK_OFFER_PCT = int(os.getenv("BULK_OFFER_PCT", "15"))
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { X } from 'lucide-react';
-import { BULK_OFFER } from '../lib/promo';
 
 // Dismissible promo strip announcing the current offer + free delivery/COD.
 // Sits in the normal page flow (below the fixed nav). Dismissal is remembered
@@ -25,12 +24,8 @@ export default function PromoBanner() {
     >
       <Link to="/shop" className="block hover:opacity-95 transition-opacity">
         <p className="text-xs sm:text-sm tracking-wide flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-          {BULK_OFFER.enabled && (
-            <>
-              <span>🎁 Buy {BULK_OFFER.minQty} Get <span className="font-semibold text-[#F0C96B]">{BULK_OFFER.percent}% OFF</span> · Shop now →</span>
-              <span className="hidden sm:inline opacity-40">|</span>
-            </>
-          )}
+          <span>🎉 <span className="font-semibold tracking-wider">FESTIVE SALE</span> — up to <span className="font-semibold text-[#F0C96B]">40% OFF</span> · Shop now →</span>
+          <span className="hidden sm:inline opacity-40">|</span>
           <span>🚚 Free Delivery + 💵 COD across India</span>
         </p>
       </Link>

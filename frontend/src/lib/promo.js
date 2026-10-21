@@ -6,7 +6,10 @@
 // The offer applies only to the non-sale portion of the cart (items already
 // on sale are excluded, same as on the backend).
 export const BULK_OFFER = {
-  enabled: true,
+  // Disabled 2026-10-21: every product is on the tiered sale now, so the buy-2
+  // offer (non-sale items only) has nothing to apply to. Flip back to true if
+  // some products are later taken off the sale.
+  enabled: false,
   minQty: 2,
   percent: 15,
 };
