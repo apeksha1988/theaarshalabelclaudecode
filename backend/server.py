@@ -239,7 +239,7 @@ COUPONS = {
 # and cover necklace/choker SETS only (standalone earrings, bracelets, ear
 # chains and hathphools are excluded):
 #   ₹1,500–3,000 → 10%    ₹3,000–5,000 → 20%    ₹5,000–7,000 → 25%
-#   ₹7,000–10,000 → 35%   ₹10,000–15,000 → 50%  (above ₹15,000 unchanged)
+#   ₹7,000–10,000 → 35%   ₹10,000–15,000 → 40%  (above ₹15,000 unchanged)
 FESTIVE_SALE = {
     # 10% — ₹1,500–3,000
     "prod_39c78f59c568": 10,  # Ruby Blossom Pendant Necklace Set
@@ -286,11 +286,11 @@ FESTIVE_SALE = {
     "prod_bbf6965c3d1d": 35,  # Polki Emerald Choker Set
     "prod_22a71bc12c02": 35,  # Emerald Stag Statement Necklace Set
     "prod_969e8f8b70b7": 35,  # Navratna Pearl Choker Set
-    # 50% — ₹10,000–15,000
-    "prod_750b0227fcc6": 50,  # Mint Rosé Royale Choker Set
-    "prod_76f21f56fc05": 50,  # Sage Hexa Luxe Necklace Set
-    "prod_d9fc5a7711c8": 50,  # Heritage Kundan Necklace Set
-    "prod_d96b4b7460b2": 50,  # Rajsi Emerald Choker Set
+    # 40% — ₹10,000–15,000
+    "prod_750b0227fcc6": 40,  # Mint Rosé Royale Choker Set
+    "prod_76f21f56fc05": 40,  # Sage Hexa Luxe Necklace Set
+    "prod_d9fc5a7711c8": 40,  # Heritage Kundan Necklace Set
+    "prod_d96b4b7460b2": 40,  # Rajsi Emerald Choker Set
     # 25% — above ₹15,000 (unchanged)
     "prod_2c1607507522": 25,  # Rosé Moissanite Layered Necklace Set
 }
