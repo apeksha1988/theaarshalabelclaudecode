@@ -8,7 +8,7 @@
 export const BULK_OFFER = {
   enabled: true,
   minQty: 2,
-  percent: 20,
+  percent: 15,
 };
 
 // Total number of pieces in the cart (sum of quantities).

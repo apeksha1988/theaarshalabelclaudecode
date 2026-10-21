@@ -311,7 +311,7 @@ def apply_coupon(subtotal: int, code: Optional[str]):
 # larger. Toggle/retune via env vars without a code change.
 BULK_OFFER_ENABLED = os.getenv("BULK_OFFER_ENABLED", "true").strip().lower() != "false"
 BULK_OFFER_MIN_QTY = int(os.getenv("BULK_OFFER_MIN_QTY", "2"))
-BULK_OFFER_PCT = int(os.getenv("BULK_OFFER_PCT", "20"))
+BULK_OFFER_PCT = int(os.getenv("BULK_OFFER_PCT", "15"))
 
 def best_discount(items, coupon_base: int, code: Optional[str]):
     """Return (discount_paise, label) applying the better of the coupon code or
