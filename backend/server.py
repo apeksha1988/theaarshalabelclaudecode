@@ -231,13 +231,11 @@ class CheckoutRequest(BaseModel):
 COUPONS = {}
 
 # Price-tiered sale: product_id -> % off. These products get a struck-through
-# original price (mrp) + a discount badge, and are EXCLUDED from stacking
-# coupons (WELCOME10/PALAK15) and the automatic buy-2 offer. Applied to the
-# live catalog via the /tasks/apply-sale endpoint. Tiers are by ORIGINAL price
-# and cover necklace/choker SETS only (standalone earrings, bracelets, ear
-# chains and hathphools are excluded):
-#   ₹1,500–3,000 → 10%    ₹3,000–5,000 → 20%    ₹5,000–7,000 → 25%
-#   ₹7,000–10,000 → 35%   ₹10,000–15,000 → 40%  (above ₹15,000 unchanged)
+# original price (mrp) + a discount badge, and are excluded from the automatic
+# buy-2 offer. Applied to the live catalog via the /tasks/apply-sale endpoint.
+# Covers ALL products, by ORIGINAL price:
+#   up to ₹3,000 → 10%    ₹3,000–5,000 → 20%    ₹5,000–7,000 → 25%
+#   ₹7,000–10,000 → 35%   ₹10,000–15,000 → 40%  (above ₹15,000 → 25%)
 FESTIVE_SALE = {
     # 10% — ₹1,500–3,000
     "prod_39c78f59c568": 10,  # Ruby Blossom Pendant Necklace Set
@@ -291,6 +289,29 @@ FESTIVE_SALE = {
     "prod_d96b4b7460b2": 40,  # Rajsi Emerald Choker Set
     # 25% — above ₹15,000 (unchanged)
     "prod_2c1607507522": 25,  # Rosé Moissanite Layered Necklace Set
+    # --- Remaining products (earrings, bracelets, hathphools, ear chains &
+    #     sub-₹1,500 sets), same price tiers ---
+    # 10% — up to ₹3,000
+    "prod_58c0cf6ac936": 10,  # Meher Oxidised Chand Ghungroo Long Earrings
+    "prod_cd8c6fc2b8ab": 10,  # Neelanjana Oxidised Ghungroo Statement Earrings
+    "prod_70d04903a2a6": 10,  # Safar Oxidized Camel Cascade Statement Earrings
+    "prod_c24d48aec236": 10,  # Noor Oxidized Midnight Cascade Earrings
+    "prod_5864293defdd": 10,  # Gulnaar Oxidized Chandbali Earrings
+    "prod_8bb8574b3e7c": 10,  # Noir Heritage Chandbali Earrings
+    "prod_cdcbae914628": 10,  # Mayura Silver Jhumka Earrings
+    "prod_2c2cb2756603": 10,  # Rose Parrot Heritage Jhumkas Earrings
+    "prod_29f83d323aa4": 10,  # Vintage Paisley Pearl Drops
+    "prod_5abb558aa2f1": 10,  # Royal Peacock Jhumka Earrings
+    "prod_b9096484f597": 10,  # Rustic Peacock Charm Choker Set
+    "prod_eb5873d0e319": 10,  # Zariya Emerald Chandbali Earrings
+    "prod_a31584e48baf": 10,  # Emerald Moissanite Bracelet
+    "prod_c6082ccbd306": 10,  # Ruby Moissanite Bracelet
+    # 20% — ₹3,000–5,000
+    "prod_cd62a0e09e8e": 20,  # Mayura Pearl Heritage Chandbali Earrings
+    "prod_a35ee937cfba": 20,  # Emerald Polki Hathphool
+    # 25% — ₹5,000–7,000
+    "prod_4024c154d96c": 25,  # Rajsi Mayura Kundan Ear Chains
+    "prod_1f37efea8c9c": 25,  # Polki Hathphool
 }
 
 def apply_coupon(subtotal: int, code: Optional[str]):
