@@ -17,6 +17,17 @@
 //
 export const REVIEWS = [
   {
+    id: 'review-whatsapp-aarsha-1',
+    name: 'Verified Customer',
+    rating: 5,
+    date: '2026-10',
+    verified: true,
+    // Genuine WhatsApp review (order confirmation + photo + review).
+    text: 'The jewellery is gorgeous and looks even more beautiful in person! Truly impressed with The Aarsha Label.',
+    image: '/images/reviews/whatsapp-review-1.webp',
+    productId: null,
+  },
+  {
     id: 'review-video-1',
     name: 'Verified Customer',
     rating: 5,
