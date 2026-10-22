@@ -101,6 +101,7 @@ export default function Homepage() {
                 src={s.image}
                 alt=""
                 fetchPriority={i === 0 ? 'high' : 'auto'}
+                loading={i === 0 ? 'eager' : 'lazy'}
                 decoding="async"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ objectPosition: s.position }}
