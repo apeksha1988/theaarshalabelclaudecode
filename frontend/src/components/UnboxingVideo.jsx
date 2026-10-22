@@ -6,6 +6,16 @@ import { Play } from 'lucide-react';
 // taps play, so they add nothing to initial page load.
 const VIDEOS = [
   {
+    src: '/videos/Palak_Influencer.mp4',
+    poster: '/images/reviews/palak-poster.webp',
+    label: 'Palak wearing The Aarsha Label',
+  },
+  {
+    src: '/videos/Sweta_Influencer.mp4',
+    poster: '/images/reviews/sweta-poster.webp',
+    label: 'Sweta wearing The Aarsha Label',
+  },
+  {
     src: '/videos/review-1.mp4',
     poster: '/images/reviews/review-1-poster.webp',
     label: 'A customer sharing her look',
