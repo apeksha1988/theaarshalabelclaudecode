@@ -28,18 +28,6 @@ export const REVIEWS = [
     productId: null,
   },
   {
-    id: 'review-video-1',
-    name: 'Verified Customer',
-    rating: 5,
-    date: '2026-08',
-    verified: true,
-    // Genuine customer video testimonial sent for use on the site.
-    text: 'A happy customer sharing her Aarsha Label set — see it on video!',
-    video: '/videos/review-1.mp4',
-    poster: '/images/reviews/review-1-poster.webp',
-    productId: null,
-  },
-  {
     id: 'review-whatsapp-1',
     name: 'Verified Customer',
     rating: 5,
