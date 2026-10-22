@@ -4,6 +4,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import api from '../lib/api';
 import ProductCard from '../components/ProductCard';
 import UnboxingVideo from '../components/UnboxingVideo';
+import WhatsAppReviews from '../components/WhatsAppReviews';
 import PromoBanner from '../components/PromoBanner';
 import { productGroup } from '../lib/productGroups';
 import { applySeo } from '../lib/seo';
@@ -205,6 +206,9 @@ export default function Homepage() {
       {/* Real customer unboxing — placed above the collection so shoppers see
           the trust signal early, while products still stay near the top. */}
       <UnboxingVideo />
+
+      {/* Real WhatsApp customer reviews — authentic social proof. */}
+      <WhatsAppReviews />
 
       {/* Collection Section */}
       <section className="py-20 md:py-32 bg-[#FDFBF7]">
