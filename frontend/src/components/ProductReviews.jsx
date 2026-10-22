@@ -109,13 +109,13 @@ export default function ProductReviews({ productId }) {
         <span className="text-sm text-[#666666]">Based on {count} review{count > 1 ? 's' : ''}</span>
       </div>
 
-      {/* Review cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      {/* Review cards — compact, all three in one row */}
+      <div className="grid grid-cols-3 gap-3 sm:gap-5 max-w-5xl mx-auto">
         {reviews.map((r) => (
-          <div key={r.id} className="bg-[#F5F0E6] p-6" data-testid="review-card">
-            <div className="flex items-center justify-between mb-3">
-              <Stars value={r.rating} />
-              <span className="text-xs text-[#999999]">{formatDate(r.date)}</span>
+          <div key={r.id} className="bg-[#F5F0E6] p-2.5 sm:p-4" data-testid="review-card">
+            <div className="flex items-center justify-between mb-2">
+              <Stars value={r.rating} size={13} />
+              <span className="text-[10px] sm:text-xs text-[#999999]">{formatDate(r.date)}</span>
             </div>
 
             {r.video ? (
@@ -125,17 +125,17 @@ export default function ProductReviews({ productId }) {
                 src={r.image}
                 alt={`Review from ${r.name}`}
                 loading="lazy"
-                className="w-full rounded-md border border-[#EAE5D9] mb-3"
+                className="w-full rounded-md border border-[#EAE5D9] mb-2"
               />
             ) : (
-              <p className="text-[#1A1A1A] leading-relaxed mb-3">“{r.text}”</p>
+              <p className="text-xs sm:text-sm text-[#1A1A1A] leading-relaxed mb-2">“{r.text}”</p>
             )}
 
-            <div className="flex items-center gap-1.5 text-sm">
+            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11px] sm:text-sm">
               <span className="font-medium text-[#1A1A1A]">{r.name}</span>
               {r.verified && (
                 <span className="inline-flex items-center gap-1 text-[#388E3C]" title="Verified customer">
-                  <BadgeCheck className="w-4 h-4" /> Verified
+                  <BadgeCheck className="w-3.5 h-3.5" /> Verified
                 </span>
               )}
             </div>
