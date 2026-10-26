@@ -128,6 +128,65 @@ async def google_feed():
     return Response(content=buf.getvalue(), media_type="text/csv",
                     headers={"Content-Disposition": "inline; filename=aarsha-google-feed.csv"})
 
+
+# Sold-out sets — keep in sync with OUT_OF_STOCK_IDS in frontend/src/lib/stock.js.
+SOLD_OUT_PRODUCT_IDS = {
+    "prod_ee13ecea43b5",  # Ruhani Ruby Necklace Set
+    "prod_454688661f78",  # Celeste Layered Pendant Necklace Set
+    "prod_20cb89a73b48",  # Gulmohar Hasli Necklace Set
+}
+
+
+# Meta (Facebook/Instagram) catalog feed. In Commerce Manager > Data sources, add a
+# scheduled feed pointing at https://api.theaarshalabel.com/api/meta-feed.
+# Same `id` as the pixel's content_ids, so catalog match rate stays high. Sale
+# items carry price=MRP + sale_price so ads can show the strikethrough.
+@api_router.get("/meta-feed")
+async def meta_feed():
+    import csv as _csv
+    import io as _io
+    import re as _re
+    from urllib.parse import quote as _quote
+    from fastapi.responses import Response
+
+    SITE = "https://www.theaarshalabel.com"
+    img = lambda p: SITE + _quote(p, safe="/")  # image folders contain spaces/apostrophes
+    cols = ["id", "title", "description", "availability", "condition", "price", "sale_price",
+            "link", "image_link", "additional_image_link", "brand", "google_product_category",
+            "product_type", "custom_label_0"]
+    products = await products_collection.find({}, {"_id": 0}).to_list(1000)
+    buf = _io.StringIO()
+    w = _csv.DictWriter(buf, fieldnames=cols)
+    w.writeheader()
+    for x in products:
+        price = x.get("price")
+        if not price:
+            continue
+        mrp = x.get("mrp")
+        on_sale = bool(mrp) and mrp > price
+        imgs = x.get("images", []) or []
+        sold_out = (x["product_id"] in SOLD_OUT_PRODUCT_IDS
+                    or _re.search(r"out.?of.?stock|sold.?out", x.get("availability") or "", _re.I))
+        desc = (x.get("description") or x.get("name", "")).replace("\n", " ").strip()[:4900]
+        w.writerow({
+            "id": x["product_id"],
+            "title": (x.get("name", ""))[:150],
+            "description": desc,
+            "availability": "out of stock" if sold_out else "in stock",
+            "condition": "new",
+            "price": f"{(mrp if on_sale else price) / 100:.2f} INR",
+            "sale_price": f"{price / 100:.2f} INR" if on_sale else "",
+            "link": f"{SITE}/product/{x['product_id']}",
+            "image_link": img(imgs[0]) if imgs else "",
+            "additional_image_link": ",".join(img(i) for i in imgs[1:10]),
+            "brand": "The Aarsha Label",
+            "google_product_category": "188",  # Apparel & Accessories > Jewelry
+            "product_type": x.get("product_type", ""),
+            "custom_label_0": x.get("category", ""),
+        })
+    return Response(content=buf.getvalue(), media_type="text/csv",
+                    headers={"Content-Disposition": "inline; filename=aarsha-meta-feed.csv"})
+
 # Models
 class User(BaseModel):
     user_id: str

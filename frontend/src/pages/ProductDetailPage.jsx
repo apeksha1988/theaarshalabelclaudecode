@@ -12,6 +12,7 @@ import SoldOutNotify from '../components/SoldOutNotify';
 import { applySeo, productJsonLd } from '../lib/seo';
 import { productGroup } from '../lib/productGroups';
 import { getCachedProducts, setCachedProducts } from '../lib/productCache';
+import { trackViewContent } from '../lib/analytics';
 
 export default function ProductDetailPage() {
   const { productId } = useParams();
@@ -82,6 +83,14 @@ export default function ProductDetailPage() {
       jsonLd: productJsonLd(product),
     });
   }, [product]);
+
+  // One ViewContent per product viewed (keyed on id, so the cached -> full
+  // product refresh above doesn't fire it twice).
+  const viewedId = product?.product_id;
+  useEffect(() => {
+    if (viewedId) trackViewContent(product);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewedId]);
 
   const fetchProduct = async () => {
     try {

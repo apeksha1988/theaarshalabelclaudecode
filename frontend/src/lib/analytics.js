@@ -70,6 +70,25 @@ export function trackPageView(path) {
   if (PIXEL_ID && window.fbq) window.fbq('track', 'PageView');
 }
 
+// Fires when a product page is viewed. Meta needs this (with content_ids that
+// match the catalog's product ids) to retarget product viewers and run
+// dynamic product ads.
+export function trackViewContent(product) {
+  const value = (product.price || 0) / 100;
+  if (window.gtag) {
+    window.gtag('event', 'view_item', {
+      currency: 'INR', value,
+      items: [{ item_id: product.product_id, item_name: product.name, price: value }],
+    });
+  }
+  if (window.fbq) {
+    window.fbq('track', 'ViewContent', {
+      content_ids: [product.product_id], content_name: product.name,
+      content_type: 'product', value, currency: 'INR',
+    });
+  }
+}
+
 export function trackAddToCart(product, quantity = 1) {
   const value = (product.price || 0) / 100;
   if (window.gtag) {
