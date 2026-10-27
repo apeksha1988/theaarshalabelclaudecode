@@ -1193,5 +1193,24 @@
     "set_includes": "1 Statement Choker Necklace + 1 Pair of Matching Statement Earrings",
     "created_at": "2026-10-09T00:00:00.000000",
     "updated_at": "2026-10-09T00:00:00.000000"
+  },
+  {
+    "product_id": "prod_3896492af62d",
+    "name": "The Aarsha's Rajvanshi – Royal Polki Kundan Kadas",
+    "description": "Embrace timeless royal elegance with the Rajvanshi Polki Kundan Kadas. Featuring uncut-diamond-look stones, intricate floral motifs, delicate ruby-pink accents, and a rich gold-tone finish, these statement bangles beautifully capture the grandeur of traditional Rajasthani jewellery. Perfect for weddings, festive celebrations, and treasured occasions.",
+    "price": 358600,
+    "currency": "INR",
+    "images": [
+      "/images/rajvanshi-royal-polki-kundan-kadas.webp",
+      "/images/rajvanshi-royal-polki-kundan-kadas-photo2.webp",
+      "/images/rajvanshi-royal-polki-kundan-kadas-photo3.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Traditional Polki Kundan Kadas (Bangles)",
+    "materials": "Gold-Tone Metal Alloy, Uncut-Diamond-Look Polki Stones, White CZ Floral Accents, Ruby-Pink Stones, Kundan-Inspired Bezel Setting",
+    "availability": "In Stock",
+    "set_includes": "2 Matching Polki Kundan Kadas",
+    "created_at": "2026-10-27T12:10:58.880451",
+    "updated_at": "2026-10-27T12:10:58.880451"
   }
 ]
