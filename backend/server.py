@@ -1417,6 +1417,25 @@ async def sync_products(request: Request):
     return {"inserted": inserted, "inserted_count": len(inserted), "retired": retired, "total": total}
 
 
+# Set a product's base (pre-sale) price and clear any sale fields, so the next
+# /tasks/apply-sale run recomputes its struck-through mrp + discount from this
+# base. Lets us set a specific "original" price for a one-off product.
+# Guarded by TASKS_TOKEN. e.g. ?token=…&product_id=prod_x&price=448300
+@api_router.api_route("/tasks/set-price", methods=["GET", "POST"])
+async def set_price(request: Request):
+    if not TASKS_TOKEN or request.query_params.get("token") != TASKS_TOKEN:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    pid = request.query_params.get("product_id")
+    price = request.query_params.get("price")
+    if not pid or not price:
+        raise HTTPException(status_code=400, detail="product_id and price (paise) required")
+    res = await products_collection.update_one(
+        {"product_id": pid},
+        {"$set": {"price": int(price)}, "$unset": {"mrp": "", "discount_percent": ""}},
+    )
+    return {"matched": res.matched_count, "modified": res.modified_count, "product_id": pid, "price": int(price)}
+
+
 # Apply (or refresh) the festive sale: set each FESTIVE_SALE product's price to
 # the discounted amount, keeping `mrp` = the original for the struck-through
 # display, and `discount_percent` for the badge. Any product that was on sale
