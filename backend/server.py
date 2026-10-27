@@ -325,6 +325,7 @@ FESTIVE_SALE = {
     "prod_9540f629317e": 20,  # Polki Choker Set
     "prod_3896492af62d": 20,  # Rajvanshi Royal Polki Kundan Kadas (bangles)
     "prod_73028e90bbac": 20,  # Meher Royal Polki Meenakari Kadas (bangles)
+    "prod_50f03e27fedd": 20,  # Emerald Noor Royal Polki Kundan Kadas (bangles)
     # 25% — ₹5,000–7,000
     "prod_0541d7c66264": 25,  # Gulraaj Royal Meenakari Heritage Choker Set
     "prod_8bfc94ce9e54": 25,  # Emerald Bloom Statement Collar Set
