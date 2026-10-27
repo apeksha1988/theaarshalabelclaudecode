@@ -22,34 +22,40 @@ export function CartProvider({ children }) {
     return () => window.removeEventListener('clear-cart', handler);
   }, []);
 
-  const addToCart = (product, quantity = 1) => {
+  // A cart line is identified by product_id + size, so the same bangle in two
+  // sizes are two separate lines.
+  const sameLine = (item, productId, size) =>
+    item.product_id === productId && (item.size || '') === (size || '');
+
+  const addToCart = (product, quantity = 1, size = null) => {
     trackAddToCart(product, quantity);
+    const sz = size || product.size || null;
     setCartItems(prev => {
-      const existing = prev.find(item => item.product_id === product.product_id);
+      const existing = prev.find(item => sameLine(item, product.product_id, sz));
       if (existing) {
         return prev.map(item =>
-          item.product_id === product.product_id
+          sameLine(item, product.product_id, sz)
             ? { ...item, quantity: Math.min(MAX_QTY, item.quantity + quantity) }
             : item
         );
       }
-      return [...prev, { ...product, quantity: Math.min(MAX_QTY, quantity) }];
+      return [...prev, { ...product, size: sz, quantity: Math.min(MAX_QTY, quantity) }];
     });
   };
 
-  const removeFromCart = (productId) => {
-    setCartItems(prev => prev.filter(item => item.product_id !== productId));
+  const removeFromCart = (productId, size = null) => {
+    setCartItems(prev => prev.filter(item => !sameLine(item, productId, size)));
   };
 
-  const updateQuantity = (productId, quantity) => {
+  const updateQuantity = (productId, quantity, size = null) => {
     if (quantity <= 0) {
-      removeFromCart(productId);
+      removeFromCart(productId, size);
       return;
     }
     const capped = Math.min(MAX_QTY, quantity);
     setCartItems(prev =>
       prev.map(item =>
-        item.product_id === productId ? { ...item, quantity: capped } : item
+        sameLine(item, productId, size) ? { ...item, quantity: capped } : item
       )
     );
   };

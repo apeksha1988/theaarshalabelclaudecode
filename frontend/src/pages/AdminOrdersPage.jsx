@@ -38,7 +38,7 @@ export default function AdminOrdersPage() {
       return [
         o.order_id, (o.created_at || '').slice(0, 16), pay, a.name || '', a.phone || '', o.email || '',
         a.line1 || '', a.line2 || '', a.city || '', a.state || '', a.postal_code || '', a.country || '',
-        (o.items || []).map((it) => `${it.quantity || 1}x ${it.name || ''}`).join('; '),
+        (o.items || []).map((it) => `${it.quantity || 1}x ${it.name || ''}${it.size ? ` (Size ${it.size})` : ''}`).join('; '),
         o.coupon || '',
         ((o.total || 0) / 100).toFixed(0), o.fulfillment_status || 'processing',
       ];
@@ -151,7 +151,7 @@ function AdminOrderCard({ order }) {
 
       <div className="text-sm text-[#666666] mb-4">
         {order.items.map((it, i) => (
-          <span key={i}>{it.name} × {it.quantity}{i < order.items.length - 1 ? ', ' : ''}</span>
+          <span key={i}>{it.name}{it.size ? ` (Size ${it.size})` : ''} × {it.quantity}{i < order.items.length - 1 ? ', ' : ''}</span>
         ))}
       </div>
 

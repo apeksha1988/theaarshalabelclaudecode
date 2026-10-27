@@ -7,6 +7,7 @@ import TrustBadges from '../components/TrustBadges';
 import ProductCard from '../components/ProductCard';
 import ProductReviews, { ProductRatingInline } from '../components/ProductReviews';
 import { productOrderLink } from '../lib/whatsappOrder';
+import { sizesForProduct } from '../lib/sizes';
 import { isOutOfStock } from '../lib/stock';
 import SoldOutNotify from '../components/SoldOutNotify';
 import { applySeo, productJsonLd } from '../lib/seo';
@@ -22,6 +23,8 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState(initialCached || null);
   const [loading, setLoading] = useState(!initialCached);
   const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [sizeError, setSizeError] = useState(false);
   const [added, setAdded] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
   const [allProducts, setAllProducts] = useState(() => getCachedProducts() || []);
@@ -103,14 +106,18 @@ export default function ProductDetailPage() {
     }
   };
 
+  const sizes = sizesForProduct(product);
+
   const handleAddToCart = () => {
-    addToCart(product, quantity);
+    if (sizes.length && !selectedSize) { setSizeError(true); return; }
+    addToCart(product, quantity, selectedSize);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
 
   const handleBuyNow = () => {
-    addToCart(product, quantity);
+    if (sizes.length && !selectedSize) { setSizeError(true); return; }
+    addToCart(product, quantity, selectedSize);
     navigate('/checkout');
   };
 
@@ -241,6 +248,30 @@ export default function ProductDetailPage() {
               <SoldOutNotify product={product} />
             ) : hasPrice ? (
               <div className="space-y-6">
+                {sizes.length > 0 && (
+                  <div data-testid="size-selector">
+                    <label className="block text-sm uppercase tracking-wide text-[#666666] mb-2">
+                      Size
+                      {sizeError && (
+                        <span className="text-[#D32F2F] normal-case tracking-normal ml-2">— please select a size</span>
+                      )}
+                    </label>
+                    <div className="flex flex-wrap gap-3">
+                      {sizes.map((s) => (
+                        <button
+                          key={s}
+                          type="button"
+                          onClick={() => { setSelectedSize(s); setSizeError(false); }}
+                          className={`px-5 py-2.5 border text-sm transition-colors ${selectedSize === s ? 'border-[#7A1F3D] bg-[#7A1F3D] text-white' : 'border-[#EAE5D9] text-[#1A1A1A] hover:border-[#7A1F3D]'}`}
+                          data-testid={`size-option-${s}`}
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                    <p className="text-xs text-[#666666] mt-2">Size is the inner diameter in inches.</p>
+                  </div>
+                )}
                 <div>
                   <label className="block text-sm uppercase tracking-wide text-[#666666] mb-2">
                     Quantity
@@ -293,7 +324,7 @@ export default function ProductDetailPage() {
                 </button>
 
                 <a
-                  href={productOrderLink(product, quantity)}
+                  href={productOrderLink(product, quantity, selectedSize)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full bg-[#25D366] text-white px-8 py-4 text-sm tracking-[0.1em] uppercase hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-2"

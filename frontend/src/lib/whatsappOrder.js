@@ -11,23 +11,24 @@ function waLink(text) {
 }
 
 // Order link for a single product from the product page.
-export function productOrderLink(product, quantity = 1) {
+export function productOrderLink(product, quantity = 1, size = null) {
   const lines = [
     "Hi! I'd like to place an order:",
     '',
     `*${product.name}*`,
+    size ? `Size: ${size}` : null,
     product.price != null ? `Price: ${rupees(product.price)}` : 'Price: On request',
     `Quantity: ${quantity}`,
     '',
     'Please help me complete my order. 🙏',
-  ];
+  ].filter(Boolean);
   return waLink(lines.join('\n'));
 }
 
 // Order link for the whole cart.
 export function cartOrderLink(cartItems, cartTotal) {
   const items = cartItems.map(
-    (it) => `• ${it.name} × ${it.quantity} — ${rupees(it.price * it.quantity)}`
+    (it) => `• ${it.name}${it.size ? ` (Size ${it.size})` : ''} × ${it.quantity} — ${rupees(it.price * it.quantity)}`
   );
   const lines = [
     "Hi! I'd like to place an order:",

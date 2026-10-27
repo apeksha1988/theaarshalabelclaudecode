@@ -48,7 +48,7 @@ export default function CartPage() {
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-6">
             {cartItems.map((item) => (
-              <div key={item.product_id} className="flex gap-6 pb-6 border-b border-[#EAE5D9]" data-testid={`cart-item-${item.product_id}`}>
+              <div key={`${item.product_id}-${item.size || ''}`} className="flex gap-6 pb-6 border-b border-[#EAE5D9]" data-testid={`cart-item-${item.product_id}`}>
                 <Link
                   to={`/product/${item.product_id}`}
                   className="w-32 h-32 bg-[#F5F0E6] overflow-hidden flex-shrink-0 block"
@@ -67,10 +67,11 @@ export default function CartPage() {
                       {item.name}
                     </Link>
                   </h3>
-                  <p className="text-sm text-[#666666] mb-4" data-testid="cart-item-price">₹{(item.price / 100).toLocaleString('en-IN')}</p>
+                  <p className="text-sm text-[#666666] mb-2" data-testid="cart-item-price">₹{(item.price / 100).toLocaleString('en-IN')}</p>
+                  {item.size && <p className="text-xs font-medium text-[#7A1F3D] mb-3" data-testid="cart-item-size">Size: {item.size}</p>}
                   <div className="flex items-center gap-4">
                     <button
-                      onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
+                      onClick={() => updateQuantity(item.product_id, item.quantity - 1, item.size)}
                       className="w-8 h-8 border border-[#EAE5D9] flex items-center justify-center hover:border-[#7A1F3D] transition-colors"
                       data-testid="cart-decrease-quantity"
                     >
@@ -78,7 +79,7 @@ export default function CartPage() {
                     </button>
                     <span className="text-sm font-light w-8 text-center" data-testid="cart-item-quantity">{item.quantity}</span>
                     <button
-                      onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
+                      onClick={() => updateQuantity(item.product_id, item.quantity + 1, item.size)}
                       disabled={item.quantity >= MAX_QTY}
                       className="w-8 h-8 border border-[#EAE5D9] flex items-center justify-center hover:border-[#7A1F3D] transition-colors disabled:opacity-40 disabled:hover:border-[#EAE5D9] disabled:cursor-not-allowed"
                       data-testid="cart-increase-quantity"
@@ -89,7 +90,7 @@ export default function CartPage() {
                 </div>
                 <div className="flex flex-col justify-between items-end">
                   <button
-                    onClick={() => removeFromCart(item.product_id)}
+                    onClick={() => removeFromCart(item.product_id, item.size)}
                     className="text-[#666666] hover:text-[#D32F2F] transition-colors"
                     data-testid="cart-remove-item"
                   >

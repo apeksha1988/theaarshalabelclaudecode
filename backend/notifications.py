@@ -185,8 +185,9 @@ async def send_whatsapp_template(campaign_name: str, destination: str, user_name
 def _items_html(order: dict) -> str:
     rows = ""
     for it in order.get("items", []):
+        _nm = it.get('name','') + (f" — Size {it.get('size')}" if it.get('size') else '')
         rows += (
-            f"<tr><td style='padding:6px 10px;border-bottom:1px solid #eee'>{it.get('name','')}</td>"
+            f"<tr><td style='padding:6px 10px;border-bottom:1px solid #eee'>{_nm}</td>"
             f"<td style='padding:6px 10px;border-bottom:1px solid #eee;text-align:center'>{it.get('quantity',1)}</td>"
             f"<td style='padding:6px 10px;border-bottom:1px solid #eee;text-align:right'>{format_inr(it.get('price'))}</td></tr>"
         )
@@ -195,7 +196,9 @@ def _items_html(order: dict) -> str:
 
 def _items_text(order: dict) -> str:
     return "\n".join(
-        f"  - {it.get('quantity',1)}x {it.get('name','')} ({format_inr(it.get('price'))})"
+        f"  - {it.get('quantity',1)}x {it.get('name','')}"
+        + (f" — Size {it.get('size')}" if it.get('size') else '')
+        + f" ({format_inr(it.get('price'))})"
         for it in order.get("items", [])
     )
 
@@ -423,7 +426,7 @@ def b2b_inquiry_whatsapp_text(inq: dict) -> str:
 def whatsapp_order_text(order: dict, for_owner: bool) -> str:
     oid = order.get("order_id", "")
     total = format_inr(order.get("total"))
-    items = "\n".join(f"• {it.get('quantity',1)}x {it.get('name','')}" for it in order.get("items", []))
+    items = "\n".join(f"• {it.get('quantity',1)}x {it.get('name','')}" + (f" — Size {it.get('size')}" if it.get('size') else '') for it in order.get("items", []))
     pay = _payment_label(order)
     if for_owner:
         return (f"🛍️ *New order* {oid}\nCustomer: {order.get('email','')}\n{items}\nPayment: {pay}\n*Total: {total}*")

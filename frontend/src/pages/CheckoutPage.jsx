@@ -85,6 +85,7 @@ export default function CheckoutPage() {
         price: item.price,
         quantity: item.quantity,
         image: item.images[0],
+        size: item.size || null,
       })),
       currency: 'INR',
       coupon: null,
@@ -385,12 +386,13 @@ export default function CheckoutPage() {
               <h2 className="text-2xl font-serif font-medium text-[#1A1A1A] mb-6" data-testid="checkout-summary-title">Order Summary</h2>
               <div className="space-y-4 mb-6">
                 {cartItems.map((item) => (
-                  <div key={item.product_id} className="flex gap-4 pb-4 border-b border-[#EAE5D9]" data-testid={`checkout-item-${item.product_id}`}>
+                  <div key={`${item.product_id}-${item.size || ''}`} className="flex gap-4 pb-4 border-b border-[#EAE5D9]" data-testid={`checkout-item-${item.product_id}`}>
                     <div className="w-16 h-16 bg-[#FDFBF7] overflow-hidden flex-shrink-0">
                       <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-[#1A1A1A]">{item.name}</p>
+                      {item.size && <p className="text-xs text-[#7A1F3D]">Size: {item.size}</p>}
                       <p className="text-sm text-[#666666]">Qty: {item.quantity}</p>
                     </div>
                     <p className="text-sm text-[#1A1A1A]">₹{((item.price * item.quantity) / 100).toLocaleString('en-IN')}</p>

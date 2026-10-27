@@ -251,6 +251,7 @@ class OrderItem(BaseModel):
     price: int
     quantity: int
     image: Optional[str] = None
+    size: Optional[str] = None
 
 class ShippingAddress(BaseModel):
     name: str
