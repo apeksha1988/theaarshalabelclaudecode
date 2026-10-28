@@ -1250,5 +1250,24 @@
     "set_includes": "2 Matching Moissanite Kadas",
     "created_at": "2026-10-27T13:33:21.769641",
     "updated_at": "2026-10-27T13:33:21.769641"
+  },
+  {
+    "product_id": "prod_5f362b07c20c",
+    "name": "The Aarsha's Gulnaar – Royal Polki Chandbali Earrings",
+    "description": "Elevate your traditional jewellery collection with the Gulnaar Royal Polki Chandbali Earrings. Featuring a magnificent double-layer crescent design, radiant Polki-inspired stones, ruby-pink centrepieces, delicate pearl embellishments, and graceful green bead drops, these statement earrings beautifully capture the elegance of India's royal jewellery heritage. Perfect for weddings, festive occasions, and celebrations.",
+    "price": 430000,
+    "currency": "INR",
+    "images": [
+      "/images/gulnaar-royal-polki-chandbali-earrings.webp",
+      "/images/gulnaar-royal-polki-chandbali-earrings-photo2.webp",
+      "/images/gulnaar-royal-polki-chandbali-earrings-photo3.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Statement Chandbali Earrings",
+    "materials": "Gold-Tone Jewellery Alloy, Polki-Inspired Uncut-Diamond-Look Stones, Ruby-Pink Teardrop Centre Stones, Clear Teardrop Stones, Translucent Green Bead Drops, Ivory Pearl-Look Beads, Kundan-Inspired Bezel Setting",
+    "availability": "In Stock",
+    "set_includes": "1 Pair of Gulnaar Royal Polki Chandbali Earrings",
+    "created_at": "2026-10-28T09:15:16.724335",
+    "updated_at": "2026-10-28T09:15:16.724335"
   }
 ]
