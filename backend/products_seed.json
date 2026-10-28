@@ -1269,5 +1269,24 @@
     "set_includes": "1 Pair of Gulnaar Royal Polki Chandbali Earrings",
     "created_at": "2026-10-28T09:15:16.724335",
     "updated_at": "2026-10-28T09:15:16.724335"
+  },
+  {
+    "product_id": "prod_be18c1e4ce24",
+    "name": "The Aarsha's Zehra – Royal Kashmiri Jhumka Earrings",
+    "description": "Inspired by the beauty of Kashmiri jewellery, the Zehra Royal Kashmiri Earrings feature intricately embellished triangular studs, cascading gold-tone chains adorned with delicate ghungroos, and striking emerald-green decorative stones. The design is completed with traditional silver-tone jhumka drops and delicate pearl embellishments. These statement earrings beautifully combine heritage-inspired craftsmanship with contemporary elegance, making them perfect for weddings, festive celebrations, and traditional occasions.",
+    "price": 289600,
+    "currency": "INR",
+    "images": [
+      "/images/zehra-royal-kashmiri-jhumka-earrings.webp",
+      "/images/zehra-royal-kashmiri-jhumka-earrings-photo2.webp",
+      "/images/zehra-royal-kashmiri-jhumka-earrings-photo3.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Kashmiri Jhumka Statement Earrings",
+    "materials": "Gold-Tone Metal Alloy, Emerald-Green Decorative Stones, Ruby-Pink Accents, Kundan-Inspired White Stones, Imitation Pearl-Look Beads, Gold-Tone Ghungroos, Oxidised Silver-Tone Jhumka Drops",
+    "availability": "In Stock",
+    "set_includes": "1 Pair of Kashmiri Statement Earrings (2 Pieces)",
+    "created_at": "2026-10-28T12:58:21.753077",
+    "updated_at": "2026-10-28T12:58:21.753077"
   }
 ]
