@@ -1288,5 +1288,24 @@
     "set_includes": "1 Pair of Kashmiri Statement Earrings (2 Pieces)",
     "created_at": "2026-10-28T12:58:21.753077",
     "updated_at": "2026-10-28T12:58:21.753077"
+  },
+  {
+    "product_id": "prod_f96b7de10709",
+    "name": "The Aarsha's Zareen – Royal Kashmiri Deer Motif Earrings",
+    "description": "Make a statement with the Zareen Royal Kashmiri Deer Motif Earrings, a beautiful celebration of heritage-inspired craftsmanship. Featuring intricately engraved deer motifs, cascading gold-tone chains, emerald-green decorative stones, colourful enamel-style accents, and traditional ghungroo embellishments, these exquisite long earrings exude timeless elegance. Finished with textured gold-tone jhumkas and delicate pearl-look fringes, they are perfect for weddings, festive celebrations, and traditional occasions.",
+    "price": 217600,
+    "currency": "INR",
+    "images": [
+      "/images/zareen-royal-kashmiri-deer-motif-earrings.webp",
+      "/images/zareen-royal-kashmiri-deer-motif-earrings-photo2.webp",
+      "/images/zareen-royal-kashmiri-deer-motif-earrings-photo3.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Kashmiri Deer Motif Statement Earrings",
+    "materials": "Gold-Tone Jewellery Alloy, Emerald-Green Teardrop Stones, Ruby-Red Accents, Clear White Stones, Ivory Pearl-Look Beads, Gold-Tone Ghungroos, Engraved Deer Motifs, Antique Gold-Tone Finish",
+    "availability": "In Stock",
+    "set_includes": "1 Pair of Zareen Royal Kashmiri Deer Motif Earrings",
+    "created_at": "2026-10-28T13:06:10.372419",
+    "updated_at": "2026-10-28T13:06:10.372419"
   }
 ]

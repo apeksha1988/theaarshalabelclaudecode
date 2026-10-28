@@ -328,6 +328,7 @@ FESTIVE_SALE = {
     "prod_50f03e27fedd": 20,  # Emerald Noor Royal Polki Kundan Kadas (bangles)
     "prod_5f362b07c20c": 20,  # Gulnaar Royal Polki Chandbali Earrings
     "prod_be18c1e4ce24": 20,  # Zehra Royal Kashmiri Jhumka Earrings
+    "prod_f96b7de10709": 20,  # Zareen Royal Kashmiri Deer Motif Earrings
     # 25% — ₹5,000–7,000
     "prod_0541d7c66264": 25,  # Gulraaj Royal Meenakari Heritage Choker Set
     "prod_8bfc94ce9e54": 25,  # Emerald Bloom Statement Collar Set
