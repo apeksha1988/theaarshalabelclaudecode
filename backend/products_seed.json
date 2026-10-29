@@ -1307,5 +1307,24 @@
     "set_includes": "1 Pair of Zareen Royal Kashmiri Deer Motif Earrings",
     "created_at": "2026-10-28T13:06:10.372419",
     "updated_at": "2026-10-28T13:06:10.372419"
+  },
+  {
+    "product_id": "prod_3621095bb717",
+    "name": "The Aarsha's Zoya – Royal Kashmiri Green Jhumka Earrings",
+    "description": "Embrace the elegance of traditional Indian jewellery with the Zoya Royal Kashmiri Green Jhumka Earrings. Featuring rich emerald-green circular studs, intricate floral motifs, cascading gold-tone ghungroo chains, and beautifully engraved jhumka drops, these exquisite statement earrings capture the charm of heritage-inspired craftsmanship. Finished with delicate pearl embellishments and ruby-red accents, they are perfect for weddings, festive celebrations, and special occasions.",
+    "price": 222000,
+    "currency": "INR",
+    "images": [
+      "/images/zoya-royal-kashmiri-green-jhumka-earrings.webp",
+      "/images/zoya-royal-kashmiri-green-jhumka-earrings-photo2.webp",
+      "/images/zoya-royal-kashmiri-green-jhumka-earrings-photo3.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Kashmiri Green Jhumka Statement Earrings",
+    "materials": "Gold-Tone Jewellery Alloy, Emerald-Green Decorative Stones, Ruby-Red Accents, Clear Kundan-Inspired White Stones, Ivory Pearl-Look Beads, Gold-Tone Ghungroo Chains, Engraved Dome Jhumka Drops, Antique Gold-Tone Finish",
+    "availability": "In Stock",
+    "set_includes": "1 Pair of Zoya Royal Kashmiri Green Jhumka Earrings",
+    "created_at": "2026-10-29T10:00:12.989122",
+    "updated_at": "2026-10-29T10:00:12.989122"
   }
 ]
