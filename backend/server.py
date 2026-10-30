@@ -1463,6 +1463,27 @@ async def model_first(request: Request):
     return {"updated_count": len(updated), "updated": updated}
 
 
+# Reverse of model-first: move the first PRODUCT image (no "-model-" in its
+# filename) to the front, so the grid thumbnail shows the distinct product shot
+# instead of the same-looking model. Model shots stay in the gallery.
+# Idempotent. Guarded by TASKS_TOKEN.
+@api_router.api_route("/tasks/product-first", methods=["GET", "POST"])
+async def product_first(request: Request):
+    if not TASKS_TOKEN or request.query_params.get("token") != TASKS_TOKEN:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    updated = []
+    async for p in products_collection.find({}, {"_id": 0, "product_id": 1, "images": 1, "name": 1}):
+        imgs = p.get("images") or []
+        idx = next((i for i, s in enumerate(imgs) if "-model-" not in (s or "")), None)
+        if idx is not None and idx != 0:
+            new_imgs = [imgs[idx]] + imgs[:idx] + imgs[idx + 1:]
+            await products_collection.update_one(
+                {"product_id": p["product_id"]}, {"$set": {"images": new_imgs}}
+            )
+            updated.append(p.get("name", p["product_id"]))
+    return {"updated_count": len(updated), "updated": updated}
+
+
 # Apply (or refresh) the festive sale: set each FESTIVE_SALE product's price to
 # the discounted amount, keeping `mrp` = the original for the struck-through
 # display, and `discount_percent` for the badge. Any product that was on sale
