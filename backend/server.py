@@ -1484,6 +1484,33 @@ async def product_first(request: Request):
     return {"updated_count": len(updated), "updated": updated}
 
 
+# Move the first image whose filename contains `match` to the front of ONE
+# product's images, so its grid thumbnail becomes that specific shot (e.g. a
+# clean jewellery-only "photo2" instead of a worn/on-model lead). Keeps the
+# other images in the gallery. Idempotent. Guarded by TASKS_TOKEN.
+# e.g. ?token=…&product_id=prod_x&match=photo2
+@api_router.api_route("/tasks/lead-image", methods=["GET", "POST"])
+async def lead_image(request: Request):
+    if not TASKS_TOKEN or request.query_params.get("token") != TASKS_TOKEN:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    pid = request.query_params.get("product_id")
+    match = request.query_params.get("match")
+    if not pid or not match:
+        raise HTTPException(status_code=400, detail="product_id and match required")
+    p = await products_collection.find_one({"product_id": pid}, {"_id": 0, "images": 1})
+    if not p:
+        raise HTTPException(status_code=404, detail="product not found")
+    imgs = p.get("images") or []
+    idx = next((i for i, s in enumerate(imgs) if match in (s or "")), None)
+    if idx is None:
+        return {"product_id": pid, "moved": False, "reason": "no image matched", "images": imgs}
+    new_imgs = [imgs[idx]] + imgs[:idx] + imgs[idx + 1:]
+    res = await products_collection.update_one(
+        {"product_id": pid}, {"$set": {"images": new_imgs}}
+    )
+    return {"product_id": pid, "moved": idx != 0, "modified": res.modified_count, "images": new_imgs}
+
+
 # Apply (or refresh) the festive sale: set each FESTIVE_SALE product's price to
 # the discounted amount, keeping `mrp` = the original for the struck-through
 # display, and `discount_percent` for the badge. Any product that was on sale
