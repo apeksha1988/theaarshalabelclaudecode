@@ -62,8 +62,9 @@ AISENSY_ABANDONED_CAMPAIGN = os.getenv("AISENSY_ABANDONED_CAMPAIGN")
 AISENSY_B2B_CAMPAIGN = os.getenv("AISENSY_B2B_CAMPAIGN")  # owner alert for B2B/wholesale inquiries
 TASKS_TOKEN = os.getenv("TASKS_TOKEN")  # shared secret guarding scheduled-task endpoints
 
-# Cash on Delivery surcharge (in paise). Override with COD_FEE_PAISE.
-COD_FEE_PAISE = int(os.getenv("COD_FEE_PAISE", "4900"))  # ₹49 default
+# Cash on Delivery surcharge (in paise). Removed Nov 2026 (was ₹49) — hardcoded
+# to 0 so a stale COD_FEE_PAISE env var on Render can't re-introduce the fee.
+COD_FEE_PAISE = 0
 
 # Google Sign-In (the Client ID is public; safe as a default).
 GOOGLE_CLIENT_ID = os.getenv(
@@ -1509,6 +1510,35 @@ async def lead_image(request: Request):
         {"product_id": pid}, {"$set": {"images": new_imgs}}
     )
     return {"product_id": pid, "moved": idx != 0, "modified": res.modified_count, "images": new_imgs}
+
+
+# One-time bulk price change: add `amount` paise to every product's selling
+# `price`, and (for sale items that have an `mrp`) to the struck-through `mrp`
+# too, recomputing `discount_percent` so the badge stays truthful. Flag-guarded
+# per `tag` so a retry can't double-apply. e.g. ?token=…&amount=5000&tag=cod_nov2026
+@api_router.api_route("/tasks/bump-prices", methods=["GET", "POST"])
+async def bump_prices(request: Request):
+    if not TASKS_TOKEN or request.query_params.get("token") != TASKS_TOKEN:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    try:
+        amount = int(request.query_params.get("amount", ""))
+    except ValueError:
+        raise HTTPException(status_code=400, detail="amount (paise) required")
+    tag = request.query_params.get("tag") or f"bump_{amount}"
+    flag = f"applied_{tag}"
+    updated = []
+    async for p in products_collection.find({}, {"_id": 0, "product_id": 1, "price": 1, "mrp": 1, flag: 1}):
+        if p.get(flag):
+            continue
+        new_price = (p.get("price") or 0) + amount
+        sets = {"price": new_price, flag: True}
+        if p.get("mrp"):
+            new_mrp = p["mrp"] + amount
+            sets["mrp"] = new_mrp
+            sets["discount_percent"] = round((1 - new_price / new_mrp) * 100)
+        await products_collection.update_one({"product_id": p["product_id"]}, {"$set": sets})
+        updated.append(p["product_id"])
+    return {"amount": amount, "tag": tag, "updated_count": len(updated)}
 
 
 # Apply (or refresh) the festive sale: set each FESTIVE_SALE product's price to
