@@ -1512,6 +1512,26 @@ async def lead_image(request: Request):
     return {"product_id": pid, "moved": idx != 0, "modified": res.modified_count, "images": new_imgs}
 
 
+# Set ONE product's images array verbatim (comma-separated paths) — for adding,
+# removing or reordering gallery images without a delete+reinsert (sync only
+# INSERTs). e.g. ?token=…&product_id=prod_x&images=/images/a.webp,/images/b.webp
+@api_router.api_route("/tasks/set-images", methods=["GET", "POST"])
+async def set_images(request: Request):
+    if not TASKS_TOKEN or request.query_params.get("token") != TASKS_TOKEN:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    pid = request.query_params.get("product_id")
+    images = request.query_params.get("images")
+    if not pid or not images:
+        raise HTTPException(status_code=400, detail="product_id and images required")
+    imgs = [s.strip() for s in images.split(",") if s.strip()]
+    res = await products_collection.update_one(
+        {"product_id": pid}, {"$set": {"images": imgs}}
+    )
+    if not res.matched_count:
+        raise HTTPException(status_code=404, detail="product not found")
+    return {"product_id": pid, "images": imgs, "modified": res.modified_count}
+
+
 # One-time bulk price change: add `amount` paise to every product's selling
 # `price`, and (for sale items that have an `mrp`) to the struck-through `mrp`
 # too, recomputing `discount_percent` so the badge stays truthful. Flag-guarded
