@@ -9,7 +9,7 @@ import TrustBadges from '../components/TrustBadges';
 import { BULK_OFFER, bulkDiscount } from '../lib/promo';
 
 // Cash on Delivery surcharge in paise (must match backend COD_FEE_PAISE).
-const COD_FEE = 4900; // ₹49
+const COD_FEE = 0; // COD handling charge removed Nov 2026 (was ₹49)
 
 // Lazily load Razorpay Checkout only when needed (on the checkout page).
 const loadRazorpayScript = () =>
@@ -358,8 +358,8 @@ export default function CheckoutPage() {
                       className="mt-1 accent-[#7A1F3D]"
                     />
                     <div>
-                      <p className="text-sm font-medium text-[#1A1A1A]">Cash on Delivery <span className="text-[#666666] font-normal">(+₹{(COD_FEE / 100).toLocaleString('en-IN')})</span></p>
-                      <p className="text-xs text-[#666666]">Pay in cash when your order is delivered. A ₹{(COD_FEE / 100).toLocaleString('en-IN')} handling charge applies.</p>
+                      <p className="text-sm font-medium text-[#1A1A1A]">Cash on Delivery {COD_FEE > 0 && <span className="text-[#666666] font-normal">(+₹{(COD_FEE / 100).toLocaleString('en-IN')})</span>}</p>
+                      <p className="text-xs text-[#666666]">Pay in cash when your order is delivered.{COD_FEE > 0 ? ` A ₹${(COD_FEE / 100).toLocaleString('en-IN')} handling charge applies.` : ' No extra charges.'}</p>
                     </div>
                   </label>
                 </div>

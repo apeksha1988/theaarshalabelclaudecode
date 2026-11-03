@@ -1,9 +1,10 @@
 import React from 'react';
-import { ShieldCheck, Truck, PackageCheck, Gem } from 'lucide-react';
+import { ShieldCheck, Truck, PackageCheck, Gem, RotateCcw } from 'lucide-react';
 
 const BADGES = [
   { icon: ShieldCheck, title: '100% Secure Payment', sub: 'Encrypted & safe checkout' },
   { icon: Truck, title: 'Free Delivery', sub: 'Dispatch in 2–3 days' },
+  { icon: RotateCcw, title: '2-Day Exchange', sub: 'Easy exchange or refund' },
   { icon: PackageCheck, title: 'Quality Checked', sub: 'Inspected before dispatch' },
   { icon: Gem, title: 'Handcrafted Quality', sub: 'Authentic, made with care' },
 ];
@@ -29,7 +30,7 @@ export default function TrustBadges({ variant = 'grid', className = '' }) {
 
   return (
     <div
-      className={`grid grid-cols-2 md:grid-cols-4 gap-6 ${className}`}
+      className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 ${className}`}
       data-testid="trust-badges"
     >
       {BADGES.map(({ icon: Icon, title, sub }) => (
