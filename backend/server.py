@@ -318,7 +318,6 @@ FESTIVE_SALE = {
     "prod_a18bec95c0eb": 20,  # Royal Pichwai Heritage Choker Set
     "prod_1f7b59e6c451": 20,  # Mayurika Royal Meenakari Heritage Choker Set
     "prod_454b4aa7ad7e": 20,  # Ruby Emerald Layered Necklace Set
-    "prod_ee13ecea43b5": 20,  # Ruhani Ruby Necklace Set (sold out)
     "prod_a9c7cf2e38b1": 20,  # Crystal Moissanite Necklace Set
     "prod_20cb89a73b48": 20,  # Gulmohar Hasli Necklace Set (sold out)
     "prod_a0a987b5053e": 20,  # Lavender Bloom Statement Necklace Set
