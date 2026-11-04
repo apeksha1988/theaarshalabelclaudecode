@@ -132,7 +132,6 @@ async def google_feed():
 
 # Sold-out sets — keep in sync with OUT_OF_STOCK_IDS in frontend/src/lib/stock.js.
 SOLD_OUT_PRODUCT_IDS = {
-    "prod_ee13ecea43b5",  # Ruhani Ruby Necklace Set
     "prod_454688661f78",  # Celeste Layered Pendant Necklace Set
     "prod_20cb89a73b48",  # Gulmohar Hasli Necklace Set
 }
