@@ -134,6 +134,7 @@ async def google_feed():
 SOLD_OUT_PRODUCT_IDS = {
     "prod_454688661f78",  # Celeste Layered Pendant Necklace Set
     "prod_20cb89a73b48",  # Gulmohar Hasli Necklace Set
+    "prod_1357f1d2784f",  # Sabyasachi Inspired Necklace Set (Pastel)
 }
 
 
