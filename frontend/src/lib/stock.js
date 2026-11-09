@@ -10,6 +10,7 @@ const OUT_OF_STOCK_IDS = new Set([
   'prod_454688661f78', // The Aarsha's Celeste Layered Pendant Necklace Set
   'prod_20cb89a73b48', // The Aarsha's Gulmohar Hasli Necklace Set
   'prod_1357f1d2784f', // The Aarsha's Sabyasachi Inspired Necklace Set (Pastel)
+  'prod_8bb8574b3e7c', // The Aarsha's Noir Heritage Chandbali Earrings
 ]);
 
 export function isOutOfStock(product) {
