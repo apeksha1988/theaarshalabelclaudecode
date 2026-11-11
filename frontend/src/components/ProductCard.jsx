@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingBag, Check, Heart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { isOutOfStock } from '../lib/stock';
+import { sizesForProduct } from '../lib/sizes';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
   const { toggleWishlist, isWished } = useWishlist();
+  const navigate = useNavigate();
   const [added, setAdded] = useState(false);
   const wished = isWished(product.product_id);
 
@@ -41,6 +43,19 @@ export default function ProductCard({ product }) {
     addToCart(product, 1);
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
+  };
+
+  const handleBuyNow = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!hasPrice || soldOut) return;
+    // Sized items (bangles/kadas) need a size chosen first — send to the product page.
+    if (sizesForProduct(product).length) {
+      navigate(`/product/${product.product_id}`);
+      return;
+    }
+    addToCart(product, 1);
+    navigate('/checkout');
   };
 
   return (
@@ -92,33 +107,44 @@ export default function ProductCard({ product }) {
         </p>
       </Link>
 
-      <button
-        onClick={handleAddToCart}
-        disabled={!hasPrice || soldOut}
-        className={`mt-auto w-full px-3 sm:px-6 py-3 text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.15em] uppercase whitespace-nowrap border transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2
-          ${soldOut
-            ? 'border-[#EAE5D9] text-[#999999] cursor-not-allowed'
-            : !hasPrice
-            ? 'border-[#EAE5D9] text-[#999999] cursor-not-allowed'
-            : added
-              ? 'border-[#7A1F3D] bg-[#7A1F3D] text-white'
-              : 'border-[#7A1F3D] text-[#7A1F3D] hover:bg-[#7A1F3D] hover:text-white'}`}
-        data-testid="add-to-cart-button"
-      >
-        {soldOut ? (
-          'Sold Out'
-        ) : !hasPrice ? (
-          'Enquire to Order'
-        ) : added ? (
-          <>
-            <Check className="w-4 h-4" /> Added
-          </>
-        ) : (
-          <>
-            <ShoppingBag className="w-4 h-4" /> Add to Cart
-          </>
+      <div className="mt-auto flex flex-col gap-2">
+        {!soldOut && hasPrice && (
+          <button
+            onClick={handleBuyNow}
+            className="w-full px-3 sm:px-6 py-3 text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.15em] uppercase whitespace-nowrap bg-[#7A1F3D] text-white hover:bg-[#5C172E] transition-all duration-300"
+            data-testid="buy-now-button"
+          >
+            Buy Now
+          </button>
         )}
-      </button>
+        <button
+          onClick={handleAddToCart}
+          disabled={!hasPrice || soldOut}
+          className={`w-full px-3 sm:px-6 py-3 text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.15em] uppercase whitespace-nowrap border transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2
+            ${soldOut
+              ? 'border-[#EAE5D9] text-[#999999] cursor-not-allowed'
+              : !hasPrice
+              ? 'border-[#EAE5D9] text-[#999999] cursor-not-allowed'
+              : added
+                ? 'border-[#7A1F3D] bg-[#7A1F3D] text-white'
+                : 'border-[#7A1F3D] text-[#7A1F3D] hover:bg-[#7A1F3D] hover:text-white'}`}
+          data-testid="add-to-cart-button"
+        >
+          {soldOut ? (
+            'Sold Out'
+          ) : !hasPrice ? (
+            'Enquire to Order'
+          ) : added ? (
+            <>
+              <Check className="w-4 h-4" /> Added
+            </>
+          ) : (
+            <>
+              <ShoppingBag className="w-4 h-4" /> Add to Cart
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }
