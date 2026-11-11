@@ -25,6 +25,7 @@
     "price": 260400,
     "currency": "INR",
     "images": [
+      "/images/celeste-crystal-drop-necklace-set-model-4.webp",
       "/images/celeste-crystal-drop-necklace-set.webp",
       "/images/celeste-crystal-drop-necklace-set-model-1.webp",
       "/images/celeste-crystal-drop-necklace-set-model-2.webp",
@@ -195,9 +196,11 @@
     "price": 274400,
     "currency": "INR",
     "images": [
+      "/images/crystal-choker-set-model-3.webp",
       "/images/crystal-choker-set.webp",
       "/images/crystal-choker-set-model-1.webp",
-      "/images/crystal-choker-set-model-2.webp"
+      "/images/crystal-choker-set-model-2.webp",
+      "/images/crystal-choker-set-model-4.webp"
     ],
     "category": "premium_heritage",
     "product_type": "Crystal Choker Necklace Set with Matching Drop Earrings",
