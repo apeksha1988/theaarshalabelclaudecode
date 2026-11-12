@@ -564,6 +564,7 @@
     "price": 129000,
     "currency": "INR",
     "images": [
+      "/images/the-aarsha-s-royal-peacock-jhumka-earrings-model-1.webp",
       "/images/Navy_Blue_earrings.webp",
       "/images/the-aarsha-s-royal-peacock-jhumka-earrings-photo1.webp"
     ],
@@ -689,6 +690,7 @@
     "price": 155000,
     "currency": "INR",
     "images": [
+      "/images/the-aarsha-s-zariya-emerald-chandbali-earrings-model-1.webp",
       "/images/DropEarrings.webp",
       "/images/the-aarsha-s-zariya-emerald-chandbali-earrings-photo1.webp",
       "/images/the-aarsha-s-zariya-emerald-chandbali-earrings-photo2.webp"
@@ -1072,9 +1074,11 @@
     "price": 110000,
     "currency": "INR",
     "images": [
+      "/images/mayura-silver-jhumka-earrings-model-3.webp",
       "/images/mayura-silver-jhumka-earrings.webp",
       "/images/mayura-silver-jhumka-earrings-model-1.webp",
-      "/images/mayura-silver-jhumka-earrings-model-2.webp"
+      "/images/mayura-silver-jhumka-earrings-model-2.webp",
+      "/images/mayura-silver-jhumka-earrings-model-4.webp"
     ],
     "category": "oxidised",
     "product_type": "Oxidised Silver Statement Jhumka Earrings",
@@ -1343,8 +1347,9 @@
     "price": 227000,
     "currency": "INR",
     "images": [
-      "/images/zoya-royal-kashmiri-green-jhumka-earrings-photo2.webp",
+      "/images/zoya-royal-kashmiri-green-jhumka-earrings-model-1.webp",
       "/images/zoya-royal-kashmiri-green-jhumka-earrings.webp",
+      "/images/zoya-royal-kashmiri-green-jhumka-earrings-photo2.webp",
       "/images/zoya-royal-kashmiri-green-jhumka-earrings-photo3.webp"
     ],
     "category": "premium_heritage",
