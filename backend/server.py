@@ -443,10 +443,15 @@ RETURN_WINDOW_DAYS = 2
 class ReturnRequestCreate(BaseModel):
     photo: str                   # base64 data-URL of the damage photo (required)
     note: Optional[str] = None   # optional description from the customer
+    email: Optional[str] = None  # required for guest (not-logged-in) requests
 
 class ReturnDecision(BaseModel):
     status: str                  # "approved" | "rejected"
     note: Optional[str] = None   # optional message shown to the customer
+
+class OrderLookup(BaseModel):
+    order_id: str
+    email: str
 
 class PaymentVerifyRequest(BaseModel):
     order_id: str
@@ -1136,13 +1141,51 @@ def _return_eligibility(order: dict):
     return True, ""
 
 
+def _public_order_view(order: dict) -> dict:
+    """A trimmed order for the guest track/return page — no address or photo."""
+    rr = order.get("return_request") or {}
+    return {
+        "order_id": order.get("order_id"),
+        "email": order.get("email"),
+        "status": order.get("status"),
+        "fulfillment_status": order.get("fulfillment_status"),
+        "delivered_at": order.get("delivered_at"),
+        "updated_at": order.get("updated_at"),
+        "created_at": order.get("created_at"),
+        "tracking_number": order.get("tracking_number"),
+        "courier": order.get("courier"),
+        "total": order.get("total"),
+        "currency": order.get("currency"),
+        "items": [
+            {"name": it.get("name"), "quantity": it.get("quantity"), "size": it.get("size")}
+            for it in (order.get("items") or [])
+        ],
+        "return_request": {k: v for k, v in rr.items() if k != "photo"} or None,
+    }
+
+
+@api_router.post("/orders/lookup")
+async def lookup_order(data: OrderLookup):
+    """Public: find an order by its ID + the email it was placed with (so guests
+    can track and return without an account). Both must match."""
+    order = await orders_collection.find_one({"order_id": data.order_id.strip()})
+    if not order or (order.get("email") or "").strip().lower() != data.email.strip().lower():
+        raise HTTPException(status_code=404, detail="We couldn't find an order with that ID and email.")
+    return _public_order_view(order)
+
+
 @api_router.post("/orders/{order_id}/return")
 async def request_return(order_id: str, data: ReturnRequestCreate, request: Request):
-    """Customer requests a return for a delivered, damaged order (photo required)."""
-    user = await require_auth(request)
+    """Request a return for a delivered, damaged order (photo required). Works for
+    a logged-in owner, or a guest who supplies the order's email."""
+    user = await get_current_user(request)
     order = await orders_collection.find_one({"order_id": order_id})
-    if not order or order.get("user_id") != user["user_id"]:
+    if not order:
         raise HTTPException(status_code=404, detail="Order not found")
+    owns = bool(user and order.get("user_id") == user["user_id"])
+    email_ok = bool(data.email and (order.get("email") or "").strip().lower() == data.email.strip().lower())
+    if not (owns or email_ok):
+        raise HTTPException(status_code=403, detail="Please sign in or enter the email your order was placed with.")
     ok, reason = _return_eligibility(order)
     if not ok:
         raise HTTPException(status_code=400, detail=reason)

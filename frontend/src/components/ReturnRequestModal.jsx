@@ -27,7 +27,7 @@ function compressImage(file, maxDim = 1000, quality = 0.7) {
   });
 }
 
-export default function ReturnRequestModal({ order, onClose, onDone }) {
+export default function ReturnRequestModal({ order, onClose, onDone, email }) {
   const [photo, setPhoto] = useState('');
   const [note, setNote] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -49,7 +49,7 @@ export default function ReturnRequestModal({ order, onClose, onDone }) {
     if (!photo) { setError('Please add a photo of the damage.'); return; }
     setSubmitting(true); setError('');
     try {
-      await api.post(`/orders/${order.order_id}/return`, { photo, note });
+      await api.post(`/orders/${order.order_id}/return`, { photo, note, email });
       onDone();
     } catch (e) {
       setError(e?.response?.data?.detail || 'Could not submit your request. Please try again.');

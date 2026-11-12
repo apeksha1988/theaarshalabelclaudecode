@@ -42,6 +42,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
+              <li><Link to="/track-order" className="hover:text-white transition-colors">Track / Return an Order</Link></li>
               <li><a href="mailto:support@theaarshalabel.com" className="hover:text-white transition-colors">support@theaarshalabel.com</a></li>
               <li><a href="https://wa.me/917310768702" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">WhatsApp: +91 73107 68702</a></li>
             </ul>

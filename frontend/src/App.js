@@ -41,6 +41,7 @@ const RefundPolicyPage = lazy(() => import('./pages/RefundPolicyPage'));
 const ShippingPolicyPage = lazy(() => import('./pages/ShippingPolicyPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
+const TrackOrderPage = lazy(() => import('./pages/TrackOrderPage'));
 
 function AppRoutes() {
   const location = useLocation();
@@ -79,6 +80,7 @@ function AppRoutes() {
         <Route path="/festive" element={<FestivePage />} />
         <Route path="/b2b" element={<B2BPage />} />
         <Route path="/b2b/catalogue" element={<B2BCataloguePage />} />
+        <Route path="/track-order" element={<TrackOrderPage />} />
         <Route path="/refund-policy" element={<RefundPolicyPage />} />
         <Route path="/shipping-policy" element={<ShippingPolicyPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
