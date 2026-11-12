@@ -3,6 +3,26 @@ import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import api from '../lib/api';
 import { Package, User } from 'lucide-react';
+import ReturnRequestModal from '../components/ReturnRequestModal';
+
+const RETURN_WINDOW_DAYS = 2;
+function returnEligible(order) {
+  if (order.fulfillment_status !== 'delivered' || order.return_request) return false;
+  const d = new Date(order.delivered_at || order.updated_at || 0).getTime();
+  return d > 0 && Date.now() <= d + RETURN_WINDOW_DAYS * 86400000;
+}
+const RETURN_LABELS = { requested: 'Return requested', approved: 'Return approved', rejected: 'Return not approved' };
+const RETURN_COLORS = { requested: '#C0672A', approved: '#2E7D32', rejected: '#B23A48' };
+function ReturnStatusBadge({ rr }) {
+  return (
+    <div className="mt-4" data-testid="return-status">
+      <span className="text-[11px] font-semibold uppercase tracking-wide text-white px-2 py-0.5 rounded" style={{ background: RETURN_COLORS[rr.status] || '#666666' }}>
+        {RETURN_LABELS[rr.status] || rr.status}
+      </span>
+      {rr.admin_note && <p className="text-xs text-[#666666] mt-1">{rr.admin_note}</p>}
+    </div>
+  );
+}
 
 const FULFILLMENT_STAGES = [
   { key: 'processing', label: 'Processing' },
@@ -44,6 +64,7 @@ export default function DashboardPage() {
   const { user } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [returnFor, setReturnFor] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -111,7 +132,7 @@ export default function DashboardPage() {
                     <div>
                       <p className="text-sm uppercase tracking-wide text-[#666666]">Order #{order.order_id}</p>
                       <p className="text-lg font-serif font-medium text-[#1A1A1A] mt-1" data-testid="order-status">
-                        {order.status === 'paid'
+                        {(order.status === 'paid' || order.status === 'cod_confirmed')
                           ? (FULFILLMENT_STAGES.find((s) => s.key === (order.fulfillment_status || 'processing'))?.label || 'Processing')
                           : order.status.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
                       </p>
@@ -119,7 +140,7 @@ export default function DashboardPage() {
                     <p className="text-lg font-medium text-[#1A1A1A]" data-testid="order-amount">₹{(order.total / 100).toLocaleString('en-IN')}</p>
                   </div>
 
-                  {order.status === 'paid' && (
+                  {(order.status === 'paid' || order.status === 'cod_confirmed') && (
                     <>
                       <OrderTimeline status={order.fulfillment_status || 'processing'} />
                       {order.tracking_number && (
@@ -138,12 +159,34 @@ export default function DashboardPage() {
                       </p>
                     ))}
                   </div>
+
+                  {(order.status === 'paid' || order.status === 'cod_confirmed') && (
+                    order.return_request ? (
+                      <ReturnStatusBadge rr={order.return_request} />
+                    ) : returnEligible(order) ? (
+                      <button
+                        onClick={() => setReturnFor(order)}
+                        className="mt-4 text-sm border border-[#7A1F3D] text-[#7A1F3D] px-4 py-2 hover:bg-[#7A1F3D] hover:text-white transition-colors"
+                        data-testid="request-return-button"
+                      >
+                        Report a damaged item
+                      </button>
+                    ) : null
+                  )}
                 </div>
               ))}
             </div>
           )}
         </div>
       </div>
+
+      {returnFor && (
+        <ReturnRequestModal
+          order={returnFor}
+          onClose={() => setReturnFor(null)}
+          onDone={() => { setReturnFor(null); fetchData(); }}
+        />
+      )}
     </div>
   );
 }

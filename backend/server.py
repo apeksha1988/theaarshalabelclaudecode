@@ -436,6 +436,18 @@ class OrderStatusUpdate(BaseModel):
     tracking_number: Optional[str] = None
     courier: Optional[str] = None
 
+# Customer can request a return within this many days of delivery, and only for
+# a damaged item (photo proof required). The owner approves/rejects in admin.
+RETURN_WINDOW_DAYS = 2
+
+class ReturnRequestCreate(BaseModel):
+    photo: str                   # base64 data-URL of the damage photo (required)
+    note: Optional[str] = None   # optional description from the customer
+
+class ReturnDecision(BaseModel):
+    status: str                  # "approved" | "rejected"
+    note: Optional[str] = None   # optional message shown to the customer
+
 class PaymentVerifyRequest(BaseModel):
     order_id: str
     razorpay_order_id: str
@@ -1052,7 +1064,7 @@ async def get_orders(request: Request):
     user = await require_auth(request)
     orders = await orders_collection.find(
         {"user_id": user["user_id"]},
-        {"_id": 0}
+        {"_id": 0, "return_request.photo": 0}
     ).to_list(1000)
     return orders
 
@@ -1066,7 +1078,7 @@ async def get_order(order_id: str):
 @api_router.get("/admin/orders")
 async def get_all_orders(request: Request):
     await require_admin(request)
-    orders = await orders_collection.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    orders = await orders_collection.find({}, {"_id": 0, "return_request.photo": 0}).sort("created_at", -1).to_list(1000)
     return orders
 
 @api_router.put("/admin/orders/{order_id}/status")
@@ -1085,6 +1097,10 @@ async def update_order_status(order_id: str, data: OrderStatusUpdate, request: R
         update["tracking_number"] = data.tracking_number.strip()
     if data.courier is not None:
         update["courier"] = data.courier.strip()
+    if data.fulfillment_status == "delivered":
+        existing = await orders_collection.find_one({"order_id": order_id}, {"_id": 0, "delivered_at": 1})
+        if existing is not None and not existing.get("delivered_at"):
+            update["delivered_at"] = datetime.now(timezone.utc)
 
     result = await orders_collection.update_one({"order_id": order_id}, {"$set": update})
     if result.matched_count == 0:
@@ -1092,6 +1108,92 @@ async def update_order_status(order_id: str, data: OrderStatusUpdate, request: R
 
     order = await orders_collection.find_one({"order_id": order_id}, {"_id": 0})
     _fire(notify_order_status(order))  # email the customer about the update
+    return order
+
+
+# --- Returns (2-day window, damaged item only; owner approves in admin) ---
+def _return_eligibility(order: dict):
+    """(eligible, reason). A delivered order with no existing return, still inside
+    the RETURN_WINDOW_DAYS window measured from delivery."""
+    if order.get("status") not in ("paid", "cod_confirmed"):
+        return False, "This order isn't eligible for a return."
+    if order.get("fulfillment_status") != "delivered":
+        return False, "A return can be requested only after the order is delivered."
+    if order.get("return_request"):
+        return False, "A return request already exists for this order."
+    delivered = order.get("delivered_at") or order.get("updated_at")
+    if isinstance(delivered, str):
+        try:
+            delivered = datetime.fromisoformat(delivered)
+        except ValueError:
+            delivered = None
+    if not delivered:
+        return False, "Delivery date is unavailable for this order."
+    if delivered.tzinfo is None:
+        delivered = delivered.replace(tzinfo=timezone.utc)
+    if datetime.now(timezone.utc) > delivered + timedelta(days=RETURN_WINDOW_DAYS):
+        return False, f"The {RETURN_WINDOW_DAYS}-day return window has closed."
+    return True, ""
+
+
+@api_router.post("/orders/{order_id}/return")
+async def request_return(order_id: str, data: ReturnRequestCreate, request: Request):
+    """Customer requests a return for a delivered, damaged order (photo required)."""
+    user = await require_auth(request)
+    order = await orders_collection.find_one({"order_id": order_id})
+    if not order or order.get("user_id") != user["user_id"]:
+        raise HTTPException(status_code=404, detail="Order not found")
+    ok, reason = _return_eligibility(order)
+    if not ok:
+        raise HTTPException(status_code=400, detail=reason)
+    photo = (data.photo or "").strip()
+    if not photo.startswith("data:image/"):
+        raise HTTPException(status_code=400, detail="A clear photo of the damage is required.")
+    if len(photo) > 3_000_000:  # ~2 MB image
+        raise HTTPException(status_code=400, detail="That photo is too large — please use a smaller image.")
+    rr = {
+        "status": "requested",
+        "reason": "damaged",
+        "note": (data.note or "").strip()[:1000],
+        "photo": photo,
+        "created_at": datetime.now(timezone.utc),
+    }
+    await orders_collection.update_one({"order_id": order_id}, {"$set": {"return_request": rr}})
+    order["return_request"] = rr
+    _fire(notify_return_request(order))
+    return {"status": "requested"}
+
+
+@api_router.get("/admin/orders/{order_id}/return-photo")
+async def get_return_photo(order_id: str, request: Request):
+    await require_admin(request)
+    order = await orders_collection.find_one(
+        {"order_id": order_id}, {"_id": 0, "return_request.photo": 1}
+    )
+    photo = ((order or {}).get("return_request") or {}).get("photo")
+    if not photo:
+        raise HTTPException(status_code=404, detail="No damage photo on file")
+    return {"photo": photo}
+
+
+@api_router.put("/admin/orders/{order_id}/return")
+async def decide_return(order_id: str, data: ReturnDecision, request: Request):
+    await require_admin(request)
+    if data.status not in ("approved", "rejected"):
+        raise HTTPException(status_code=400, detail="status must be 'approved' or 'rejected'")
+    order = await orders_collection.find_one({"order_id": order_id}, {"_id": 0, "return_request.photo": 0})
+    if not order or not order.get("return_request"):
+        raise HTTPException(status_code=404, detail="No return request on this order")
+    await orders_collection.update_one(
+        {"order_id": order_id},
+        {"$set": {
+            "return_request.status": data.status,
+            "return_request.admin_note": (data.note or "").strip()[:1000],
+            "return_request.reviewed_at": datetime.now(timezone.utc),
+        }},
+    )
+    order = await orders_collection.find_one({"order_id": order_id}, {"_id": 0, "return_request.photo": 0})
+    _fire(notify_return_decision(order))
     return order
 
 # Custom dress request routes
@@ -1291,6 +1393,32 @@ async def notify_order_paid(order: dict):
                 await notifications.send_whatsapp(OWNER_WHATSAPP, notifications.whatsapp_order_text(order, for_owner=True))
     except Exception as e:
         logging.error("notify_order_paid failed: %s", e)
+
+
+async def notify_return_request(order: dict):
+    """Email the owner (best-effort WhatsApp) about a new return request."""
+    try:
+        if OWNER_EMAIL:
+            subj, html, text = notifications.return_request_for_owner(order)
+            await notifications.send_email(OWNER_EMAIL, subj, html, text)
+        if OWNER_WHATSAPP:
+            oid = order.get("order_id", "")
+            await notifications.send_whatsapp(
+                OWNER_WHATSAPP,
+                f"↩️ Return requested for order {oid} (damaged item). "
+                f"Open your Orders admin to view the photo and approve or reject it.",
+            )
+    except Exception as e:
+        logging.error("notify_return_request failed: %s", e)
+
+
+async def notify_return_decision(order: dict):
+    """Email the customer that their return was approved or rejected."""
+    try:
+        subj, html, text = notifications.return_status_for_customer(order)
+        await notifications.send_email(order.get("email"), subj, html, text)
+    except Exception as e:
+        logging.error("notify_return_decision failed: %s", e)
 
 
 async def notify_b2b_inquiry(inquiry: dict):

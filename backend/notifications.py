@@ -338,6 +338,54 @@ def order_status_update_for_customer(order: dict):
     return subject, html, text
 
 
+def return_request_for_owner(order: dict):
+    """Email to the owner about a new return request (damaged item)."""
+    oid = order.get("order_id", "")
+    rr = order.get("return_request", {}) or {}
+    note = rr.get("note") or "—"
+    cust = order.get("email", "")
+    subject = f"Return requested — order {oid} (damaged)"
+    html = f"""
+    <div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#1A1A1A">
+      <h2 style="color:#7A1F3D">Return requested (damaged item)</h2>
+      <p><b>Order:</b> {oid}<br/><b>Customer:</b> {cust}</p>
+      <p><b>Customer note:</b> {note}</p>
+      <p>Open your <b>Orders admin</b> to view the damage photo and approve or reject this return.</p>
+    </div>"""
+    text = (f"Return requested (damaged) for order {oid}\nCustomer: {cust}\nNote: {note}\n\n"
+            f"View the photo and approve/reject it in your Orders admin.")
+    return subject, html, text
+
+
+def return_status_for_customer(order: dict):
+    """Email to the customer when their return is approved or rejected."""
+    oid = order.get("order_id", "")
+    rr = order.get("return_request", {}) or {}
+    status = rr.get("status")
+    admin_note = rr.get("admin_note")
+    if status == "approved":
+        head = "Your return has been approved"
+        body = ("We're sorry your piece arrived damaged. Your return is approved — "
+                "we'll arrange a free replacement or store credit and be in touch shortly.")
+    else:
+        head = "Update on your return request"
+        body = ("After reviewing your request, we're unable to approve this return. "
+                "If you have any questions, reply to this email or WhatsApp us and we'll help.")
+    note_html = f"<p style='color:#444'><b>Note:</b> {admin_note}</p>" if admin_note else ""
+    note_text = f"Note: {admin_note}\n" if admin_note else ""
+    subject = f"{STORE_NAME} — Return {status} ({oid})"
+    html = f"""
+    <div style="font-family:Georgia,serif;max-width:560px;margin:auto;color:#1A1A1A">
+      <h2 style="color:#7A1F3D">{head}</h2>
+      <p>Regarding your order <b>{oid}</b>.</p>
+      <p>{body}</p>
+      {note_html}
+      <p style="color:#666">Thank you, {STORE_NAME}.</p>
+    </div>"""
+    text = f"{head}\n\nOrder {oid}\n{body}\n{note_text}\n— {STORE_NAME}"
+    return subject, html, text
+
+
 def b2b_inquiry_for_owner(inq: dict):
     """Email to the owner about a new B2B/wholesale inquiry."""
     rows = [

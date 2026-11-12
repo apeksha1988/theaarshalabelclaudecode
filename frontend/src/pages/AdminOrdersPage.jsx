@@ -138,6 +138,15 @@ function AdminOrderCard({ order }) {
                 Coupon · {order.coupon}
               </span>
             )}
+            {order.return_request && (
+              <span
+                className="text-[10px] font-semibold uppercase tracking-wide text-white px-2 py-0.5 rounded"
+                style={{ background: order.return_request.status === 'approved' ? '#2E7D32' : order.return_request.status === 'rejected' ? '#B23A48' : '#C0672A' }}
+                data-testid="return-badge"
+              >
+                Return · {order.return_request.status}
+              </span>
+            )}
           </div>
           <p className="text-sm text-[#1A1A1A] mt-1">{order.email}</p>
           {addr.name && (
@@ -200,6 +209,80 @@ function AdminOrderCard({ order }) {
         </button>
         {saved && <span className="text-sm text-green-700">Saved ✓ Customer emailed</span>}
       </div>
+
+      {order.return_request && <ReturnPanel order={order} />}
+    </div>
+  );
+}
+
+function ReturnPanel({ order }) {
+  const rr = order.return_request;
+  const [status, setStatus] = useState(rr.status);
+  const [photo, setPhoto] = useState('');
+  const [note, setNote] = useState('');
+  const [busy, setBusy] = useState(false);
+
+  const loadPhoto = async () => {
+    try {
+      const r = await api.get(`/admin/orders/${order.order_id}/return-photo`);
+      setPhoto(r.data.photo);
+    } catch {
+      alert('Could not load the damage photo.');
+    }
+  };
+  const decide = async (decision) => {
+    setBusy(true);
+    try {
+      await api.put(`/admin/orders/${order.order_id}/return`, { status: decision, note });
+      setStatus(decision);
+    } catch {
+      alert('Failed to update the return. Please try again.');
+    } finally {
+      setBusy(false);
+    }
+  };
+  const color = status === 'approved' ? '#2E7D32' : status === 'rejected' ? '#B23A48' : '#C0672A';
+
+  return (
+    <div className="mt-5 p-4 border border-[#E0C9A0] bg-[#FBF3E7]" data-testid="admin-return-panel">
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-white px-2 py-0.5 rounded" style={{ background: color }}>
+          Return · {status}
+        </span>
+        <span className="text-xs text-[#666666]">Reason: damaged</span>
+      </div>
+      {rr.note && (
+        <p className="text-sm text-[#1A1A1A] mb-2"><span className="text-[#666666]">Customer note: </span>{rr.note}</p>
+      )}
+      {photo ? (
+        <img src={photo} alt="Reported damage" className="max-h-60 border border-[#E0C9A0] mb-3" />
+      ) : (
+        <button onClick={loadPhoto} className="text-sm text-[#7A1F3D] underline mb-3 block" data-testid="view-damage-photo">
+          View damage photo
+        </button>
+      )}
+      {status === 'requested' ? (
+        <div className="space-y-2">
+          <input
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="Note to customer (optional)"
+            className="w-full border border-[#D8CFC0] bg-white px-3 py-2 text-sm"
+          />
+          <div className="flex gap-2">
+            <button onClick={() => decide('approved')} disabled={busy} className="bg-[#2E7D32] text-white text-sm px-4 py-2 hover:opacity-90 disabled:opacity-60" data-testid="approve-return">
+              Approve
+            </button>
+            <button onClick={() => decide('rejected')} disabled={busy} className="bg-[#B23A48] text-white text-sm px-4 py-2 hover:opacity-90 disabled:opacity-60" data-testid="reject-return">
+              Reject
+            </button>
+          </div>
+        </div>
+      ) : (
+        <p className="text-sm text-[#1A1A1A]">
+          Customer notified — <b>{status}</b>.{status === 'approved' ? ' Arrange a replacement or store credit.' : ''}
+        </p>
+      )}
     </div>
   );
 }
