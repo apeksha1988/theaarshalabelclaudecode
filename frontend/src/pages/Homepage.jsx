@@ -20,6 +20,19 @@ const HERO_IMAGES = [
   { image: '/images/sabyasachi-inspired-royale-necklace-set-hero.webp', position: 'center' },
 ];
 
+// Circular "Shop by Category" row below the hero. Each links to a shop filter
+// (type / style / category) that has products.
+const CATEGORIES = [
+  { label: 'Necklace Sets', to: '/shop?type=necklace', image: '/images/zareen-emerald-heritage-necklace-set-model-4-thumb.webp' },
+  { label: 'Chokers', to: '/shop?style=choker', image: '/images/polki-choker-set-model-1-thumb.webp' },
+  { label: 'Earrings', to: '/shop?type=earrings', image: '/images/the-aarsha-s-royal-peacock-jhumka-earrings-model-1-thumb.webp' },
+  { label: 'Bangles & Bracelets', to: '/shop?type=bracelet', image: '/images/emerald-bracelet-thumb.webp' },
+  { label: 'Hathphool', to: '/shop?type=hathphool', image: '/images/hathphool-thumb.webp' },
+  { label: 'Bridal', to: '/shop?style=bridal', image: '/images/gulbahar-heritage-necklace-set-model-3-thumb.webp' },
+  { label: 'Premium Heritage', to: '/shop?category=premium_heritage', image: '/images/heritage-kundan-necklace-set-thumb.webp' },
+  { label: 'Oxidised', to: '/shop?category=oxidised', image: '/images/the-aarsha-s-gulnaar-oxidized-chandbali-earrings-model-1-thumb.webp' },
+];
+
 export default function Homepage() {
   const [products, setProducts] = useState(() => getCachedProducts() || []);
   const [loading, setLoading] = useState(() => !getCachedProducts());
@@ -164,38 +177,34 @@ export default function Homepage() {
 
       <PromoBanner />
 
-      {/* Shop by Category */}
-      <section className="py-10 md:py-16 bg-[#FDFBF7]" data-testid="category-section">
+      {/* Shop by Category — circular tiles that swipe horizontally on mobile */}
+      <section className="py-9 md:py-14 bg-[#FBF1F1]" data-testid="category-section">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="text-center mb-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A1F3D] mb-4">Explore</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-light tracking-tight text-[#1A1A1A]">
+          <div className="text-center mb-7 md:mb-9">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7A1F3D] mb-3">Explore</p>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-light tracking-tight text-[#1A1A1A]">
               Shop by Category
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
-            {[
-              { label: 'Premium Heritage', sub: 'Kundan · Polki · Moissanite', to: '/shop?category=premium_heritage', image: '/images/heritage-kundan-necklace-set-thumb.webp' },
-              { label: 'Oxidised', sub: 'Silver-tone · Statement pieces', to: '/shop?category=oxidised', image: '/images/Oxidised_Necklace-thumb.webp' },
-            ].map((c) => (
+          <div className="flex gap-5 sm:gap-7 overflow-x-auto md:overflow-visible md:flex-wrap md:justify-center pb-2 -mx-6 px-6 md:mx-0 md:px-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            {CATEGORIES.map((c) => (
               <Link
-                key={c.to}
+                key={c.label}
                 to={c.to}
-                className="group relative block overflow-hidden aspect-[16/10]"
-                data-testid={`category-tile-${c.label.toLowerCase().replace(/\s+/g, '-')}`}
+                className="group shrink-0 flex flex-col items-center w-[84px] sm:w-[104px]"
+                data-testid={`category-circle-${c.label.toLowerCase().replace(/[^a-z]+/g, '-')}`}
               >
-                <img
-                  src={c.image}
-                  alt={c.label}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/35 group-hover:bg-black/45 transition-colors" />
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
-                  <h3 className="text-2xl md:text-3xl font-serif font-light mb-1">{c.label}</h3>
-                  <p className="text-xs md:text-sm tracking-wide opacity-90 mb-4">{c.sub}</p>
-                  <span className="text-xs uppercase tracking-[0.2em] border-b border-white/70 pb-1">Shop Now</span>
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden bg-white ring-1 ring-[#EADBD0] shadow-sm transition-all duration-300 group-hover:ring-2 group-hover:ring-[#7A1F3D]">
+                  <img
+                    src={c.image}
+                    alt={c.label}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
                 </div>
+                <span className="mt-3 text-xs sm:text-sm font-medium text-center text-[#1A1A1A] group-hover:text-[#7A1F3D] transition-colors leading-tight">
+                  {c.label}
+                </span>
               </Link>
             ))}
           </div>
