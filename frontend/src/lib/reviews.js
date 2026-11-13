@@ -17,6 +17,17 @@
 //
 export const REVIEWS = [
   {
+    id: 'review-whatsapp-roshan-1',
+    name: 'Roshan',
+    rating: 5,
+    date: '2026-11',
+    verified: true,
+    // Genuine WhatsApp review — customer shared photos of herself wearing the order.
+    text: 'I was doubting whether the page was real or a scam because of the images, but I am in LOVE with this earring!',
+    image: '/images/reviews/roshan-review.webp',
+    productId: null,
+  },
+  {
     id: 'review-whatsapp-aarsha-1',
     name: 'Verified Customer',
     rating: 5,
