@@ -1557,6 +1557,8 @@ async def abandoned_reminders(request: Request):
 # ever deleted, so the blast radius is explicit.
 RETIRED_PRODUCT_IDS = {
     "prod_e55cf53ba9ed",  # The Aarsha's Ruby Feather Statement Jhumkas (Earcuff)
+    "prod_4e298cd184a3",  # The Aarsha's Simhavati Royal Heritage Necklace Set
+    "prod_1f7b59e6c451",  # The Aarsha's Mayurika Royal Meenakari Heritage Choker Set
 }
 
 # Publish newly-added catalog products and retire listed ones. Inserts any
