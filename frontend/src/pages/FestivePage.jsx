@@ -7,6 +7,7 @@ import TrustBadges from '../components/TrustBadges';
 import { productGroup } from '../lib/productGroups';
 import { applySeo } from '../lib/seo';
 import { getCachedProducts, setCachedProducts } from '../lib/productCache';
+import { visibleProducts } from '../lib/stock';
 
 // Festive landing page — a curated place for festive/ad traffic to land, framed
 // around the upcoming festivals (Teej & Raksha Bandhan). Renders instantly from
@@ -31,7 +32,7 @@ export default function FestivePage() {
 
   // Festive-first ordering: necklace sets & earrings first, cheapest within each.
   const RANK = { necklace: 0, earrings: 1, bracelet: 2, hathphool: 3 };
-  const sorted = [...products].sort(
+  const sorted = visibleProducts(products).sort(
     (a, b) => (RANK[productGroup(a)] ?? 9) - (RANK[productGroup(b)] ?? 9) || ((a.price ?? 0) - (b.price ?? 0))
   );
 

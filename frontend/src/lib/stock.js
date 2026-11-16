@@ -18,3 +18,11 @@ export function isOutOfStock(product) {
   if (OUT_OF_STOCK_IDS.has(product.product_id)) return true;
   return /out.?of.?stock|sold.?out/i.test(product.availability || '');
 }
+
+// Sold-out products are HIDDEN from the storefront's browse/discovery surfaces
+// (shop grid, homepage, festive, "you may also like"). Their data and pages are
+// kept intact, so removing an id from OUT_OF_STOCK_IDS brings the product back
+// instantly. Use this to filter any public product list before rendering.
+export function visibleProducts(list) {
+  return (list || []).filter((p) => !isOutOfStock(p));
+}

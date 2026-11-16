@@ -8,6 +8,7 @@ import PromoBanner from '../components/PromoBanner';
 import { productGroup } from '../lib/productGroups';
 import { applySeo } from '../lib/seo';
 import { getCachedProducts, setCachedProducts } from '../lib/productCache';
+import { visibleProducts } from '../lib/stock';
 
 // Rotating product images behind a fixed hero message. Product-only shots
 // (smaller -hero variants) so the focus stays on the jewellery and the
@@ -87,7 +88,7 @@ export default function Homepage() {
   const hasPrice = (p) => p.price !== null && p.price !== undefined;
   const GROUP_RANK = { necklace: 0, earrings: 1, bracelet: 2, hathphool: 3 };
   const rank = (p) => GROUP_RANK[productGroup(p)] ?? 9;
-  const sortedProducts = [...products].sort((a, b) => {
+  const sortedProducts = visibleProducts(products).sort((a, b) => {
     const byGroup = rank(a) - rank(b);
     if (byGroup !== 0) return byGroup;
     if (!hasPrice(a) && !hasPrice(b)) return 0;

@@ -1,12 +1,6 @@
 {
   "version": "0.0.1",
   "configurations": [
-    {
-      "name": "frontend",
-      "runtimeExecutable": "C:\\Program Files\\nodejs\\node.exe",
-      "runtimeArgs": ["node_modules/@craco/craco/dist/bin/craco.js", "start"],
-      "port": 3000,
-      "cwd": "frontend"
-    }
+    { "name": "aarsha-frontend", "runtimeExecutable": "npm", "runtimeArgs": ["start"], "port": 3000, "cwd": "frontend" }
   ]
 }

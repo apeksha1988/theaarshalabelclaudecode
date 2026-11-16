@@ -8,7 +8,7 @@ import ProductCard from '../components/ProductCard';
 import ProductReviews, { ProductRatingInline } from '../components/ProductReviews';
 import { productOrderLink } from '../lib/whatsappOrder';
 import { sizesForProduct } from '../lib/sizes';
-import { isOutOfStock } from '../lib/stock';
+import { isOutOfStock, visibleProducts } from '../lib/stock';
 import SoldOutNotify from '../components/SoldOutNotify';
 import { applySeo, productJsonLd } from '../lib/seo';
 import { productGroup } from '../lib/productGroups';
@@ -69,7 +69,7 @@ export default function ProductDetailPage() {
     const rank = (p) =>
       (productGroup(p) === group ? 0 : 100) + (p.category === product.category ? 0 : 10);
     const priceGap = (p) => Math.abs((p.price ?? 0) - (product.price ?? 0));
-    return allProducts
+    return visibleProducts(allProducts)
       .filter((p) => p.product_id !== product.product_id)
       .sort((a, b) => rank(a) - rank(b) || priceGap(a) - priceGap(b))
       .slice(0, 4);

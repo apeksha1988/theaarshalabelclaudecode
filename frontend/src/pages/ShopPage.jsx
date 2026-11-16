@@ -7,6 +7,7 @@ import { productGroup, groupLabel, STYLES, styleLabel, styleMatch } from '../lib
 import { applySeo } from '../lib/seo';
 import { SHOP_CONTENT, faqJsonLd } from '../lib/shopContent';
 import { getCachedProducts, setCachedProducts } from '../lib/productCache';
+import { visibleProducts } from '../lib/stock';
 
 const CATEGORY_LABELS = { premium_heritage: 'Premium Heritage', oxidised: 'Oxidised' };
 
@@ -88,7 +89,8 @@ export default function ShopPage() {
 
   // Filter by category (Shop by Type), style (Shop by Style) and the legacy
   // "type" group (from the nav dropdown). All combine as AND.
-  let filtered = products;
+  // Hide sold-out products from the shop (data is kept; see lib/stock.js).
+  let filtered = visibleProducts(products);
   if (category !== 'all') filtered = filtered.filter((p) => p.category === category);
   if (style !== 'all') filtered = filtered.filter(styleMatch(style));
   if (type !== 'all') filtered = filtered.filter((p) => productGroup(p) === type);
@@ -144,7 +146,7 @@ export default function ShopPage() {
   // the Bridal filter stays hidden until its curated list is populated.
   const styleFilters = [
     { value: 'all', label: 'All' },
-    ...STYLES.filter((s) => products.some(s.match)).map((s) => ({ value: s.key, label: s.label })),
+    ...STYLES.filter((s) => visibleProducts(products).some(s.match)).map((s) => ({ value: s.key, label: s.label })),
   ];
 
   const heading = style !== 'all' ? styleLabel(style)
