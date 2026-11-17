@@ -1311,5 +1311,24 @@
     "availability": "In Stock",
     "set_includes": "1 Royal Peacock Heritage Choker Necklace + 1 Pair of Matching Peacock Motif Statement Earrings",
     "created_at": "2026-11-17T10:00:00.000000"
+  },
+  {
+    "product_id": "prod_a1062ca56e45",
+    "name": "The Aarsha's Mehr – Royal Emerald Moissanite Choker Set",
+    "description": "Crafted for the bride who loves understated grandeur, the Mehr Royal Emerald Moissanite Choker Set pairs brilliant moissanite stones with rich emerald-green accents and delicate ivory pearl-look strands. Antique silver-tone detailing warmed by gold-tone settings frames each kundan-inspired motif, while matching earrings and a maang tikka complete a truly regal bridal look. A timeless choice for weddings, receptions and festive celebrations.",
+    "price": 551500,
+    "currency": "INR",
+    "images": [
+      "/images/mehr-royal-emerald-moissanite-choker-set-model-1.webp",
+      "/images/mehr-royal-emerald-moissanite-choker-set.webp",
+      "/images/mehr-royal-emerald-moissanite-choker-set-model-2.webp",
+      "/images/mehr-royal-emerald-moissanite-choker-set-model-3.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Moissanite Choker Necklace Set",
+    "materials": "Jewellery alloy base with antique silver-tone finish and gold-tone settings, Moissanite primary stones, Emerald-green decorative accent stones, Small white sparkling stones, Ivory-white pearl-look beads",
+    "availability": "In Stock",
+    "set_includes": "1 Moissanite Choker Necklace + 1 Pair of Matching Earrings + 1 Matching Maang Tikka",
+    "created_at": "2026-11-17T11:00:00.000000"
   }
 ]
