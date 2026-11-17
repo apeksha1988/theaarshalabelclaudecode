@@ -1293,5 +1293,23 @@
     "set_includes": "1 Pair of Zoya Royal Kashmiri Green Jhumka Earrings",
     "created_at": "2026-10-29T10:00:12.989122",
     "updated_at": "2026-10-29T10:00:12.989122"
+  },
+  {
+    "product_id": "prod_1a97619eabda",
+    "name": "The Aarsha's Royal Mayura Heritage Choker Set",
+    "description": "Discover timeless royal elegance with the Mayura Royal Peacock Heritage Choker Set. Featuring intricate peacock motifs, vibrant emerald-green and ruby-pink accents, sparkling Kundan-inspired stonework, and delicate golden ghungroo embellishments, this antique gold-tone choker beautifully celebrates traditional Indian artistry. Paired with matching statement earrings, it is an exquisite choice for weddings, festive occasions, and grand celebrations.",
+    "price": 705200,
+    "currency": "INR",
+    "images": [
+      "/images/royal-mayura-heritage-choker-set-model-1.webp",
+      "/images/royal-mayura-heritage-choker-set.webp",
+      "/images/royal-mayura-heritage-choker-set-model-2.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Heritage Choker Necklace Set",
+    "materials": "Gold-tone jewellery alloy base with antique gold-tone finish, White Kundan-style decorative stones, Emerald-green and ruby-pink decorative stones / enamel-style inlay, Floral central motif with green and white stones, Multicoloured peacock detailing in green and pink, White pearl-look bead and white-stone border detailing, Gold-tone ghungroo bell drops",
+    "availability": "In Stock",
+    "set_includes": "1 Royal Peacock Heritage Choker Necklace + 1 Pair of Matching Peacock Motif Statement Earrings",
+    "created_at": "2026-11-17T10:00:00.000000"
   }
 ]
