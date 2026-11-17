@@ -6,6 +6,7 @@ the send functions no-op and log a warning instead of raising — so the app
 works fine before credentials are added.
 """
 import os
+import re
 import ssl
 import smtplib
 import asyncio
@@ -37,11 +38,17 @@ STORE_URL = os.getenv("STORE_URL", "https://www.theaarshalabel.com").rstrip("/")
 
 
 def _abs_image(path: str) -> str:
-    """Absolute, URL-safe image link for emails; '' when there's no image."""
+    """Absolute, URL-safe image link for emails; '' when there's no image.
+
+    Product images are .webp, which some email clients (Outlook/Windows) can't
+    render, so we point at the .jpg sibling produced by
+    scripts/generate_email_jpgs.py.
+    """
     if not path:
         return ""
     if path.startswith(("http://", "https://")):
         return path
+    path = re.sub(r"\.(webp|png|jpe?g)$", ".jpg", path, flags=re.IGNORECASE)
     return STORE_URL + quote(path, safe="/")
 
 # --- Email (Mailgun HTTP API) config — used in preference to SMTP when set ---
