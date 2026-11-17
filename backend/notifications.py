@@ -16,6 +16,7 @@ from typing import List, Optional
 
 import httpx
 from pathlib import Path
+from urllib.parse import quote
 from dotenv import load_dotenv
 
 # Load .env here too, so config is correct regardless of import order in the host app.
@@ -30,6 +31,18 @@ SMTP_USER = os.getenv("SMTP_USER")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 SMTP_FROM = os.getenv("SMTP_FROM") or SMTP_USER
 STORE_NAME = os.getenv("STORE_NAME", "The Aarsha Label")
+# Public site origin, used to turn a product's relative image path (e.g.
+# "/images/zehra-...-model-1.webp") into an absolute URL for order emails.
+STORE_URL = os.getenv("STORE_URL", "https://www.theaarshalabel.com").rstrip("/")
+
+
+def _abs_image(path: str) -> str:
+    """Absolute, URL-safe image link for emails; '' when there's no image."""
+    if not path:
+        return ""
+    if path.startswith(("http://", "https://")):
+        return path
+    return STORE_URL + quote(path, safe="/")
 
 # --- Email (Mailgun HTTP API) config — used in preference to SMTP when set ---
 MAILGUN_API_KEY = os.getenv("MAILGUN_API_KEY")
@@ -186,10 +199,25 @@ def _items_html(order: dict) -> str:
     rows = ""
     for it in order.get("items", []):
         _nm = it.get('name','') + (f" — Size {it.get('size')}" if it.get('size') else '')
+        img = _abs_image(it.get('image') or '')
+        thumb = (
+            f"<img src='{img}' width='56' height='56' alt='' "
+            f"style='display:block;width:56px;height:56px;border-radius:6px;"
+            f"border:1px solid #eee;object-fit:cover' />"
+            if img else ""
+        )
+        # Name cell = thumbnail + product name side by side (nested table so it
+        # stays aligned across email clients).
+        name_cell = (
+            "<table role='presentation' cellpadding='0' cellspacing='0' border='0'><tr>"
+            + (f"<td style='padding-right:12px;vertical-align:middle'>{thumb}</td>" if thumb else "")
+            + f"<td style='vertical-align:middle;font-family:Georgia,serif;color:#1A1A1A'>{_nm}</td>"
+            "</tr></table>"
+        )
         rows += (
-            f"<tr><td style='padding:6px 10px;border-bottom:1px solid #eee'>{_nm}</td>"
-            f"<td style='padding:6px 10px;border-bottom:1px solid #eee;text-align:center'>{it.get('quantity',1)}</td>"
-            f"<td style='padding:6px 10px;border-bottom:1px solid #eee;text-align:right'>{format_inr(it.get('price'))}</td></tr>"
+            f"<tr><td style='padding:8px 10px;border-bottom:1px solid #eee'>{name_cell}</td>"
+            f"<td style='padding:8px 10px;border-bottom:1px solid #eee;text-align:center;vertical-align:middle'>{it.get('quantity',1)}</td>"
+            f"<td style='padding:8px 10px;border-bottom:1px solid #eee;text-align:right;vertical-align:middle'>{format_inr(it.get('price'))}</td></tr>"
         )
     return rows
 
@@ -235,7 +263,8 @@ def order_confirmation_for_customer(order: dict):
     <div style="font-family:Georgia,serif;max-width:560px;margin:auto;color:#1A1A1A">
       <h2 style="color:#7A1F3D">Thank you for your order!</h2>
       <p>{intro}</p>
-      <p style="font-size:15px"><b>Order ID:</b> {oid}<br/><b>Payment method:</b> {pay}</p>
+      <p style="font-size:15px;margin:4px 0"><b>Payment method:</b> {pay}</p>
+      <p style="font-size:12px;color:#999;margin:0 0 10px">Order ID: {oid}</p>
       <table style="width:100%;border-collapse:collapse;margin:16px 0">
         <thead><tr>
           <th style="text-align:left;padding:6px 10px;border-bottom:2px solid #7A1F3D">Item</th>
@@ -314,7 +343,7 @@ def order_status_update_for_customer(order: dict):
     html = f"""
     <div style="font-family:Georgia,serif;max-width:560px;margin:auto;color:#1A1A1A">
       <h2 style="color:#7A1F3D">Your order is now: {label}</h2>
-      <p>Here's an update on your order <b>{oid}</b>.</p>
+      <p>Here's an update on your order. <span style="font-size:12px;color:#999">({oid})</span></p>
       <table style="width:100%;border-collapse:collapse;margin:16px 0">
         <thead><tr>
           <th style="text-align:left;padding:6px 10px;border-bottom:2px solid #7A1F3D">Item</th>
