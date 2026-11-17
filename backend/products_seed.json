@@ -1330,5 +1330,21 @@
     "availability": "In Stock",
     "set_includes": "1 Moissanite Choker Necklace + 1 Pair of Matching Earrings + 1 Matching Maang Tikka",
     "created_at": "2026-11-17T11:00:00.000000"
+  },
+  {
+    "product_id": "prod_e1ca0a7edfa8",
+    "name": "The Aarsha's Riva – Ruby Elegance Moissanite Necklace Set",
+    "description": "The Riva Ruby Elegance Moissanite Necklace Set is effortless sophistication for the modern woman. A delicate double-layer necklace of sparkling moissanite stones frames a bold rectangular ruby-red centre, finished with a large pear-shaped moissanite drop for a graceful focal point. Paired with matching ruby-and-drop earrings in a warm gold-tone finish, it is a refined choice for receptions, festive evenings and special celebrations.",
+    "price": 371000,
+    "currency": "INR",
+    "images": [
+      "/images/riva-ruby-elegance-moissanite-necklace-set-model-1.webp"
+    ],
+    "category": "premium_heritage",
+    "product_type": "Double-Layer Moissanite Necklace Set",
+    "materials": "Jewellery alloy base with gold-tone finish, Moissanite primary stones, Rectangular ruby-red decorative centre stone, Large pear-shaped white pendant stone, Pear-shaped white stones with sparkling borders (outer layer), Small round white stones (inner layer), Ruby-red rectangular stones and pear-shaped white drops on earrings",
+    "availability": "In Stock",
+    "set_includes": "1 Double-Layer Moissanite Necklace with Pendant + 1 Pair of Matching Drop Earrings",
+    "created_at": "2026-11-17T11:30:00.000000"
   }
 ]
