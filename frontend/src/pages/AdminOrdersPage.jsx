@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../lib/api';
-import { Package, Download } from 'lucide-react';
+import { Package, Download, Plus } from 'lucide-react';
 
 const csvEscape = (v) => {
   const s = String(v ?? '');
@@ -68,15 +69,24 @@ export default function AdminOrdersPage() {
             <Package className="w-7 h-7 text-[#7A1F3D]" strokeWidth={1.5} />
             <h1 className="text-3xl sm:text-4xl font-serif font-light text-[#1A1A1A]">Orders — Admin</h1>
           </div>
-          {paidOrders.length > 0 && (
-            <button
-              onClick={downloadCsv}
-              className="flex items-center gap-2 border border-[#7A1F3D] text-[#7A1F3D] px-4 py-2 text-sm hover:bg-[#7A1F3D] hover:text-white transition-colors"
-              data-testid="download-orders-csv"
+          <div className="flex items-center gap-2 flex-wrap">
+            <Link
+              to="/admin/new-order"
+              className="flex items-center gap-2 bg-[#7A1F3D] text-white px-4 py-2 text-sm hover:bg-[#5C172E] transition-colors"
+              data-testid="new-whatsapp-order"
             >
-              <Download className="w-4 h-4" /> Download CSV ({paidOrders.length})
-            </button>
-          )}
+              <Plus className="w-4 h-4" /> New WhatsApp order
+            </Link>
+            {paidOrders.length > 0 && (
+              <button
+                onClick={downloadCsv}
+                className="flex items-center gap-2 border border-[#7A1F3D] text-[#7A1F3D] px-4 py-2 text-sm hover:bg-[#7A1F3D] hover:text-white transition-colors"
+                data-testid="download-orders-csv"
+              >
+                <Download className="w-4 h-4" /> Download CSV ({paidOrders.length})
+              </button>
+            )}
+          </div>
         </div>
 
         {error && <p className="text-red-600 mb-6">{error}</p>}

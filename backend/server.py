@@ -286,6 +286,16 @@ class CheckoutRequest(BaseModel):
     redirect_url: str
     coupon: Optional[str] = None
 
+class ManualOrderCreate(BaseModel):
+    """An order the owner enters by hand (e.g. placed over WhatsApp/DM), so it
+    lives in the system with a real order id, dashboard entry and tracking."""
+    items: List[OrderItem]
+    shipping_address: ShippingAddress
+    email: Optional[str] = None
+    payment_method: str = "cod"   # "cod" (collect on delivery) or "paid" (already paid)
+    discount: int = 0             # optional discount in paise
+    notify: bool = True           # email/WhatsApp the customer a confirmation
+
 # Discount coupons removed (Oct 2026) — the site runs a price-tiered sale +
 # automatic buy-2 offer instead. An empty table means no code is ever valid;
 # apply_coupon() and best_discount() still work (they just return 0 for codes).
@@ -1007,6 +1017,50 @@ async def create_cod_order(data: CheckoutRequest, request: Request):
     if fresh:
         _fire(notify_order_paid(fresh))  # order-confirmation email/WhatsApp (customer + owner)
     return {"order_id": order_id, "status": "cod_confirmed"}
+
+
+@api_router.post("/admin/orders/manual")
+async def create_manual_order(data: ManualOrderCreate, request: Request):
+    """Owner-created order for a sale made off-site (e.g. over WhatsApp). Gets a
+    real order id, shows in the admin dashboard, and works with status updates,
+    tracking and returns just like a website order."""
+    await require_admin(request)
+    if not data.items:
+        raise HTTPException(status_code=400, detail="Add at least one item.")
+
+    subtotal = sum(item.price * item.quantity for item in data.items)
+    discount = max(0, int(data.discount or 0))
+    total = max(0, subtotal - discount)
+    is_cod = data.payment_method != "paid"
+    order_id = f"order_{uuid.uuid4().hex[:12]}"
+    now = datetime.now(timezone.utc)
+
+    order_doc = {
+        "order_id": order_id,
+        "user_id": None,
+        "email": data.email or "",
+        "items": [item.model_dump() for item in data.items],
+        "subtotal": subtotal,
+        "discount": discount,
+        "coupon": None,
+        "payment_method": "cod" if is_cod else "paid",
+        "total": total,
+        "currency": "INR",
+        "status": "cod_confirmed" if is_cod else "paid",
+        "shipping_address": data.shipping_address.model_dump(),
+        "fulfillment_status": "processing",
+        "source": "whatsapp",   # marks a manually-entered (off-site) order
+        "created_at": now,
+        "updated_at": now,
+        "notified_at": now,
+    }
+    await orders_collection.insert_one(order_doc)
+
+    if data.notify:
+        fresh = await orders_collection.find_one({"order_id": order_id}, {"_id": 0})
+        if fresh:
+            _fire(notify_order_paid(fresh))
+    return {"order_id": order_id, "status": order_doc["status"], "total": total}
 
 @api_router.post("/checkout/verify")
 async def verify_checkout(data: PaymentVerifyRequest):

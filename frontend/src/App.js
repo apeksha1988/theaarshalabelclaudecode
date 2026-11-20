@@ -26,6 +26,7 @@ const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'));
 const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const AdminOrdersPage = lazy(() => import('./pages/AdminOrdersPage'));
+const AdminNewOrderPage = lazy(() => import('./pages/AdminNewOrderPage'));
 const WishlistPage = lazy(() => import('./pages/WishlistPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
@@ -101,6 +102,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute adminOnly>
               <AdminOrdersPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/new-order"
+          element={
+            <ProtectedRoute adminOnly>
+              <AdminNewOrderPage />
             </ProtectedRoute>
           }
         />
