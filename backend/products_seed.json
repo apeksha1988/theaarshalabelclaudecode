@@ -632,6 +632,8 @@
     "price": 215000,
     "currency": "INR",
     "images": [
+      "/images/hasli-choker-set-model-1.webp",
+      "/images/hasli-choker-set-model-2.webp",
       "/images/Hasli1.webp",
       "/images/the-aarsha-s-hasli-choker-set-photo1.webp"
     ],
@@ -649,6 +651,8 @@
     "price": 215000,
     "currency": "INR",
     "images": [
+      "/images/mayur-ratna-hasli-choker-model-1.webp",
+      "/images/mayur-ratna-hasli-choker-model-2.webp",
       "/images/Hasli2.webp",
       "/images/the-aarsha-s-mayur-ratna-hasli-choker-photo1.webp",
       "/images/the-aarsha-s-mayur-ratna-hasli-choker-photo2.webp"
@@ -703,6 +707,7 @@
     "price": 155000,
     "currency": "INR",
     "images": [
+      "/images/rajsi-antique-silver-necklace-model-1.webp",
       "/images/Oxidised_Necklace.webp"
     ],
     "category": "oxidised",
