@@ -1759,6 +1759,27 @@ async def set_images(request: Request):
     return {"product_id": pid, "images": imgs, "modified": res.modified_count}
 
 
+# Strip a leading prefix (default "The Aarsha's ") from every product name, to
+# shorten the titles shown on the storefront. Idempotent — re-running does
+# nothing once the prefix is gone. e.g. ?token=…&prefix=The%20Aarsha's%20
+@api_router.api_route("/tasks/strip-name-prefix", methods=["GET", "POST"])
+async def strip_name_prefix(request: Request):
+    if not TASKS_TOKEN or request.query_params.get("token") != TASKS_TOKEN:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    prefix = request.query_params.get("prefix", "The Aarsha's ")
+    renamed = []
+    async for p in products_collection.find({}, {"_id": 0, "product_id": 1, "name": 1}):
+        name = p.get("name") or ""
+        if name.startswith(prefix):
+            new = name[len(prefix):].strip()
+            if new and new != name:
+                await products_collection.update_one(
+                    {"product_id": p["product_id"]}, {"$set": {"name": new}}
+                )
+                renamed.append(new)
+    return {"renamed": len(renamed), "names": renamed}
+
+
 # One-time bulk price change: add `amount` paise to every product's selling
 # `price`, and (for sale items that have an `mrp`) to the struck-through `mrp`
 # too, recomputing `discount_percent` so the badge stays truthful. Flag-guarded
