@@ -1739,6 +1739,24 @@ async def lead_image(request: Request):
     return {"product_id": pid, "moved": idx != 0, "modified": res.modified_count, "images": new_imgs}
 
 
+# Read one order by id (owner-only via TASKS_TOKEN) — used to build an invoice
+# from a real order without logging into the admin dashboard. Excludes the bulky
+# return photo. e.g. ?token=…&order_id=order_abc123
+@api_router.api_route("/tasks/get-order", methods=["GET", "POST"])
+async def get_order_task(request: Request):
+    if not TASKS_TOKEN or request.query_params.get("token") != TASKS_TOKEN:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    oid = request.query_params.get("order_id")
+    if not oid:
+        raise HTTPException(status_code=400, detail="order_id required")
+    o = await orders_collection.find_one(
+        {"order_id": oid}, {"_id": 0, "return_request.photo": 0}
+    )
+    if not o:
+        raise HTTPException(status_code=404, detail="order not found")
+    return o
+
+
 # Set ONE product's images array verbatim (comma-separated paths) — for adding,
 # removing or reordering gallery images without a delete+reinsert (sync only
 # INSERTs). e.g. ?token=…&product_id=prod_x&images=/images/a.webp,/images/b.webp
